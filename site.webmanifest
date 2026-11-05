@@ -1,0 +1,25 @@
+{
+  "name": "Premium Host Punta",
+  "short_name": "PHPunta",
+  "description": "Administración premium de alquileres vacacionales en Punta del Este",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf7f0",
+  "theme_color": "#0d1b2a",
+  "lang": "es-UY",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
