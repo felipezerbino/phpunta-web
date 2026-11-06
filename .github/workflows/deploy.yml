@@ -1,0 +1,109 @@
+name: Publicar la web (phpunta.uy)
+
+# Push a main → publica en la raíz de phpunta.uy por HTTPS, con el mismo receptor que usan las
+# apps (limpiezas/deployer/deploy.php, app 'web'). Sube SOLO lo que cambió desde lo publicado
+# (lo dice https://phpunta.uy/web-version.json). NUNCA borra nada del hosting: enviar.php,
+# .htaccess y las carpetas de las apps quedan intactos (el receptor además lo impide).
+# Secret necesario en ESTE repo: DEPLOY_TOKEN (= el contenido de limpiezas/deployer/deploy_token.txt).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      completo:
+        description: 'Subir TODO el sitio (no solo lo que cambió)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: publicar-web
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bajar el repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Armar los lotes
+        env:
+          COMPLETO: ${{ inputs.completo }}
+        run: |
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+          PUB=$(curl -s --max-time 30 -A "$UA" "https://phpunta.uy/web-version.json?n=$RANDOM" | python3 -c "import json,sys
+          try: print(json.load(sys.stdin).get('sha',''))
+          except Exception: print('')" || true)
+          echo "Publicado hoy: ${PUB:-desconocido}"
+          # Primera vez (sin web-version.json): la base es el commit de importación, que es copia
+          # exacta de lo que ya estaba publicado → no se re-suben los 30 MB (videos incluidos).
+          [ -n "$PUB" ] || PUB=$(git rev-list --max-parents=0 HEAD | tail -n 1)
+          if [ "$COMPLETO" != "true" ] && git cat-file -e "$PUB^{commit}" 2>/dev/null; then
+            git diff --name-only --diff-filter=AMR "$PUB" HEAD > cambios.txt
+          else
+            echo "Subida completa"; git ls-files > cambios.txt
+          fi
+          python3 - <<'EOF'
+          import os, re, json, zipfile, subprocess, datetime
+          ok_ext = re.compile(r'\.(html|css|js|json|xml|txt|webmanifest|png|jpe?g|webp|gif|svg|ico|avif|mp4|webm|woff2?)$', re.I)
+          files = []
+          for f in open('cambios.txt').read().split('\n'):
+              f = f.strip()
+              if not f or not os.path.isfile(f): continue
+              if re.search(r'(^|/)\.', f) or not ok_ext.search(f): continue
+              if '/' in f and not re.match(r'^(assets|en|pt)/', f): continue
+              files.append(f)
+          sha = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
+          with open('web-version.json', 'w') as fh:
+              json.dump({'sha': sha, 'publicado': datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}, fh)
+          # Lotes chicos: el PHP del hosting tiene un tope de subida que no conocemos (suele ser 2 MB).
+          # Un archivo más grande que el lote va solo; si el hosting lo rechaza, el paso siguiente lo dice.
+          lotes, cur, size = [], [], 0
+          for f in files:
+              s = os.path.getsize(f)
+              if cur and (size + s > 1500 * 1024 or len(cur) >= 250):
+                  lotes.append(cur); cur, size = [], 0
+              cur.append(f); size += s
+          cur.append('web-version.json')   # siempre en el último lote: marca lo publicado al final
+          lotes.append(cur)
+          os.makedirs('lotes', exist_ok=True)
+          for i, lote in enumerate(lotes):
+              with zipfile.ZipFile(f'lotes/{i:03d}.zip', 'w', zipfile.ZIP_DEFLATED) as z:
+                  for f in lote: z.write(f, f)
+          print(f'{len(files)} archivos en {len(lotes)} lote(s)')
+          for f in files: print('  ' + f)
+          EOF
+
+      - name: Publicar por HTTPS
+        env:
+          TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          [ -n "$TOKEN" ] || { echo "Falta el secret DEPLOY_TOKEN en este repo"; exit 1; }
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+          URL="https://phpunta.uy/limpiezas/deployer/deploy.php"
+          for Z in lotes/*.zip; do
+            ok=""
+            for intento in 1 2 3 4; do
+              : > resp.json
+              code=$(curl -sS -o resp.json -w "%{http_code}" --max-time 180 -A "$UA" -X POST \
+                -H "X-Deploy-Token: $TOKEN" -F "app=web" -F "zip=@$Z" "$URL" 2>curlerr.txt) || true
+              echo "$Z (intento $intento) → HTTP ${code:-sin-respuesta}"
+              head -c 300 curlerr.txt || true; head -c 400 resp.json || true; echo
+              if [ "$code" = "200" ] && grep -q '"ok":true' resp.json; then ok=1; break; fi
+              if grep -qE '"php_error":(1|2)' resp.json; then
+                echo "❌ El hosting rechaza este lote por tamaño (tope de subida de PHP). Archivos:"; unzip -Z1 "$Z"
+                echo "Subilos a mano por el Administrador de archivos de cPanel o achicalos."; exit 1
+              fi
+              sleep 10
+            done
+            [ -n "$ok" ] || { echo "❌ No se pudo publicar $Z"; exit 1; }
+          done
+
+      - name: Verificar lo publicado
+        run: |
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+          PUB=$(curl -s --max-time 30 -A "$UA" "https://phpunta.uy/web-version.json?n=$RANDOM" | python3 -c "import json,sys;print(json.load(sys.stdin)['sha'])")
+          echo "repo=$(git rev-parse HEAD) publicado=$PUB"
+          [ "$PUB" = "$(git rev-parse HEAD)" ] && echo "✅ Web publicada"

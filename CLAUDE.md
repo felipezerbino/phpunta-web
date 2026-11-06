@@ -17,5 +17,10 @@ Un deploy NUNCA debe borrar esos archivos del hosting.
 cPanel `phpunta.uy` (hostingmontevideo), raíz `public_html/`. Ahí conviven carpetas INTOCABLES de otras apps: `comunicacion/`, `limpiezas/`, `operaciones/`, `pagos/`, `portalpropietarios/`, `portalinmobiliarias/`, `optimizer/`, `mensajes/`, `reservas/`, `wp/`, `wpr/`, `deployer/`. El deploy de la web solo puede escribir los archivos de este repo, sin borrar nada.
 Cloudflare: no se usa (la zona se dio de baja el 2-nov-2026; Felipe decidió no seguir por ahora).
 
-## Deploy
-Pendiente de definir (ver el hilo de la sesión). Hasta entonces, nada de este repo se publica solo.
+## Deploy (6-nov-2026)
+- **Push a `main` → `.github/workflows/deploy.yml` → publica en la raíz de phpunta.uy por HTTPS** con el receptor de las apps (`limpiezas/deployer/deploy.php`, app `web`). Secret del repo: `DEPLOY_TOKEN` (= `limpiezas/deployer/deploy_token.txt` del hosting).
+- Sube SOLO lo que cambió desde lo publicado (`https://phpunta.uy/web-version.json` guarda el commit). La primera vez la base es el commit de importación. "Subir todo": Actions → Publicar la web → Run workflow → tildar "completo".
+- **Nunca borra.** Un archivo eliminado del repo sigue en el hosting: borrarlo a mano.
+- El receptor solo acepta en la web: archivos sueltos en la raíz y carpetas `assets/`, `en/`, `pt/`; html/css/js/imágenes/video/sitemap. Nada `.php`, `.htaccess` ni ocultos. Una carpeta nueva fuera de esas tres exige cambiar `deploy.php` (repo phpunta-comunicaciones) y re-subirlo a mano.
+- Lotes de ≤1,5 MB: el tope de subida del PHP del hosting no está medido. Un archivo más grande (los videos de 6-7 MB) puede ser rechazado: el workflow lo dice y hay que subirlo por el Administrador de archivos.
+- Verificación: el último paso compara `web-version.json` publicado con el commit.
