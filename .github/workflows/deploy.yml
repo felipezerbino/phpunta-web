@@ -4,7 +4,7 @@ name: Publicar la web (phpunta.uy)
 # apps (limpiezas/deployer/deploy.php, app 'web'). Sube SOLO lo que cambió desde lo publicado
 # (lo dice https://phpunta.uy/web-version.json). NUNCA borra nada del hosting: enviar.php,
 # .htaccess y las carpetas de las apps quedan intactos (el receptor además lo impide).
-# Secret necesario en ESTE repo: DEPLOY_TOKEN (= el contenido de limpiezas/deployer/deploy_token.txt).
+# Secret necesario en ESTE repo: DEPLOY_TOKEN (= el contenido de deployer/deploy_token.txt de la raíz).
 on:
   push:
     branches: [main]
@@ -82,7 +82,7 @@ jobs:
         run: |
           [ -n "$TOKEN" ] || { echo "Falta el secret DEPLOY_TOKEN en este repo"; exit 1; }
           UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
-          URL="https://phpunta.uy/limpiezas/deployer/deploy.php"
+          URL="https://phpunta.uy/deployer/deploy.php"
           for Z in lotes/*.zip; do
             ok=""
             for intento in 1 2 3 4; do
