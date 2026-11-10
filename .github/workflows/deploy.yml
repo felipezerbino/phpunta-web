@@ -1,7 +1,7 @@
 name: Publicar la web (phpunta.uy)
 
 # Push a main → publica en la raíz de phpunta.uy por HTTPS, con el mismo receptor que usan las
-# apps (limpiezas/deployer/deploy.php, app 'web'). Sube SOLO lo que cambió desde lo publicado
+# apps (receptor propio en la raíz: deployer/deploy.php, app web). Sube SOLO lo que cambió desde lo publicado
 # (lo dice https://phpunta.uy/web-version.json). NUNCA borra nada del hosting: enviar.php,
 # .htaccess y las carpetas de las apps quedan intactos (el receptor además lo impide).
 # Secret necesario en ESTE repo: DEPLOY_TOKEN (= el contenido de deployer/deploy_token.txt de la raíz).
