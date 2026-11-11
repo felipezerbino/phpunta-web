@@ -3,10 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="php-base" content="/reservasnueva/" />
+<!--SEO-->
 <title>Reservas en Punta del Este | Premium Host Punta</title>
 <meta name="description" content="Casas y apartamentos premium en Punta del Este, La Barra, Manantiales y Montevideo. Reservá directo con Premium Host Punta: disponibilidad y precio real al instante." />
 <!-- OCULTA hasta que esté probada: fuera del sitemap y sin indexar. Al publicarla: sacar este noindex, canonical definitivo y sitemap. -->
 <meta name="robots" content="noindex, nofollow" />
+<meta name="php-alt-es" content="/reservasnueva/" />
+<meta name="php-alt-pt" content="/reservasnueva/pt/" />
+<meta name="php-alt-en" content="/reservasnueva/en/" />
+<!--/SEO-->
 <meta name="theme-color" content="#0d1b2a" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -530,6 +536,7 @@ body.mapa-movil .topbar { display: none; }
   <div class="layout">
     <main class="list">
       <div class="zona-act" id="zonaAct">Mostrando solo lo que está en la zona del mapa. <button type="button" class="lnk" id="zonaQuitar">Ver todas</button></div>
+      <!--PRE-->
       <div class="grid" id="grid"></div>
       <div class="mas-box" id="masBox" hidden><div class="grid peek" id="peek" aria-hidden="true"></div><button type="button" class="btn-mas" id="btnMas">Mostrar más propiedades</button></div>
       <div class="vacio" id="vacio" hidden></div>
@@ -654,6 +661,19 @@ body.mapa-movil .topbar { display: none; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 'use strict';
+// ── Idioma y rutas (i18n): las plantillas están en español; tools/i18n_reservas.py arma pt y en ──────────────
+const LANG = (document.documentElement.lang || 'es').slice(0, 2);
+const LOC = LANG === 'en' ? 'en-US' : (LANG === 'pt' ? 'pt-BR' : 'es-UY');
+const BASE = document.querySelector('meta[name="php-base"]') ? document.querySelector('meta[name="php-base"]').content : '/reservasnueva/';
+// Selector ES · PT · EN: cada link va a la MISMA página en el otro idioma (metas php-alt-xx) y conserva fechas y huéspedes.
+(function () {
+  ['es', 'pt', 'en'].forEach(function (l) {
+    const m = document.querySelector('meta[name="php-alt-' + l + '"]'), a = document.querySelector('.topbar-langs a[hreflang="' + l + '"]');
+    if (!m || !a || !m.content || m.content.indexOf('__') === 0) return;
+    const ir = function () { a.href = m.content + location.search; };
+    ir(); a.addEventListener('click', ir);
+  });
+})();
 // ── Configuración ────────────────────────────────────────────────────────────────────────────────────
 const API = (function () {
   const q = new URLSearchParams(location.search).get('api');
@@ -667,7 +687,7 @@ const POR_PAGINA = 10;   // Felipe (11-nov): de a 10 y un botón para ver más (
 // ── Utilidades ───────────────────────────────────────────────────────────────────────────────────────
 const $ = function (s, r) { return (r || document).querySelector(s); };
 const esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
-const usd = function (n) { return 'USD ' + Math.round(n).toLocaleString('es-UY'); };
+const usd = function (n) { return 'USD ' + Math.round(n).toLocaleString(LOC); };
 const iso = function (d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
 const parseIso = function (s) { const p = String(s || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; };
 const fechaCorta = function (s) { const d = parseIso(s); return d ? d.getDate() + ' ' + MESES[d.getMonth()].slice(0, 3) : ''; };
@@ -838,7 +858,7 @@ async function cargarDispo() {
   if (k === dispoKey) return;
   dispoKey = k; DISPO = null;
   if (!k) return;
-  try { const j = await api('/web/buscar?desde=' + S.llegada + '&hasta=' + S.salida); if (dispoKey === k) DISPO = j.resultados || {}; }
+  try { const j = await api('/web/buscar?desde=' + S.llegada + '&hasta=' + S.salida + '&lang=' + LANG); if (dispoKey === k) DISPO = j.resultados || {}; }
   catch (e) { if (dispoKey === k) DISPO = {}; }
 }
 function filtrar() {
@@ -867,6 +887,7 @@ function filtrar() {
 let tAplicar = null;
 function aplicarDiferido() { clearTimeout(tAplicar); tAplicar = setTimeout(aplicar, 350); }
 async function aplicar(centrar) {
+  const sp = $('#seoPre'); if (sp) sp.remove();   // el listado para buscadores (lo arma el generador) se va al pintar
   pintarChips(); urlEstado();
   await cargarDispo();
   visibles = filtrar(); mostradas = 0;
@@ -934,7 +955,7 @@ function tarjeta(p) {
   const a = document.createElement('a');
   const d = DISPO && DISPO[p.slug];
   a.className = 'card' + (d && d.libre === false ? ' ocupada' : '');
-  a.href = '/reservasnueva/' + encodeURIComponent(p.slug) + '/' + qsFicha();
+  a.href = BASE + encodeURIComponent(p.slug) + '/' + qsFicha();
   a.dataset.slug = p.slug;
   const fotos = (p.fotos && p.fotos.length ? p.fotos : []).slice(0, 6);
   const meta = [p.tipo === 'casa' ? 'Casa' : 'Apartamento', p.dormitorios ? p.dormitorios + (p.dormitorios === 1 ? ' dormitorio' : ' dormitorios') : '', p.huespedes ? 'hasta ' + p.huespedes + ' huéspedes' : ''].filter(Boolean).join(' · ');
@@ -991,7 +1012,7 @@ function marcaTxt(p) {
   const d = DISPO && DISPO[p.slug];
   if (d && d.libre === false) return 'No disp.';
   if (d && d.total_aprox) return usd(d.total_aprox).replace('USD ', 'US$');
-  return p.desde_noche ? 'US$' + Math.round(p.desde_noche).toLocaleString('es-UY') : '·';
+  return p.desde_noche ? 'US$' + Math.round(p.desde_noche).toLocaleString(LOC) : '·';
 }
 function pintarMarcas() {
   if (!map) return;
@@ -1002,7 +1023,7 @@ function pintarMarcas() {
     const txt = marcaTxt(p);
     const icon = L.divIcon({ className: '', html: '<span class="mk' + (d && d.libre === false ? ' oc' : '') + (txt === '·' ? ' dot' : '') + '" data-slug="' + esc(p.slug) + '">' + (txt === '·' ? '' : esc(txt)) + '</span>', iconSize: [0, 0] });
     const m = L.marker([p.coord.lat, p.coord.lng], { icon: icon, riseOnHover: true }).addTo(capa);
-    m.bindPopup('<a class="mpop" href="/reservasnueva/' + encodeURIComponent(p.slug) + '/' + qsFicha() + '">' + (p.fotos[0] ? '<img src="' + esc(p.fotos[0]) + '" alt="" />' : '') + '<div><b>' + esc(p.titulo) + '</b><span style="font-size:12.5px;color:#556070">' + lineaPrecio(p) + '</span></div></a>', { closeButton: false, offset: [0, -6] });
+    m.bindPopup('<a class="mpop" href="' + BASE + encodeURIComponent(p.slug) + '/' + qsFicha() + '">' + (p.fotos[0] ? '<img src="' + esc(p.fotos[0]) + '" alt="" />' : '') + '<div><b>' + esc(p.titulo) + '</b><span style="font-size:12.5px;color:#556070">' + lineaPrecio(p) + '</span></div></a>', { closeButton: false, offset: [0, -6] });
     marcas[p.slug] = m;
   });
 }
@@ -1079,7 +1100,7 @@ $('#selCrear').addEventListener('click', function () {
     const conFechas = conF && $('#selConF') && $('#selConF').checked;
     try {
       const r = await fetch(API + '/web/seleccion', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok },
-        body: JSON.stringify({ slugs: SEL, desde: conFechas ? S.llegada : null, hasta: conFechas ? S.salida : null, huespedes: conFechas ? huespedes() : null, titulo: $('#selTit').value, nota: $('#selNota').value }) });
+        body: JSON.stringify({ lang: LANG, slugs: SEL, desde: conFechas ? S.llegada : null, hasta: conFechas ? S.salida : null, huespedes: conFechas ? huespedes() : null, titulo: $('#selTit').value, nota: $('#selNota').value }) });
       const j = await r.json().catch(function () { return null; });
       if (r.status === 401) { try { localStorage.removeItem('phweb_team_token'); } catch (e) {} b.disabled = false; b.textContent = 'Crear link'; return loginEquipo(function () { $('#selCrear').click(); }); }
       if (!r.ok || !j || !j.ok) throw new Error((j && j.error) || 'No se pudo crear el link.');
@@ -1099,7 +1120,7 @@ selPintarBarra();
 // Vista de una selección (?sel=ID): solo esas propiedades, con las fechas y los precios que armó el equipo.
 async function verSeleccion(id) {
   VER_SEL = true; document.body.classList.add('ver-sel');
-  const j = await api('/web/seleccion?id=' + encodeURIComponent(id));
+  const j = await api('/web/seleccion?id=' + encodeURIComponent(id) + '&lang=' + LANG);
   const s = j.seleccion || {};
   if (s.desde && s.hasta && !s.pasada) { S.llegada = s.desde; S.salida = s.hasta; if (s.huespedes) { S.ad = s.huespedes; S.ni = 0; } }
   else { S.llegada = ''; S.salida = ''; }
@@ -1113,7 +1134,7 @@ async function verSeleccion(id) {
   h1.innerHTML = s.titulo ? esc(s.titulo) : 'Opciones <em>para vos</em>';
   sub.textContent = s.desde && s.hasta ? (s.pasada ? 'Las fechas de esta selección ya pasaron: elegí nuevas fechas en cada propiedad.' : 'Del ' + fechaCorta(s.desde) + ' al ' + fechaCorta(s.hasta) + ' · ' + n + (n === 1 ? ' noche' : ' noches') + (s.huespedes ? ' · ' + s.huespedes + ' personas' : '') + '. Los precios son finales, con la limpieza incluida.') : 'Elegí las fechas en cada propiedad para ver disponibilidad y precio final.';
   if (s.nota) { const d = document.createElement('div'); d.className = 'sel-head'; d.innerHTML = '<div class="nota-sel">' + esc(s.nota) + '</div>'; sub.after(d); }
-  const v = document.createElement('p'); v.style.marginTop = '14px'; v.innerHTML = '<a href="/reservasnueva/" style="color:var(--gold);text-decoration:underline">Ver todas nuestras propiedades</a>'; document.querySelector('.hero .container').appendChild(v);
+  const v = document.createElement('p'); v.style.marginTop = '14px'; v.innerHTML = '<a href="' + BASE + '" style="color:var(--gold);text-decoration:underline">Ver todas nuestras propiedades</a>'; document.querySelector('.hero .container').appendChild(v);
   urlEstado = function () {};   // la URL de la selección no se toca
   await aplicar(false);
   if (j.seleccion && j.seleccion.retiradas) { const vac = $('#vacio'); vac.hidden = false; vac.innerHTML = '<p>' + j.seleccion.retiradas + (j.seleccion.retiradas === 1 ? ' propiedad de esta selección ya no está disponible.' : ' propiedades de esta selección ya no están disponibles.') + '</p>'; }
@@ -1126,11 +1147,11 @@ async function verSeleccion(id) {
   g.innerHTML = Array(6).fill('<div><div class="skel"></div><div class="skel" style="aspect-ratio:auto;height:16px;margin-top:12px;width:60%"></div></div>').join('');
   if (Q.get('sel')) {
     try { await verSeleccion(Q.get('sel')); }
-    catch (e) { g.innerHTML = ''; $('#vacio').hidden = false; $('#vacio').innerHTML = '<h3>' + (e.status === 404 ? 'Esta selección no existe o ya no está disponible' : 'No pudimos cargar la selección') + '</h3><p><a href="/reservasnueva/" style="text-decoration:underline">Ver todas nuestras propiedades</a></p>'; }
+    catch (e) { g.innerHTML = ''; $('#vacio').hidden = false; $('#vacio').innerHTML = '<h3>' + (e.status === 404 ? 'Esta selección no existe o ya no está disponible' : 'No pudimos cargar la selección') + '</h3><p><a href="' + BASE + '" style="text-decoration:underline">Ver todas nuestras propiedades</a></p>'; }
     return;
   }
   try {
-    const j = await api('/web/catalogo');
+    const j = await api('/web/catalogo?lang=' + LANG);
     CAT = j.propiedades || [];
     const zonas = Object.keys(j.barrios || {}).filter(function (b) { return CAT.some(function (p) { return p.barrio === b; }); })
       .sort(function (a, b) { return Object.keys(BARRIO_NOMBRE).indexOf(a) - Object.keys(BARRIO_NOMBRE).indexOf(b); });

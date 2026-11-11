@@ -138,7 +138,10 @@ def head_seo(lang, titulo, desc, url, imagen, alt_urls, tipo_og='website', jsonl
 
 def armar(tpl, lang, base_path, seo, cuerpo_pre=None, slug='', estado=''):
   out = I18N.traducir(tpl, lang)
-  out = re.sub(r'<html lang="[a-z-]+"', '<html lang="' + lang + '"', out, count=1)
+  out = re.sub(r'<html lang="[A-Za-z-]+"', '<html lang="' + {'es': 'es', 'pt': 'pt-BR', 'en': 'en'}[lang] + '"', out, count=1)
+  # Links entre idiomas que dejan los pares de tools/i18n_reservas.py.
+  for lg in LANGS:
+    out = out.replace('__BASE_' + lg.upper() + '__', '/' + DIRS[lg] + '/')
   out = out.replace('<meta name="php-base" content="/reservasnueva/" />', '<meta name="php-base" content="' + base_path + '" />')
   # Lo que la plantilla trae de SEO (título, description, robots, og) lo reemplaza el bloque nuevo.
   a, b = out.find('<!--SEO-->'), out.find('<!--/SEO-->')

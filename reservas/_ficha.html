@@ -3,17 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- PLANTILLA: el deploy genera reservasnueva/<slug>/index.html reemplazando los __MARCADORES__ (tools/generar-fichas.py). -->
-<title>__TITULO__ | Reservas Premium Host Punta</title>
-<meta name="description" content="__DESC__" />
-<meta name="robots" content="noindex, nofollow" />
+<!-- PLANTILLA: tools/generar-reservas.py arma cada propiedad en ES/PT/EN; el bloque SEO lo completa el generador. -->
 <meta name="php-slug" content="__SLUG__" />
 <meta name="php-estado" content="__ESTADO__" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="__TITULO__" />
-<meta property="og:description" content="__DESC__" />
-<meta property="og:image" content="__OG__" />
-<meta property="og:url" content="__URL__" />
+<meta name="php-base" content="/reservasnueva/" />
+<!--SEO-->
+<!--/SEO-->
 <meta name="theme-color" content="#0d1b2a" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -22,7 +17,6 @@
 <link rel="preconnect" href="https://phpunta-backend-production.up.railway.app" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-<script type="application/ld+json">__JSONLD__</script>
 <style>
 :root {
   color-scheme: light;
@@ -505,7 +499,7 @@ body.mapa-movil .topbar { display: none; }
 
 <div class="container" id="app">
   <a class="volver" id="volver" href="/reservasnueva/">‹ Todas las propiedades</a>
-  <div class="cargando" id="cargando"><h1 style="font-weight:300">__TITULO__</h1><p style="margin-top:10px">Cargando…</p></div>
+  <div class="cargando" id="cargando"><!--PRE--></div>
 </div>
 
 <footer data-bg="dark">
@@ -581,6 +575,19 @@ body.mapa-movil .topbar { display: none; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 'use strict';
+// ── Idioma y rutas (i18n): las plantillas están en español; tools/i18n_reservas.py arma pt y en ──────────────
+const LANG = (document.documentElement.lang || 'es').slice(0, 2);
+const LOC = LANG === 'en' ? 'en-US' : (LANG === 'pt' ? 'pt-BR' : 'es-UY');
+const BASE = document.querySelector('meta[name="php-base"]') ? document.querySelector('meta[name="php-base"]').content : '/reservasnueva/';
+// Selector ES · PT · EN: cada link va a la MISMA página en el otro idioma (metas php-alt-xx) y conserva fechas y huéspedes.
+(function () {
+  ['es', 'pt', 'en'].forEach(function (l) {
+    const m = document.querySelector('meta[name="php-alt-' + l + '"]'), a = document.querySelector('.topbar-langs a[hreflang="' + l + '"]');
+    if (!m || !a || !m.content || m.content.indexOf('__') === 0) return;
+    const ir = function () { a.href = m.content + location.search; };
+    ir(); a.addEventListener('click', ir);
+  });
+})();
 const API = (function () {
   const q = new URLSearchParams(location.search).get('api');
   if (q && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return q.replace(/\/$/, '');
@@ -590,7 +597,7 @@ const BARRIO_NOMBRE = { peninsula: 'Península', mansa: 'Playa Mansa', brava: 'P
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 const $ = function (s, r) { return (r || document).querySelector(s); };
 const esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
-const usd = function (n) { return 'USD ' + Math.round(n).toLocaleString('es-UY'); };
+const usd = function (n) { return 'USD ' + Math.round(n).toLocaleString(LOC); };
 const iso = function (d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
 const parseIso = function (s) { const p = String(s || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; };
 const fechaLarga = function (s) { const d = parseIso(s); return d ? d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() : ''; };
@@ -623,7 +630,7 @@ function urlEstado() {
   if (Q.get('p')) p.set('p', Q.get('p'));
   history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
   const v = new URLSearchParams(p); v.delete('p');
-  $('#volver').href = '/reservasnueva/' + (v.toString() ? '?' + v : '');
+  $('#volver').href = BASE + (v.toString() ? '?' + v : '');
 }
 
 // ── Calendario de rango (mismo componente que el buscador) ──────────────────────────────────────────
@@ -756,7 +763,7 @@ function pintar() {
     '<div class="sug" id="pregSug">' + ['¿Hay estacionamiento?', '¿Qué tan cerca está la playa?', '¿Se aceptan mascotas?', '¿Tiene aire acondicionado?'].map(function (q) { return '<button type="button">' + q + '</button>'; }).join('') + '</div>' +
     '<div class="qa" id="pregQa"></div><p class="nota">Responde un asistente con IA según la información de esta página. Para confirmar algo puntual, escribinos por WhatsApp.</p></div></div>';
   const masc = p.mascotas == null ? '' : '<div class="regla"><span>Mascotas</span><b>' + (p.mascotas ? 'Se aceptan' : 'No se aceptan') + '</b></div>';
-  $('#app').innerHTML = '<a class="volver" id="volver" href="/reservasnueva/">‹ Todas las propiedades</a>' +
+  $('#app').innerHTML = '<a class="volver" id="volver" href="' + BASE + '">‹ Todas las propiedades</a>' +
     '<div class="tit"><div class="eyebrow">' + esc(meta) + '</div><div class="tit-fila"><div><h1>' + esc(p.titulo) + '</h1>' + rate + badgeInm + '</div>' +
       '<div style="position:relative"><button type="button" class="btn-comp" id="btnComp">' + ICO_COMP + 'Compartir</button><div class="comp-pop" id="compPop"></div></div></div></div>' + gal +
     '<div class="cuerpo"><div>' +
@@ -852,7 +859,7 @@ function iniciarPreguntas() {
     const da = document.createElement('div'); da.className = 'a cargando'; da.textContent = 'Pensando…'; qa.appendChild(da);
     $('#pregI').value = ''; b.disabled = true;
     try {
-      const r = await fetch(API + '/web/preguntar', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ slug: SLUG, pregunta: q, historial: PREG.slice(-3) }) });
+      const r = await fetch(API + '/web/preguntar', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ lang: LANG, slug: SLUG, pregunta: q, historial: PREG.slice(-3) }) });
       const j = await r.json().catch(function () { return null; });
       if (!r.ok || !j || !j.ok) throw new Error((j && j.error) || 'No pude responder ahora.');
       da.textContent = j.respuesta; PREG.push({ q: q, a: j.respuesta });
@@ -887,9 +894,9 @@ function iniciarLugares(p) {
     });
     if (pts.length > 1) m.fitBounds(pts, { padding: [30, 30], maxZoom: 15 });
     $('#lugLista').innerHTML = lista.map(function (x, i) {
-      const sub = [x.etiqueta && x.etiqueta.es, distTxt(x.km), x.rating ? '★ ' + String(x.rating).replace('.', ',') : ''].filter(Boolean).join(' · ');
+      const sub = [x.etiqueta && (x.etiqueta[LANG] || x.etiqueta.es), distTxt(x.km), x.rating ? '★ ' + String(x.rating).replace('.', ',') : ''].filter(Boolean).join(' · ');
       return '<button type="button" class="lug" data-i="' + i + '">' + (x.foto ? '<img src="' + esc(x.foto) + '" alt="" loading="lazy" />' : '<span class="ph2">' + (x.emoji || LUG_EMOJI[x.cat] || '📍') + '</span>') +
-        '<span><b>' + esc(x.nombre) + '</b><small>' + esc(sub) + '</small>' + (x.desc && x.desc.es ? '<p>' + esc(x.desc.es) + '</p>' : '') + '</span></button>';
+        '<span><b>' + esc(x.nombre) + '</b><small>' + esc(sub) + '</small>' + (x.desc && (x.desc[LANG] || x.desc.es) ? '<p>' + esc(x.desc[LANG] || x.desc.es) + '</p>' : '') + '</span></button>';
     }).join('');
     $('#lugLista').querySelectorAll('.lug img').forEach(function (im) { im.addEventListener('error', function () { const x = lista[Number(im.closest('.lug').dataset.i)]; const sp = document.createElement('span'); sp.className = 'ph2'; sp.textContent = (x && (x.emoji || LUG_EMOJI[x.cat])) || '📍'; im.replaceWith(sp); }, { once: true }); });
     $('#lugLista').querySelectorAll('.lug').forEach(function (b) { b.onclick = function () { const x = lista[Number(b.dataset.i)]; m.setView([x.lat, x.lng], 15); x._mk.openPopup(); $('#mini').scrollIntoView({ behavior: 'smooth', block: 'center' }); }; });
@@ -1092,7 +1099,7 @@ function abrirFormulario() {
     const msj = $('#rM') ? $('#rM').value.trim() : '';
     try {
       const r = await fetch(API + (inm ? '/web/reservar' : '/web/solicitar'), { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify({ slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, mensaje: msj, acepta: true, acepta_bases: true, acepta_reglas: true }) });
+        body: JSON.stringify({ lang: LANG, slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, mensaje: msj, acepta: true, acepta_bases: true, acepta_reglas: true }) });
       const j = await r.json().catch(function () { return null; });
       if (!r.ok || !j || !j.ok || (inm && !j.link)) {
         cerrarWin();
@@ -1134,7 +1141,7 @@ async function cotizar() {
   const g = ++cotGen;
   pintarBox();
   try {
-    const j = await api('/web/cotizar?slug=' + encodeURIComponent(SLUG) + '&desde=' + S.llegada + '&hasta=' + S.salida + '&huespedes=' + huespedes());
+    const j = await api('/web/cotizar?slug=' + encodeURIComponent(SLUG) + '&desde=' + S.llegada + '&hasta=' + S.salida + '&huespedes=' + huespedes() + '&lang=' + LANG);
     if (g !== cotGen) return;
     COT = j;
   } catch (e) { if (g !== cotGen) return; COT = { estado: 'error', msg: e.status === 429 ? 'Demasiadas consultas seguidas. Probá en un minuto.' : 'No pudimos calcular el precio en este momento.' }; }
@@ -1148,11 +1155,11 @@ $('#burger').addEventListener('click', function () { $('#mobileMenu').classList.
 (async function () {
   urlEstado();
   if (document.querySelector('meta[name="php-estado"]').content === 'retirada') {
-    $('#cargando').outerHTML = '<div class="retirada"><h1>Esta propiedad ya no está disponible</h1><p>Mirá las demás opciones que tenemos para tu estadía.</p><p style="margin-top:22px"><a class="btn-res" style="display:inline-block;width:auto;padding:14px 26px" href="/reservasnueva/">Ver propiedades</a></p></div>';
+    $('#cargando').outerHTML = '<div class="retirada"><h1>Esta propiedad ya no está disponible</h1><p>Mirá las demás opciones que tenemos para tu estadía.</p><p style="margin-top:22px"><a class="btn-res" style="display:inline-block;width:auto;padding:14px 26px" href="' + BASE + '">Ver propiedades</a></p></div>';
     return;
   }
   try {
-    const j = await api('/web/propiedad?slug=' + encodeURIComponent(SLUG));
+    const j = await api('/web/propiedad?slug=' + encodeURIComponent(SLUG) + '&lang=' + LANG);
     P = j.propiedad; CFG = Object.assign(CFG, j.cfg || {});
     pintar();
     if (P.vitrina) return;
@@ -1162,7 +1169,7 @@ $('#burger').addEventListener('click', function () { $('#mobileMenu').classList.
     if (S.llegada && S.salida) cotizar();
   } catch (e) {
     $('#cargando').innerHTML = e.status === 404
-      ? '<h1>Esta propiedad ya no está disponible</h1><p style="margin-top:12px"><a href="/reservasnueva/" style="text-decoration:underline">Ver las demás propiedades</a></p>'
+      ? '<h1>Esta propiedad ya no está disponible</h1><p style="margin-top:12px"><a href="' + BASE + '" style="text-decoration:underline">Ver las demás propiedades</a></p>'
       : '<h1 style="font-weight:300">No pudimos cargar la propiedad</h1><p style="margin-top:12px">Probá recargar en un momento, o escribinos por <a href="https://api.whatsapp.com/send/?phone=59899716681" style="text-decoration:underline" target="_blank" rel="noopener">WhatsApp</a>.</p>';
   }
 })();
