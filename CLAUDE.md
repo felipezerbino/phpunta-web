@@ -27,9 +27,18 @@ Cloudflare: no se usa (la zona se dio de baja el 2-nov-2026; Felipe decidió no 
 
 ## Central de reservas (`reservasnueva/`, OCULTA — fase 1 vitrina, 11-nov-2026)
 Reemplaza al sitio de reservas de Avantio (reservas.phpunta.uy). Oculta: `noindex`, fuera del sitemap y sin links desde la web; se publica cuando Felipe la apruebe (ahí: sacar noindex, canonical, sitemap, links del menú y decidir la URL final — `alquileres/` ya está habilitada en el receptor).
-- `reservasnueva/index.html`: buscador (fechas, huéspedes, zona), filtros que sirven (tipo, dormitorios, piscina, frente al mar, playa, parrillero, jacuzzi, orden), lista con scroll continuo y mapa (Leaflet + CARTO) con "Buscar en esta zona" / "Buscar al mover el mapa". El estado vive en la URL (se puede compartir).
+- `reservasnueva/index.html`: buscador (fechas, huéspedes, zona), filtros que sirven (tipo, dormitorios, piscina, frente al mar, playa, parrillero, jacuzzi, orden), lista con scroll continuo y mapa (Leaflet + OpenStreetMap; CARTO pide clave desde nov-2026) con "Buscar en esta zona" / "Buscar al mover el mapa". El estado vive en la URL (se puede compartir).
 - `reservasnueva/_ficha.html`: PLANTILLA de la página de cada propiedad. El deploy corre `tools/generar-fichas.py`, que lee `/web/slugs` del backend y escribe `reservasnueva/<slug>/index.html` (no se versionan: `.gitignore`). Los archivos que empiezan con `_` no se publican. El workflow corre también una vez por día (propiedades nuevas, títulos nuevos). Una propiedad que deja de publicarse conserva su página con "ya no está disponible" (el receptor nunca borra).
 - Datos: backend `/web/*` (v2.738): catálogo, ficha, calendario, cotización, búsqueda. El slug (URL) no cambia una vez creado. Títulos = los de Airbnb sin "PHPunta" con el nombre del edificio adelante; precios = total directo (tabla de Avantio con descuentos + limpieza REAL) × (1 + recargo). Config en `app_config.web_reservas` (`recargo_pct`, `sena_pct`, `whatsapp_reservas`).
 - Fase 1 NO cobra: "Reservar" abre WhatsApp de Reservas con fechas, huéspedes y total. Fase 2: pago (seña 50% al reservar, 50% + garantía al llegar), bloqueo en Avantio y alta en nuestras apps.
 - Probar local: `python3 -m http.server` en la raíz y abrir `/reservasnueva/?api=http://localhost:<puerto>` (el `?api=` solo se acepta en localhost).
+- **Ficha (11-nov, v2):** descripción y comodidades del anuncio de Airbnb (backend v2.740), camas por dormitorio, puntaje y
+  reseñas, calendario SIN precios por día (pedido de Felipe) con la nota "actualizados en tiempo real", total por N noches sin
+  desglose ("incluye la tarifa de limpieza"; con descuento, el precio sin descuento tachado en rojo y el descuento en negativo),
+  "en otras plataformas te hubiera costado hasta USD X" (factor de Airbnb, sin nombrar plataforma ni %), Compartir (con o sin
+  fechas), "Hacé preguntas sobre este alojamiento" (IA) y mapa con los lugares de la guía por categoría.
+- **Selecciones:** con la sesión del equipo (la misma de Comunicaciones o el Portal: mismo dominio; si no, `?equipo=1` o
+  "Acceso equipo" en el pie) aparece "Armar selección": círculos en las tarjetas y "Crear link" → `?sel=<id>` muestra solo
+  esas propiedades con las fechas y precios elegidos. Funciona solo en `phpunta.uy` (sin www: localStorage es por origen).
+- El calendario del buscador va por encima de la barra de filtros (`body.pop-on .hero`): el `.hero` tiene `isolation`.
 - Pendiente: el logo del menú todavía se carga desde reservas.phpunta.uy (Avantio): copiarlo a `assets/` antes de dar de baja ese sitio — lo usan TODAS las páginas.

@@ -98,6 +98,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 
 /* CUERPO */
 .cuerpo { display: grid; grid-template-columns: 1fr; gap: 40px; margin: 34px 0 60px; }
+.cuerpo > * { min-width: 0; }
 @media (min-width: 980px) { .cuerpo { grid-template-columns: minmax(0, 1fr) 380px; gap: 64px; } }
 .datos { display: flex; flex-wrap: wrap; gap: 10px 26px; padding: 18px 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); font-size: 15px; }
 .datos b { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--navy); margin-right: 4px; }
@@ -113,6 +114,75 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .regla b { font-weight: 500; font-size: 16px; }
 #mini { height: 300px; border-radius: 3px; background: #e8e4da; }
 .nota-mapa { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+/* v2 (Felipe 11-nov): ficha como en Airbnb */
+.tit-fila { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.tit .rate { font-size: 14.5px; color: var(--text-soft); margin-top: 2px; }
+.tit .rate b { color: var(--navy); font-weight: 600; }
+.btn-comp { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--border); color: var(--navy); padding: 9px 16px; font-size: 13px; border-radius: 999px; }
+.btn-comp:hover { border-color: var(--gold-deep); }
+.btn-comp svg { width: 16px; height: 16px; }
+.comp-pop { position: absolute; right: 0; top: calc(100% + 8px); background: #fff; border: 1px solid var(--border-light); box-shadow: 0 20px 40px -20px rgba(13,27,42,.35); border-radius: 4px; padding: 6px; z-index: 30; min-width: 240px; display: none; }
+.comp-pop.open { display: block; }
+.comp-pop button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 11px 12px; font-size: 14px; color: var(--navy); border-radius: 3px; }
+.comp-pop button:hover { background: var(--cream-warm); }
+.toast { position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%); background: var(--cream); color: var(--navy); border: 1px solid var(--gold); padding: 12px 18px; font-size: 14px; border-radius: 3px; box-shadow: 0 14px 30px -14px rgba(13,27,42,.4); z-index: 2000; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.toast.on { opacity: 1; }
+.sec h3 { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--navy); margin: 22px 0 8px; letter-spacing: 0; }
+.desc-mas { display: none; }
+.desc-mas.open { display: block; }
+.dorms { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.dorm { background: #fff; border: 1px solid var(--border-light); border-radius: 4px; padding: 16px; }
+.dorm svg { width: 28px; height: 28px; color: var(--gold-deep); }
+.dorm b { display: block; font-weight: 600; margin: 8px 0 4px; color: var(--navy); }
+.dorm span { display: block; font-size: 14px; color: var(--text-soft); }
+.amen li.oculta { display: none; }
+.amen.todas li.oculta { display: list-item; }
+.btn-linea { margin-top: 18px; background: #fff; border: 1px solid var(--navy); color: var(--navy); padding: 11px 20px; font-size: 13.5px; border-radius: 3px; }
+.btn-linea:hover { background: var(--cream-warm); }
+.nota-cal { font-size: 13px; color: var(--gold-deep); margin-top: 10px; display: flex; align-items: center; gap: 8px; }
+.nota-cal::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #3f9d6c; box-shadow: 0 0 0 3px rgba(63,157,108,.18); }
+.cot .tachado { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: 14px; }
+.cot .tachado s { color: #b23a2e; }
+.cot .menos { color: #b23a2e; font-weight: 500; }
+.cot .incl { font-size: 13px; color: var(--text-soft); margin-top: 2px; }
+.cot .otras { margin-top: 12px; padding: 11px 14px; background: #eef6f0; border: 1px solid #cfe5d6; border-radius: 3px; font-size: 13.5px; color: #24563b; line-height: 1.5; }
+.cot .otras b { white-space: nowrap; }
+.punt { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-bottom: 22px; }
+.punt .big { font-family: var(--serif); font-size: 3.2rem; color: var(--navy); line-height: 1; }
+.punt .big small { font-size: 1rem; color: var(--text-soft); font-family: var(--sans); margin-left: 6px; }
+.cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px 22px; flex: 1; min-width: 260px; }
+.cat-r { font-size: 13px; color: var(--text-soft); }
+.cat-r i { display: block; height: 4px; background: var(--cream-paper); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+.cat-r i em { display: block; height: 100%; background: var(--navy); }
+.resenas { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.resena { background: #fff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; font-size: 14.5px; line-height: 1.65; color: var(--text-soft); }
+.resena b { display: block; color: var(--navy); font-weight: 600; margin-bottom: 2px; }
+.resena small { display: block; color: var(--text-muted); font-size: 12.5px; margin-bottom: 8px; }
+.preg { background: var(--cream-warm); border-radius: 6px; padding: 22px; }
+.preg form { display: flex; gap: 8px; background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 6px 6px 6px 18px; align-items: center; }
+.preg input { flex: 1; border: 0; outline: 0; font-size: 16px; background: transparent; min-width: 0; font-family: var(--sans); }
+.preg form button { background: var(--navy); color: #fff; border: 0; border-radius: 999px; padding: 10px 16px; font-size: 13px; white-space: nowrap; }
+.preg form button:disabled { opacity: .5; }
+.preg .sug { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.preg .sug button { background: #fff; border: 1px solid var(--border-light); border-radius: 999px; padding: 7px 13px; font-size: 13px; color: var(--navy); }
+.preg .qa { margin-top: 16px; display: grid; gap: 12px; }
+.preg .q { justify-self: end; background: var(--navy); color: #fff; padding: 10px 14px; border-radius: 14px 14px 2px 14px; font-size: 14.5px; max-width: 85%; }
+.preg .a { background: #fff; padding: 12px 14px; border-radius: 14px 14px 14px 2px; font-size: 14.5px; line-height: 1.6; color: var(--text); max-width: 92%; white-space: pre-line; }
+.preg .a.cargando { color: var(--text-muted); font-style: italic; }
+.preg .nota { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+.lug-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.lug-chips button { background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px; font-size: 13px; color: var(--navy); }
+.lug-chips button.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+#mini { height: 360px; }
+.lug-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
+.lug { display: flex; gap: 12px; background: #fff; border: 1px solid var(--border-light); border-radius: 4px; padding: 10px; text-align: left; cursor: pointer; }
+.lug img, .lug .ph2 { width: 64px; height: 64px; object-fit: cover; border-radius: 3px; flex: none; background: var(--cream-paper); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+.lug b { display: block; color: var(--navy); font-weight: 600; font-size: 14px; }
+.lug small { display: block; font-size: 12.5px; color: var(--text-muted); }
+.lug p { font-size: 12.5px; color: var(--text-soft); margin-top: 3px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.mk-lug { background: #fff; border: 2px solid var(--gold-deep); border-radius: 50%; width: 30px !important; height: 30px !important; display: flex; align-items: center; justify-content: center; font-size: 15px; box-shadow: 0 4px 10px -4px rgba(0,0,0,.4); }
+.mk-casa { background: var(--navy); border: 2px solid var(--gold); border-radius: 50%; width: 38px !important; height: 38px !important; display: flex; align-items: center; justify-content: center; }
+.mk-casa svg { width: 18px; height: 18px; color: var(--gold); }
 
 /* CALENDARIO */
 .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -293,8 +363,7 @@ function Calendario(host, opt) {
       else if (oc) { dis = true; cls += ' ocup'; }
       if (f === self.ini || f === self.fin) cls += ' sel';
       else if (self.ini && self.fin && f > self.ini && f < self.fin) cls += ' inrange';
-      const pr = opt.precio(f);
-      h += '<button type="button" class="' + cls + '" data-f="' + f + '"' + (dis ? ' disabled' : '') + '>' + d + (pr ? '<small>' + pr + '</small>' : '') + '</button>';
+      h += '<button type="button" class="' + cls + '" data-f="' + f + '"' + (dis ? ' disabled' : '') + '>' + d + '</button>';
     }
     return h + '</div></div>';
   }
@@ -305,7 +374,7 @@ function Calendario(host, opt) {
       '<span style="font-size:13.5px;color:var(--text-soft)">' + (self.ini && !self.fin ? 'Elegí la fecha de salida' : (n ? n + (n === 1 ? ' noche' : ' noches') + ' · ' + fechaCorta(self.ini) + ' – ' + fechaCorta(self.fin) : 'Elegí la fecha de llegada')) + '</span>' +
       '<button type="button" class="cal-nav" data-nav="1" ' + (self.mes >= maxMes ? 'disabled' : '') + ' aria-label="Mes siguiente">›</button></div>' +
       '<div class="cal-months' + (dos() ? ' dos' : '') + '">' + mesHtml(self.mes) + (dos() ? mesHtml(m2) : '') + '</div>' +
-      '<div class="cal-foot"><button type="button" class="lnk" data-borrar="1">Borrar fechas</button><span>Precio por noche en USD · tachado = no disponible</span></div>';
+      '<div class="cal-foot"><button type="button" class="lnk" data-borrar="1">Borrar fechas</button><span>Tachado = no disponible</span></div>';
   };
   host.addEventListener('click', function (e) {
     const nav = e.target.closest('[data-nav]');
@@ -337,24 +406,48 @@ function pintar() {
       (fotos.length > 1 ? '<button type="button" class="gal-todas" id="galTodas">Ver las ' + fotos.length + ' fotos</button>' : '') +
       '<div class="gal-movil"><div class="tr" id="galTr">' + fotos.map(function (u, i) { return '<img src="' + esc(u) + '" alt="" loading="lazy" data-i="' + i + '" />'; }).join('') + '</div><span class="gal-n" id="galN">1 / ' + fotos.length + '</span></div></div>';
   }
+  const ICO_COMP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>';
+  const ICO_CAMA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8"/><path d="M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/></svg>';
+  const pu = p.puntaje;
+  const rate = pu ? '<div class="rate">★ <b>' + String(Math.round(pu.rating * 100) / 100).replace('.', ',') + '</b> · ' + pu.resenas + ' reseñas</div>' : '';
+  // Descripción: el resumen a la vista; el resto de las secciones al tocar "Mostrar más".
+  const secs = (p.secciones || []).filter(function (x) { return x && x.texto; });
+  const desc0 = secs[0], descResto = secs.slice(1);
+  const descHtml = desc0 ? '<div class="sec"><h2>La propiedad</h2>' + (desc0.titulo ? '<h3>' + esc(desc0.titulo) + '</h3>' : '') + '<div class="desc">' + esc(desc0.texto) + '</div>' +
+    (descResto.length ? '<div class="desc-mas" id="descMasBox">' + descResto.map(function (x) { return (x.titulo ? '<h3>' + esc(x.titulo) + '</h3>' : '') + '<div class="desc">' + esc(x.texto) + '</div>'; }).join('') + '</div><button type="button" class="btn-linea" id="descMas">Mostrar más</button>' : '') + '</div>' : '';
+  const dormHtml = (p.dormitorios_detalle && p.dormitorios_detalle.length)
+    ? '<div class="sec"><h2>Dónde vas a dormir</h2><div class="dorms">' + p.dormitorios_detalle.map(function (d) { return '<div class="dorm">' + ICO_CAMA + '<b>' + esc(d.nombre) + '</b>' + d.camas.map(function (c) { return '<span>' + esc(c) + '</span>'; }).join('') + '</div>'; }).join('') + '</div></div>'
+    : (p.camas ? '<div class="sec"><h2>Dónde vas a dormir</h2><p class="desc">' + esc(p.camas) + '</p></div>' : '');
+  const amen = (p.amenities || []).slice();
+  if (amen.length < 20) ['Wifi', 'Ropa de cama y toallas'].forEach(function (x) { if (!amen.some(function (a) { return a.toLowerCase().indexOf(x.toLowerCase().slice(0, 4)) === 0; })) amen.push(x); });
+  const amenHtml = amen.length ? '<div class="sec"><h2>Qué ofrece este lugar</h2><ul class="amen" id="amen">' + amen.map(function (a, i) { return '<li' + (i >= 12 ? ' class="oculta"' : '') + '>' + esc(a) + '</li>'; }).join('') + '</ul>' +
+    (amen.length > 12 ? '<button type="button" class="btn-linea" id="amenMas">Mostrar las ' + amen.length + ' comodidades</button>' : '') + '</div>' : '';
+  const CATN = { limpieza: 'Limpieza', veracidad: 'Veracidad', checkin: 'Llegada', comunicacion: 'Comunicación', ubicacion: 'Ubicación', valor: 'Calidad-precio' };
+  const resHtml = (pu || (p.resenas && p.resenas.length)) ? '<div class="sec" id="secRes"><h2>Lo que dicen los huéspedes</h2>' +
+    (pu ? '<div class="punt"><div class="big">★ ' + String(Math.round(pu.rating * 100) / 100).replace('.', ',') + '<small>' + pu.resenas + ' reseñas</small></div><div class="cats">' + Object.keys(pu.categorias || {}).map(function (k) { const v = pu.categorias[k]; return '<div class="cat-r">' + CATN[k] + ' · ' + String(v).replace('.', ',') + '<i><em style="width:' + Math.round(v / 5 * 100) + '%"></em></i></div>'; }).join('') + '</div></div>' : '') +
+    (p.resenas && p.resenas.length ? '<div class="resenas">' + p.resenas.slice(0, 6).map(function (r) { const d = parseIso((r.fecha || '') + '-01'); return '<div class="resena"><b>' + esc(r.nombre) + '</b><small>★★★★★' + (d ? ' · ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() : '') + '</small>' + esc(r.texto) + '</div>'; }).join('') + '</div>' : '') + '</div>' : '';
+  const pregHtml = '<div class="sec"><h2>Hacé preguntas sobre este alojamiento</h2><div class="preg"><form id="pregF"><input id="pregI" maxlength="300" placeholder="¿Hay estacionamiento?" autocomplete="off" /><button type="submit" id="pregB">Preguntar</button></form>' +
+    '<div class="sug" id="pregSug">' + ['¿Hay estacionamiento?', '¿Qué tan cerca está la playa?', '¿Se aceptan mascotas?', '¿Tiene aire acondicionado?'].map(function (q) { return '<button type="button">' + q + '</button>'; }).join('') + '</div>' +
+    '<div class="qa" id="pregQa"></div><p class="nota">Responde un asistente con IA según la información de esta página. Para confirmar algo puntual, escribinos por WhatsApp.</p></div></div>';
+  const masc = p.mascotas == null ? '' : '<div class="regla"><span>Mascotas</span><b>' + (p.mascotas ? 'Se aceptan' : 'No se aceptan') + '</b></div>';
   $('#app').innerHTML = '<a class="volver" id="volver" href="/reservasnueva/">‹ Todas las propiedades</a>' +
-    '<div class="tit"><div class="eyebrow">' + esc(meta) + '</div><h1>' + esc(p.titulo) + '</h1></div>' + gal +
+    '<div class="tit"><div class="eyebrow">' + esc(meta) + '</div><div class="tit-fila"><div><h1>' + esc(p.titulo) + '</h1>' + rate + '</div>' +
+      '<div style="position:relative"><button type="button" class="btn-comp" id="btnComp">' + ICO_COMP + 'Compartir</button><div class="comp-pop" id="compPop"></div></div></div></div>' + gal +
     '<div class="cuerpo"><div>' +
       '<div class="datos">' + datos + '</div>' +
-      (p.descripcion ? '<div class="sec"><h2>La propiedad</h2><div class="desc corta" id="desc">' + esc(p.descripcion) + '</div><button type="button" class="lnk" id="descMas" style="margin-top:10px">Leer más</button></div>' : '') +
-      (p.camas ? '<div class="sec"><h2>Dónde vas a dormir</h2><p class="desc">' + esc(p.camas) + '</p></div>' : '') +
-      (p.amenities && p.amenities.length ? '<div class="sec"><h2>Comodidades</h2><ul class="amen">' + p.amenities.concat(['Wifi', 'Ropa de cama y toallas']).map(function (a) { return '<li>' + esc(a) + '</li>'; }).join('') + '</ul></div>' : '') +
-      '<div class="sec" id="secCal"><h2>Disponibilidad</h2><div id="cal"></div></div>' +
+      descHtml + dormHtml + amenHtml +
+      '<div class="sec" id="secCal"><h2>Disponibilidad</h2><div id="cal"></div><p class="nota-cal">Nuestros calendarios están actualizados en tiempo real.</p></div>' +
+      resHtml + pregHtml +
       '<div class="sec"><h2>Bueno saber</h2><div class="reglas">' +
         '<div class="regla"><span>Entrada</span><b>Desde las ' + esc(p.checkin) + '</b></div>' +
         '<div class="regla"><span>Salida</span><b>Hasta las ' + esc(p.checkout) + '</b></div>' +
-        (p.minimo_noches ? '<div class="regla"><span>Estadía mínima</span><b>' + p.minimo_noches + ' noches</b></div>' : '') +
+        (p.minimo_noches ? '<div class="regla"><span>Estadía mínima</span><b>' + p.minimo_noches + ' noches</b></div>' : '') + masc +
         '<div class="regla"><span>Pago</span><b>' + CFG.sena_pct + '% al reservar</b></div>' +
       '</div><p class="desc" style="margin-top:14px;font-size:14px">Al reservar se abona el ' + CFG.sena_pct + '% como seña. El ' + (100 - CFG.sena_pct) + '% restante y el depósito en garantía se abonan el día de llegada; la garantía se devuelve al salir, después de revisar la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>' +
-      (p.coord ? '<div class="sec"><h2>Ubicación</h2><div id="mini"></div><p class="nota-mapa">' + (p.tipo === 'casa' ? 'Ubicación aproximada. La dirección exacta se envía al confirmar la reserva.' : 'La dirección exacta se envía al confirmar la reserva.') + '</p></div>' : '') +
+      (p.coord ? '<div class="sec" id="secLug"><h2>Dónde vas a estar</h2><div class="lug-chips" id="lugChips"></div><div id="mini"></div><p class="nota-mapa">' + (p.tipo === 'casa' ? 'Ubicación aproximada. La dirección exacta se envía al confirmar la reserva.' : 'La dirección exacta se envía al confirmar la reserva.') + ' Las distancias son en línea recta.</p><div class="lug-lista" id="lugLista"></div></div>' : '') +
     '</div>' +
     '<aside><div class="box" id="box"></div></aside></div>' +
-    '<div class="mbar" id="mbar"><div class="t" id="mbarT"></div><button type="button" id="mbarB">Ver precio</button></div>';
+    '<div class="mbar" id="mbar"><div class="t" id="mbarT"></div><button type="button" id="mbarB">Ver precio</button></div><div class="toast" id="toast"></div>';
   urlEstado();
   // Galería
   const lb = $('#lb');
@@ -367,20 +460,100 @@ function pintar() {
   if ($('#galTodas')) $('#galTodas').addEventListener('click', function () { abrirLb(0); });
   if ($('#galTr')) { const tr = $('#galTr'); tr.addEventListener('scroll', function () { $('#galN').textContent = (Math.round(tr.scrollLeft / tr.clientWidth) + 1) + ' / ' + fotos.length; }, { passive: true }); tr.addEventListener('click', function (e) { const im = e.target.closest('img'); if (im) abrirLb(Number(im.dataset.i)); }); }
   $('#lbX').onclick = function () { lb.classList.remove('open'); document.body.style.overflow = ''; };
-  if ($('#descMas')) {
-    const d = $('#desc');
-    if (d.scrollHeight <= d.clientHeight + 4) { d.classList.remove('corta'); $('#descMas').remove(); }
-    else $('#descMas').onclick = function () { const c = d.classList.toggle('corta'); this.textContent = c ? 'Leer más' : 'Leer menos'; };
-  }
-  // Mapa chico
-  if (p.coord && typeof L !== 'undefined') {
-    const m = L.map('mini', { scrollWheelZoom: false }).setView([p.coord.lat, p.coord.lng], 15);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(m);
-    if (p.tipo === 'casa') L.circle([p.coord.lat, p.coord.lng], { radius: 180, color: '#a88c3a', weight: 1, fillColor: '#c9a84c', fillOpacity: .25 }).addTo(m);
-    else L.circleMarker([p.coord.lat, p.coord.lng], { radius: 9, color: '#0d1b2a', weight: 2, fillColor: '#c9a84c', fillOpacity: 1 }).addTo(m);
-  }
+  if ($('#descMas')) $('#descMas').onclick = function () { const o = $('#descMasBox').classList.toggle('open'); this.textContent = o ? 'Mostrar menos' : 'Mostrar más'; };
+  if ($('#amenMas')) $('#amenMas').onclick = function () { const o = $('#amen').classList.toggle('todas'); this.textContent = o ? 'Mostrar menos' : 'Mostrar las ' + amen.length + ' comodidades'; };
+  $('#btnComp').onclick = function (e) { e.stopPropagation(); compartirMenu(); };
+  document.addEventListener('click', function (e) { if (!e.target.closest('#compPop')) $('#compPop').classList.remove('open'); });
+  iniciarPreguntas();
+  // Mapa con los lugares que recomendamos (la guía del huésped)
+  if (p.coord && typeof L !== 'undefined') iniciarLugares(p);
   pintarBox();
   $('#mbarB').onclick = function () { if (COT && COT.estado === 'ok') return reservar(); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+}
+
+// ── Compartir ────────────────────────────────────────────────────────────────────────────────────────
+function toast(t) { const el = $('#toast'); if (!el) return; el.textContent = t; el.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(function () { el.classList.remove('on'); }, 2600); }
+function urlCompartir(conFechas) {
+  const u = new URL(location.href), q = new URLSearchParams();
+  if (conFechas) ['llegada', 'salida', 'adultos', 'ninos', 'bebes'].forEach(function (k) { if (u.searchParams.get(k)) q.set(k, u.searchParams.get(k)); });
+  if (u.searchParams.get('p')) q.set('p', u.searchParams.get('p'));
+  return location.origin + location.pathname + (q.toString() ? '?' + q : '');
+}
+async function compartir(conFechas) {
+  $('#compPop').classList.remove('open');
+  const url = urlCompartir(conFechas);
+  const texto = P.titulo + (conFechas && S.llegada && S.salida ? ' · del ' + fechaLarga(S.llegada) + ' al ' + fechaLarga(S.salida) : '');
+  if (navigator.share) { try { await navigator.share({ title: P.titulo, text: texto, url: url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+  try { await navigator.clipboard.writeText(url); toast('Link copiado. Ya lo podés pegar donde quieras.'); }
+  catch (e) { window.prompt('Copiá el link:', url); }
+}
+function compartirMenu() {
+  if (!(S.llegada && S.salida)) return compartir(false);
+  const pop = $('#compPop');
+  pop.innerHTML = '<button type="button" data-c="1">Con estas fechas (' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) + ')</button><button type="button" data-c="0">Solo la propiedad, sin fechas</button>';
+  pop.classList.toggle('open');
+  pop.querySelectorAll('[data-c]').forEach(function (b) { b.onclick = function (e) { e.stopPropagation(); compartir(b.dataset.c === '1'); }; });
+}
+
+// ── Preguntas a la IA ───────────────────────────────────────────────────────────────────────────────
+const PREG = [];
+function iniciarPreguntas() {
+  const f = $('#pregF'); if (!f) return;
+  const enviar = async function (q) {
+    q = String(q || '').trim(); if (q.length < 3) return;
+    const qa = $('#pregQa'), b = $('#pregB');
+    const dq = document.createElement('div'); dq.className = 'q'; dq.textContent = q; qa.appendChild(dq);
+    const da = document.createElement('div'); da.className = 'a cargando'; da.textContent = 'Pensando…'; qa.appendChild(da);
+    $('#pregI').value = ''; b.disabled = true;
+    try {
+      const r = await fetch(API + '/web/preguntar', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ slug: SLUG, pregunta: q, historial: PREG.slice(-3) }) });
+      const j = await r.json().catch(function () { return null; });
+      if (!r.ok || !j || !j.ok) throw new Error((j && j.error) || 'No pude responder ahora.');
+      da.textContent = j.respuesta; PREG.push({ q: q, a: j.respuesta });
+    } catch (e) { da.textContent = e.message || 'No pude responder ahora. Escribinos por WhatsApp.'; }
+    da.classList.remove('cargando'); b.disabled = false;
+  };
+  f.addEventListener('submit', function (e) { e.preventDefault(); enviar($('#pregI').value); });
+  $('#pregSug').addEventListener('click', function (e) { const b = e.target.closest('button'); if (b) enviar(b.textContent); });
+}
+
+// ── Lugares recomendados (guía del huésped) ─────────────────────────────────────────────────────────
+function distKm(a, b, c, d) { const R = 6371, r = Math.PI / 180, x = Math.sin((c - a) * r / 2), y = Math.sin((d - b) * r / 2); return 2 * R * Math.asin(Math.sqrt(x * x + Math.cos(a * r) * Math.cos(c * r) * y * y)); }
+function distTxt(km) { return km < 1 ? 'a ' + (Math.round(km * 10) * 100) + ' m' : 'a ' + String(km < 10 ? km.toFixed(1) : Math.round(km)).replace('.', ',') + ' km'; }
+const LUG_EMOJI = { playas: '🏖️', restaurantes: '🍽️', cafeterias: '☕', bares: '🍸', actividades: '📍', malls: '🛍️', boliches: '🎶' };
+function iniciarLugares(p) {
+  const m = L.map('mini', { scrollWheelZoom: false }).setView([p.coord.lat, p.coord.lng], 14);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(m);
+  const casa = L.divIcon({ className: 'mk-casa', html: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg>', iconSize: [38, 38] });
+  if (p.tipo === 'casa') L.circle([p.coord.lat, p.coord.lng], { radius: 180, color: '#a88c3a', weight: 1, fillColor: '#c9a84c', fillOpacity: .25 }).addTo(m);
+  L.marker([p.coord.lat, p.coord.lng], { icon: casa, zIndexOffset: 1000 }).addTo(m);
+  const capa = L.layerGroup().addTo(m);
+  let LUG = [], CATS = [], cat = null;
+  const pintarLug = function () {
+    capa.clearLayers();
+    const lista = LUG.filter(function (x) { return x.cat === cat; }).map(function (x) { return Object.assign({ km: distKm(p.coord.lat, p.coord.lng, x.lat, x.lng) }, x); }).sort(function (a, b) { return a.km - b.km; });
+    $('#lugChips').innerHTML = CATS.map(function (c) { return '<button type="button" data-cat="' + c.id + '" class="' + (c.id === cat ? 'on' : '') + '">' + (LUG_EMOJI[c.id] || '') + ' ' + esc(c.nombre) + '</button>'; }).join('');
+    const pts = [[p.coord.lat, p.coord.lng]];
+    lista.forEach(function (x, i) {
+      const ic = L.divIcon({ className: 'mk-lug', html: x.emoji || LUG_EMOJI[x.cat] || '📍', iconSize: [30, 30] });
+      const mk = L.marker([x.lat, x.lng], { icon: ic }).addTo(capa).bindPopup('<b>' + esc(x.nombre) + '</b><br>' + esc(distTxt(x.km)));
+      x._mk = mk; if (i < 6) pts.push([x.lat, x.lng]);
+    });
+    if (pts.length > 1) m.fitBounds(pts, { padding: [30, 30], maxZoom: 15 });
+    $('#lugLista').innerHTML = lista.map(function (x, i) {
+      const sub = [x.etiqueta && x.etiqueta.es, distTxt(x.km), x.rating ? '★ ' + String(x.rating).replace('.', ',') : ''].filter(Boolean).join(' · ');
+      return '<button type="button" class="lug" data-i="' + i + '">' + (x.foto ? '<img src="' + esc(x.foto) + '" alt="" loading="lazy" />' : '<span class="ph2">' + (x.emoji || LUG_EMOJI[x.cat] || '📍') + '</span>') +
+        '<span><b>' + esc(x.nombre) + '</b><small>' + esc(sub) + '</small>' + (x.desc && x.desc.es ? '<p>' + esc(x.desc.es) + '</p>' : '') + '</span></button>';
+    }).join('');
+    $('#lugLista').querySelectorAll('.lug').forEach(function (b) { b.onclick = function () { const x = lista[Number(b.dataset.i)]; m.setView([x.lat, x.lng], 15); x._mk.openPopup(); $('#mini').scrollIntoView({ behavior: 'smooth', block: 'center' }); }; });
+  };
+  $('#lugChips').addEventListener('click', function (e) { const b = e.target.closest('[data-cat]'); if (b) { cat = b.dataset.cat; pintarLug(); } });
+  api('/web/lugares').then(function (j) {
+    LUG = j.lugares || [];
+    CATS = (j.categorias || []).filter(function (c) { return LUG.some(function (x) { return x.cat === c.id; }); });
+    if (!CATS.length) return;
+    cat = CATS[0].id; pintarLug();
+  }).catch(function () {});
 }
 
 let calendario = null;
@@ -388,7 +561,6 @@ function iniciarCalendario() {
   calendario = Calendario($('#cal'), {
     ini: S.llegada, fin: S.salida,
     ocupado: function (f) { const d = DIAS[f]; return !!(d && d.o === 1); },
-    precio: function (f) { const d = DIAS[f]; return d && d.p && d.o !== 1 ? Math.round(d.p) : null; },
     cambio: function (a, b) { S.llegada = a; S.salida = b; urlEstado(); cotizar(); }
   });
 }
@@ -396,9 +568,7 @@ function huespedes() { return S.ad + S.ni; }
 function pintarBox() {
   const p = P, h = huespedes();
   const max = p.huespedes || 20;
-  let desde = null;
-  Object.keys(DIAS).forEach(function (f) { const d = DIAS[f]; if (d.p && d.o !== 1 && (desde == null || d.p < desde)) desde = d.p; });
-  if (desde == null) desde = p.desde_noche;
+  const desde = p.desde_noche;
   $('#box').innerHTML =
     '<div class="px">' + (COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b> total' : (desde ? 'Desde <b>' + usd(desde) + '</b> / noche' : 'Consultá el precio')) + '</div>' +
     '<div class="bsel"><button type="button" id="bIn"><span>Llegada</span><div>' + (S.llegada ? fechaCorta(S.llegada) : 'Agregar') + '</div></button>' +
@@ -426,10 +596,10 @@ function cotHtml() {
   if (!COT) return '<div class="aviso">Calculando el precio…</div>';
   const c = COT, n = c.noches;
   if (c.estado === 'ok') {
-    return '<div class="fila"><span>' + usd(c.por_noche) + ' × ' + n + (n === 1 ? ' noche' : ' noches') + '</span><span>' + usd(c.estadia) + '</span></div>' +
-      (c.limpieza ? '<div class="fila"><span>Limpieza final</span><span>' + usd(c.limpieza) + '</span></div>' : '') +
-      '<div class="fila tot"><span>Total</span><span>' + usd(c.total) + '</span></div>' +
-      (c.descuento_pct ? '<div class="aviso">Incluye ' + c.descuento_pct + '% de descuento por la duración de la estadía.</div>' : '') +
+    return (c.antes ? '<div class="tachado"><span>Precio sin descuento</span><s>' + usd(c.antes) + '</s></div><div class="tachado"><span>Descuento por estadía de ' + n + ' noches</span><span class="menos">−' + usd(c.antes - c.total) + '</span></div>' : '') +
+      '<div class="fila tot"><span>Total por ' + n + (n === 1 ? ' noche' : ' noches') + '</span><span>' + usd(c.total) + '</span></div>' +
+      '<div class="incl">Incluye la tarifa de limpieza.</div>' +
+      (c.otras_plataformas ? '<div class="otras">Esta misma propiedad en otras plataformas te hubiera costado hasta <b>' + usd(c.otras_plataformas) + '</b>.</div>' : '') +
       '<div class="pago"><div class="fila"><span>Seña al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo el día de llegada</span><span>' + usd(c.saldo) + '</span></div><div class="fila"><span>Depósito en garantía (se devuelve)</span><span>' + usd(c.garantia) + '</span></div></div>';
   }
   if (c.estado === 'ocupado') return '<div class="err">Esas fechas no están disponibles.</div>' + (c.libres_cerca && c.libres_cerca.length ? '<div class="aviso">Libres cerca: ' + c.libres_cerca.map(function (w) { return '<button type="button" class="lnk" data-w="' + w.desde + '|' + w.hasta + '">' + fechaCorta(w.desde) + ' – ' + fechaCorta(w.hasta) + '</button>'; }).join(' · ') + '</div>' : '');

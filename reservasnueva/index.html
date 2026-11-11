@@ -95,6 +95,41 @@ em { font-style: italic; font-weight: 300; }
 }
 .pop { position: absolute; z-index: 950; top: calc(100% + 8px); left: 0; background: #fff; border: 1px solid var(--border-light); border-radius: 3px; box-shadow: 0 30px 70px -20px rgba(13,27,42,.35); padding: 18px; display: none; color: var(--text); }
 .pop.open { display: block; }
+body.pop-on .hero { z-index: 955; }   /* el calendario y los huéspedes van por encima de la barra de filtros y las fotos */
+/* Selecciones (equipo) */
+.sel-ck { display: none; position: absolute; top: 10px; left: 10px; z-index: 5; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; background: rgba(13,27,42,.35); color: #fff; font-size: 16px; line-height: 1; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+body.modo-equipo .sel-ck { display: flex; }
+.sel-ck.on { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+.chip.eq { display: none; background: var(--navy); color: var(--cream); border-color: var(--navy); }
+body.es-equipo .chip.eq { display: inline-flex; }
+.sel-bar { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 890; background: var(--navy); color: var(--cream); padding: 12px 0; box-shadow: 0 -10px 30px rgba(13,27,42,.3); }
+body.modo-equipo .sel-bar { display: block; }
+body.modo-equipo .fab-map, body.modo-equipo .wa-float { bottom: 84px; }
+.sel-bar .container { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.sel-bar button { background: var(--gold); color: var(--navy); border: 0; padding: 11px 18px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; border-radius: 2px; }
+.sel-bar button.sec2 { background: transparent; color: var(--cream); border: 1px solid rgba(250,247,240,.4); }
+.modal-bg { position: fixed; inset: 0; background: rgba(13,27,42,.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
+.modal-bg.open { display: flex; }
+.modal { background: var(--cream); color: var(--text); width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; border-radius: 6px; padding: 24px; }
+.modal h3 { font-size: 1.7rem; margin-bottom: 12px; }
+.modal label { display: block; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); margin: 14px 0 6px; }
+.modal input[type=text], .modal input[type=password], .modal textarea { width: 100%; font-size: 16px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 3px; background: #fff; font-family: var(--sans); }
+.modal .acc { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+.modal .acc button { padding: 11px 18px; font-size: 13px; border-radius: 3px; border: 1px solid var(--navy); background: #fff; color: var(--navy); }
+.modal .acc button.pri { background: var(--navy); color: #fff; }
+.modal .lst { list-style: none; display: grid; gap: 6px; font-size: 14px; }
+.modal .lst li { display: flex; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid var(--border-light); padding: 8px 10px; border-radius: 3px; }
+.modal .lst button { background: none; border: 0; color: #a25b4a; font-size: 13px; }
+.modal .link { word-break: break-all; background: #fff; border: 1px solid var(--gold); padding: 12px; border-radius: 3px; font-size: 14px; margin-top: 10px; }
+.modal .err { color: #a25b4a; font-size: 14px; margin-top: 10px; }
+.modal .nota { font-size: 13px; color: var(--text-soft); margin-top: 8px; }
+/* Vista de una selección (?sel=) */
+body.ver-sel .search, body.ver-sel .fbar, body.ver-sel .mapbox, body.ver-sel .fab-map, body.ver-sel .zona-act { display: none !important; }
+body.ver-sel .layout { grid-template-columns: 1fr !important; }
+.sel-head { margin-top: 22px; background: rgba(250,247,240,.08); border: 1px solid rgba(201,168,76,.35); border-radius: 4px; padding: 16px 18px; }
+.sel-head b { color: var(--gold); }
+.sel-head .nota-sel { margin-top: 8px; color: var(--cream); white-space: pre-line; }
+.cp .tach { color: #b23a2e; text-decoration: line-through; font-size: 13px; margin-right: 6px; }
 .pop-cal { left: 0; right: 0; }
 @media (min-width: 860px) { .pop-cal { right: auto; width: 680px; } }
 .pop-hues { right: 0; left: auto; width: 290px; }
@@ -328,6 +363,7 @@ body.mapa-movil .wa-float { display: none; }
     <span class="sep"></span>
     </span>
     <span class="chip"><select id="selOrden" aria-label="Ordenar"><option value="rec">Recomendadas</option><option value="pa">Precio: menor a mayor</option><option value="pd">Precio: mayor a menor</option><option value="dorm">Más dormitorios</option></select></span>
+    <button type="button" class="chip eq" id="btnEquipo">Armar selección</button>
     <span class="res-n" id="resN"></span>
   </div>
 </div>
@@ -393,13 +429,15 @@ body.mapa-movil .wa-float { display: none; }
       </div>
       <div class="footer-col"><h4>Navegación</h4><ul><li><a href="/index.html">Inicio</a></li><li><a href="/reservasnueva/">Reservas</a></li><li><a href="/como-trabajamos.html">Cómo trabajamos</a></li><li><a href="/propietarios.html">Propietarios</a></li><li><a href="/contacto.html">Contacto</a></li></ul></div>
       <div class="footer-col"><h4>Contacto</h4><ul><li><a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">+598 99 716 681</a></li><li><a href="mailto:info@phpunta.uy">info@phpunta.uy</a></li><li>Punta del Este, Uruguay</li></ul></div>
-      <div class="footer-col"><h4>Legal</h4><ul><li><a href="/condiciones-generales.html">Condiciones generales</a></li><li><a href="/politica-privacidad.html">Política de privacidad</a></li><li><a href="/politica-cookies.html">Política de cookies</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="/condiciones-generales.html">Condiciones generales</a></li><li><a href="/politica-privacidad.html">Política de privacidad</a></li><li><a href="?equipo=1" rel="nofollow">Acceso equipo</a></li><li><a href="/politica-cookies.html">Política de cookies</a></li></ul></div>
     </div>
     <div class="footer-legal"><span>© 2026 Premium Host Punta SAS · RUT 220520320015 · Registro MINTUR N°2011</span><span>Punta del Este · Uruguay</span></div>
   </div>
 </footer>
 <a href="https://api.whatsapp.com/send/?phone=59899716681" class="wa-float" id="waFloat" aria-label="Escribir por WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.5.8 3.4.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></a>
 
+<div class="sel-bar" id="selBar"><div class="container"><span id="selN">Tocá el círculo de cada propiedad para sumarla</span><span style="display:flex;gap:8px"><button type="button" class="sec2" id="selSalir">Salir</button><button type="button" id="selCrear">Crear link</button></span></div></div>
+<div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 'use strict';
@@ -518,7 +556,7 @@ function Calendario(host, opt) {
 // ── Buscador ─────────────────────────────────────────────────────────────────────────────────────────
 const popCal = $('#popCal'), popHues = $('#popHues');
 let cal = null;
-function cerrarPops() { popCal.classList.remove('open'); popHues.classList.remove('open'); }
+function cerrarPops() { popCal.classList.remove('open'); popHues.classList.remove('open'); document.body.classList.remove('pop-on'); }
 function pintarBuscador() {
   $('#vIn').textContent = S.llegada ? fechaCorta(S.llegada) : 'Elegí una fecha'; $('#vIn').classList.toggle('vacia', !S.llegada);
   $('#vOut').textContent = S.salida ? fechaCorta(S.salida) : 'Elegí una fecha'; $('#vOut').classList.toggle('vacia', !S.salida);
@@ -534,11 +572,11 @@ function abrirCal() {
   cerrarPops();
   if (!cal) cal = Calendario(popCal, { ini: S.llegada, fin: S.salida, cerrar: cerrarPops, cambio: function (a, b) { S.llegada = a; S.salida = b; pintarBuscador(); if (a && b) { cerrarPops(); aplicar(); } else if (!a) aplicar(); } });
   else { cal.ini = S.llegada; cal.fin = S.salida; cal.render(); }
-  popCal.classList.add('open');
+  popCal.classList.add('open'); document.body.classList.add('pop-on');
 }
 $('#sfIn').addEventListener('click', function (e) { e.stopPropagation(); abrirCal(); });
 $('#sfOut').addEventListener('click', function (e) { e.stopPropagation(); abrirCal(); });
-$('#sfHues').addEventListener('click', function (e) { e.stopPropagation(); const ab = popHues.classList.contains('open'); cerrarPops(); if (!ab) popHues.classList.add('open'); });
+$('#sfHues').addEventListener('click', function (e) { e.stopPropagation(); const ab = popHues.classList.contains('open'); cerrarPops(); if (!ab) { popHues.classList.add('open'); document.body.classList.add('pop-on'); } });
 popHues.addEventListener('click', function (e) {
   e.stopPropagation();
   const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return;
@@ -580,8 +618,9 @@ function pintarChips() {
 }
 
 // ── Datos ────────────────────────────────────────────────────────────────────────────────────────────
-let CAT = [], DISPO = null, dispoKey = '', visibles = [], mostradas = 0;
+let CAT = [], DISPO = null, dispoKey = '', visibles = [], mostradas = 0, SELCOT = null, VER_SEL = false;
 async function cargarDispo() {
+  if (VER_SEL) return;
   const k = S.llegada && S.salida ? S.llegada + '|' + S.salida : '';
   if (k === dispoKey) return;
   dispoKey = k; DISPO = null;
@@ -590,6 +629,7 @@ async function cargarDispo() {
   catch (e) { if (dispoKey === k) DISPO = {}; }
 }
 function filtrar() {
+  if (VER_SEL) return CAT.slice();
   const h = huespedes();
   let L = CAT.filter(function (p) {
     if (S.zona && p.barrio !== S.zona) return false;
@@ -638,6 +678,15 @@ function mas() {
 new IntersectionObserver(function (es) { if (es[0].isIntersecting && mostradas < visibles.length) mas(); }, { rootMargin: '800px' }).observe($('#masSent'));
 
 function lineaPrecio(p) {
+  if (SELCOT) {
+    const c = SELCOT[p.slug], n = noches(S.llegada, S.salida);
+    if (!c) return '<small>Consultá precio y disponibilidad</small>';
+    if (c.estado === 'ok') return (c.antes ? '<span class="tach">' + usd(c.antes) + '</span>' : '') + '<b>' + usd(c.total) + '</b> <small>total · ' + n + (n === 1 ? ' noche' : ' noches') + ' · limpieza incluida</small>';
+    if (c.estado === 'ocupado') return '<span class="no">Ya no está disponible en esas fechas</span>';
+    if (c.estado === 'minimo') return '<span class="no">Mínimo ' + c.minimo + ' noches para esa llegada</span>';
+    if (c.estado === 'capacidad') return '<span class="no">Recibe hasta ' + c.maximo + ' huéspedes</span>';
+    return '<small>Precio a confirmar por WhatsApp</small>';
+  }
   const d = DISPO && DISPO[p.slug];
   if (d) {
     const n = noches(S.llegada, S.salida);
@@ -661,7 +710,7 @@ function tarjeta(p) {
   a.innerHTML = '<div class="ph"><div class="ph-track">' +
     (fotos.length ? fotos.map(function (u, i) { return '<img src="' + esc(u) + '" alt="' + esc(p.titulo) + '" loading="' + (i === 0 ? 'lazy' : 'lazy') + '" decoding="async" />'; }).join('') : '') + '</div>' +
     (fotos.length > 1 ? '<button type="button" class="ph-arr l" aria-label="Foto anterior">‹</button><button type="button" class="ph-arr r" aria-label="Foto siguiente">›</button><div class="ph-dots">' + fotos.map(function (u, i) { return '<i' + (i ? '' : ' class="on"') + '></i>'; }).join('') + '</div>' : '') +
-    (p.frente_mar ? '<span class="ph-tag">Frente al mar</span>' : '') + '</div>' +
+    (p.frente_mar ? '<span class="ph-tag">Frente al mar</span>' : '') + '<button type="button" class="sel-ck' + (SEL.indexOf(p.slug) >= 0 ? ' on' : '') + '" aria-label="Sumar a la selección">' + (SEL.indexOf(p.slug) >= 0 ? '✓' : '+') + '</button></div>' +
     '<div class="cinfo"><div class="cz">' + esc(BARRIO_NOMBRE[p.barrio] || 'Punta del Este') + '</div><h3 class="ct">' + esc(p.titulo) + '</h3>' +
     '<div class="cm">' + esc(meta) + (extras ? '<br>' + esc(extras) : '') + '</div><div class="cp">' + lineaPrecio(p) + '</div></div>';
   // Carrusel: flechas en PC, deslizar en el teléfono.
@@ -677,6 +726,7 @@ function tarjeta(p) {
     track.addEventListener('touchend', function (e) { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) ir(i + (dx < 0 ? 1 : -1)); x0 = null; });
     a.addEventListener('click', function (e) { if (mov) { e.preventDefault(); mov = false; } });
   }
+  a.querySelector('.sel-ck').addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); selToggle(p.slug, this); });
   a.addEventListener('mouseenter', function () { resaltar(p.slug, true); });
   a.addEventListener('mouseleave', function () { resaltar(p.slug, false); });
   return a;
@@ -742,11 +792,111 @@ $('#fabMap').addEventListener('click', function () {
 // ── Menú del teléfono ────────────────────────────────────────────────────────────────────────────────
 $('#burger').addEventListener('click', function () { $('#mobileMenu').classList.toggle('open'); document.body.style.overflow = $('#mobileMenu').classList.contains('open') ? 'hidden' : ''; });
 
+// ── Selecciones: el equipo arma un link con propiedades (con o sin fechas) para mandarle a un interesado ─
+// La sesión del equipo es la misma de las demás plataformas (mismo dominio): Comunicaciones o el Portal interno.
+const TEAM_KEYS = ['phweb_team_token', 'phprop_admin_token', 'php_token'];
+function teamToken() { for (let i = 0; i < TEAM_KEYS.length; i++) { try { const t = localStorage.getItem(TEAM_KEYS[i]); if (t && t.length > 20) return t; } catch (e) {} } return ''; }
+let SEL = [];
+try { SEL = JSON.parse(sessionStorage.getItem('phweb_sel') || '[]').filter(function (x) { return typeof x === 'string'; }).slice(0, 12); } catch (e) { SEL = []; }
+function selGuardar() { try { sessionStorage.setItem('phweb_sel', JSON.stringify(SEL)); } catch (e) {} selPintarBarra(); }
+function selPintarBarra() { $('#selN').textContent = SEL.length ? SEL.length + (SEL.length === 1 ? ' propiedad seleccionada' : ' propiedades seleccionadas') : 'Tocá el círculo de cada propiedad para sumarla'; }
+function selToggle(slug, btn) {
+  const i = SEL.indexOf(slug);
+  if (i >= 0) SEL.splice(i, 1); else { if (SEL.length >= 12) return alert('Una selección puede tener hasta 12 propiedades.'); SEL.push(slug); }
+  if (btn) { const on = SEL.indexOf(slug) >= 0; btn.classList.toggle('on', on); btn.textContent = on ? '✓' : '+'; }
+  selGuardar();
+}
+function modal(html) { $('#modal').innerHTML = html; $('#modalBg').classList.add('open'); }
+function cerrarModal() { $('#modalBg').classList.remove('open'); }
+$('#modalBg').addEventListener('click', function (e) { if (e.target === this) cerrarModal(); });
+function modoEquipo(on) { document.body.classList.toggle('modo-equipo', on); $('#btnEquipo').textContent = on ? 'Armando selección…' : 'Armar selección'; selPintarBarra(); }
+$('#btnEquipo').addEventListener('click', function () { modoEquipo(!document.body.classList.contains('modo-equipo')); });
+$('#selSalir').addEventListener('click', function () { modoEquipo(false); });
+function loginEquipo(despues) {
+  modal('<h3>Acceso equipo</h3><p class="nota">Entrá con tu usuario de las plataformas de PHPunta.</p><label>Usuario</label><input type="text" id="lgU" autocomplete="username" /><label>Contraseña</label><input type="password" id="lgP" autocomplete="current-password" /><div class="err" id="lgE"></div><div class="acc"><button type="button" id="lgC">Cancelar</button><button type="button" class="pri" id="lgOk">Entrar</button></div>');
+  $('#lgC').onclick = cerrarModal;
+  const ir = async function () {
+    $('#lgE').textContent = '';
+    try {
+      const r = await fetch(API + '/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: $('#lgU').value.trim(), pass: $('#lgP').value }) });
+      const j = await r.json().catch(function () { return null; });
+      if (!r.ok || !j || !j.token) throw new Error((j && j.error) || 'Usuario o contraseña incorrectos.');
+      try { localStorage.setItem('phweb_team_token', j.token); } catch (e) {}
+      $('#lgP').value = '';
+      cerrarModal(); document.body.classList.add('es-equipo'); if (despues) despues();
+    } catch (e) { $('#lgE').textContent = e.message; }
+  };
+  $('#lgOk').onclick = ir; $('#lgP').addEventListener('keydown', function (e) { if (e.key === 'Enter') ir(); });
+  setTimeout(function () { $('#lgU').focus(); }, 50);
+}
+$('#selCrear').addEventListener('click', function () {
+  if (!SEL.length) return alert('Elegí al menos una propiedad tocando su círculo.');
+  const conF = !!(S.llegada && S.salida), n = conF ? noches(S.llegada, S.salida) : 0;
+  const nombre = function (sl) { const p = CAT.find(function (x) { return x.slug === sl; }); return p ? p.titulo : sl; };
+  modal('<h3>Crear link de la selección</h3><ul class="lst" id="selLst">' + SEL.map(function (sl) { return '<li><span>' + esc(nombre(sl)) + '</span><button type="button" data-q="' + esc(sl) + '">Quitar</button></li>'; }).join('') + '</ul>' +
+    (conF ? '<label style="display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-size:14px;color:var(--text)"><input type="checkbox" id="selConF" checked /> Con fechas: ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) + ' (' + n + ' noches, ' + huespedes() + ' personas)</label>' : '<p class="nota">Sin fechas: el interesado ve las propiedades y elige las fechas en cada una. Para mandarla con fechas y precios, elegí las fechas arriba antes de crear el link.</p>') +
+    '<label>Título (opcional)</label><input type="text" id="selTit" maxlength="80" placeholder="Opciones para tu estadía en enero" /><label>Nota para el interesado (opcional)</label><textarea id="selNota" rows="3" maxlength="400"></textarea>' +
+    '<div class="err" id="selE"></div><div id="selRes"></div><div class="acc" id="selAcc"><button type="button" id="selC">Cerrar</button><button type="button" class="pri" id="selOk">Crear link</button></div>');
+  $('#selLst').addEventListener('click', function (e) { const b = e.target.closest('[data-q]'); if (!b) return; selToggle(b.dataset.q); document.querySelectorAll('.card[data-slug="' + CSS.escape(b.dataset.q) + '"] .sel-ck').forEach(function (x) { x.classList.remove('on'); x.textContent = '+'; }); b.closest('li').remove(); });
+  $('#selC').onclick = cerrarModal;
+  $('#selOk').onclick = async function () {
+    const tok = teamToken();
+    if (!tok) return loginEquipo(function () { $('#selCrear').click(); });
+    if (!SEL.length) return;
+    const b = this; b.disabled = true; b.textContent = conF ? 'Calculando precios…' : 'Creando…'; $('#selE').textContent = '';
+    const conFechas = conF && $('#selConF') && $('#selConF').checked;
+    try {
+      const r = await fetch(API + '/web/seleccion', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok },
+        body: JSON.stringify({ slugs: SEL, desde: conFechas ? S.llegada : null, hasta: conFechas ? S.salida : null, huespedes: conFechas ? huespedes() : null, titulo: $('#selTit').value, nota: $('#selNota').value }) });
+      const j = await r.json().catch(function () { return null; });
+      if (r.status === 401) { try { localStorage.removeItem('phweb_team_token'); } catch (e) {} b.disabled = false; b.textContent = 'Crear link'; return loginEquipo(function () { $('#selCrear').click(); }); }
+      if (!r.ok || !j || !j.ok) throw new Error((j && j.error) || 'No se pudo crear el link.');
+      const url = j.url;
+      $('#selRes').innerHTML = '<label>Link listo para mandar</label><div class="link">' + esc(url) + '</div>';
+      $('#selAcc').innerHTML = '<button type="button" id="selCp">Copiar link</button><a class="pri" style="padding:11px 18px;font-size:13px;border-radius:3px;background:#25d366;color:#fff" target="_blank" rel="noopener" href="https://api.whatsapp.com/send/?text=' + encodeURIComponent(url) + '">Mandar por WhatsApp</a><button type="button" class="pri" id="selFin">Listo</button>';
+      $('#selCp').onclick = function () { navigator.clipboard.writeText(url).then(function () { $('#selCp').textContent = 'Copiado ✓'; }, function () { window.prompt('Copiá el link:', url); }); };
+      $('#selFin').onclick = function () { SEL = []; selGuardar(); document.querySelectorAll('.sel-ck.on').forEach(function (x) { x.classList.remove('on'); x.textContent = '+'; }); cerrarModal(); modoEquipo(false); };
+    } catch (e) { $('#selE').textContent = e.message; b.disabled = false; b.textContent = 'Crear link'; }
+  };
+});
+if (teamToken()) document.body.classList.add('es-equipo');
+if (Q.get('equipo') && !teamToken()) setTimeout(function () { loginEquipo(function () { modoEquipo(true); }); }, 300);
+else if (Q.get('equipo')) setTimeout(function () { modoEquipo(true); }, 300);
+selPintarBarra();
+
+// Vista de una selección (?sel=ID): solo esas propiedades, con las fechas y los precios que armó el equipo.
+async function verSeleccion(id) {
+  VER_SEL = true; document.body.classList.add('ver-sel');
+  const j = await api('/web/seleccion?id=' + encodeURIComponent(id));
+  const s = j.seleccion || {};
+  if (s.desde && s.hasta && !s.pasada) { S.llegada = s.desde; S.salida = s.hasta; if (s.huespedes) { S.ad = s.huespedes; S.ni = 0; } }
+  else { S.llegada = ''; S.salida = ''; }
+  SELCOT = (s.desde && !s.pasada) ? {} : null;
+  (j.propiedades || []).forEach(function (p) { if (SELCOT && p.cotizacion) SELCOT[p.slug] = p.cotizacion; });
+  CAT = j.propiedades || [];
+  if (j.cfg && j.cfg.whatsapp) $('#waFloat').href = 'https://api.whatsapp.com/send/?phone=' + encodeURIComponent(j.cfg.whatsapp) + '&text=' + encodeURIComponent('Hola! Vi la selección de propiedades que me mandaron: ' + location.href.replace(/[?&]api=[^&]*/, ''));
+  const n = s.desde && s.hasta ? noches(s.desde, s.hasta) : 0;
+  const h1 = document.querySelector('.hero h1'), sub = document.querySelector('.hero p'), eb = document.querySelector('.hero .eyebrow');
+  eb.textContent = 'Selección de propiedades' + (s.de ? ' · de ' + s.de + ', de PHPunta' : '');
+  h1.innerHTML = s.titulo ? esc(s.titulo) : 'Opciones <em>para vos</em>';
+  sub.textContent = s.desde && s.hasta ? (s.pasada ? 'Las fechas de esta selección ya pasaron: elegí nuevas fechas en cada propiedad.' : 'Del ' + fechaCorta(s.desde) + ' al ' + fechaCorta(s.hasta) + ' · ' + n + (n === 1 ? ' noche' : ' noches') + (s.huespedes ? ' · ' + s.huespedes + ' personas' : '') + '. Los precios son finales, con la limpieza incluida.') : 'Elegí las fechas en cada propiedad para ver disponibilidad y precio final.';
+  if (s.nota) { const d = document.createElement('div'); d.className = 'sel-head'; d.innerHTML = '<div class="nota-sel">' + esc(s.nota) + '</div>'; sub.after(d); }
+  const v = document.createElement('p'); v.style.marginTop = '14px'; v.innerHTML = '<a href="/reservasnueva/" style="color:var(--gold);text-decoration:underline">Ver todas nuestras propiedades</a>'; document.querySelector('.hero .container').appendChild(v);
+  urlEstado = function () {};   // la URL de la selección no se toca
+  await aplicar(false);
+  if (j.seleccion && j.seleccion.retiradas) { const vac = $('#vacio'); vac.hidden = false; vac.innerHTML = '<p>' + j.seleccion.retiradas + (j.seleccion.retiradas === 1 ? ' propiedad de esta selección ya no está disponible.' : ' propiedades de esta selección ya no están disponibles.') + '</p>'; }
+}
+
 // ── Arranque ─────────────────────────────────────────────────────────────────────────────────────────
 (async function () {
   pintarBuscador(); pintarChips();
   const g = $('#grid');
   g.innerHTML = Array(6).fill('<div><div class="skel"></div><div class="skel" style="aspect-ratio:auto;height:16px;margin-top:12px;width:60%"></div></div>').join('');
+  if (Q.get('sel')) {
+    try { await verSeleccion(Q.get('sel')); }
+    catch (e) { g.innerHTML = ''; $('#vacio').hidden = false; $('#vacio').innerHTML = '<h3>' + (e.status === 404 ? 'Esta selección no existe o ya no está disponible' : 'No pudimos cargar la selección') + '</h3><p><a href="/reservasnueva/" style="text-decoration:underline">Ver todas nuestras propiedades</a></p>'; }
+    return;
+  }
   try {
     const j = await api('/web/catalogo');
     CAT = j.propiedades || [];
