@@ -25,7 +25,29 @@ Cloudflare: no se usa (la zona se dio de baja el 2-nov-2026; Felipe decidió no 
 - Lotes de ≤1,5 MB: el tope de subida del PHP del hosting no está medido. Un archivo más grande (los videos de 6-7 MB) puede ser rechazado: el workflow lo dice y hay que subirlo por el Administrador de archivos.
 - Verificación: el último paso compara `web-version.json` publicado con el commit.
 
-## Central de reservas (`reservasnueva/`, OCULTA — fase 1 vitrina, 11-nov-2026)
+## Central de reservas (ES/PT/EN — 11-nov-2026; oculta en /reservasnueva hasta habilitar /reservas)
+- **Plantillas** (no se publican, empiezan con _): `reservas/_lista.html` (buscador + lista + mapa) y `reservas/_ficha.html`
+  (cada propiedad). Están en ESPAÑOL; `tools/i18n_reservas.py` (PARES es→pt→en aplicados en el armado) genera PT y EN.
+  **Regla: todo texto nuevo que vea el visitante lleva su par PT/EN en ese archivo en el mismo cambio** (probar con
+  `python3 tools/probar-i18n-reservas.py`: `restos()` tiene que dar 0). Rutas en JS: `BASE` (meta php-base); links entre
+  idiomas: `__BASE_ES__/__BASE_PT__/__BASE_EN__` en los pares.
+- **Generador** `tools/generar-reservas.py` (corre en cada deploy y una vez por día): lee `/web/seo?lang=` del backend y arma
+  la lista y una página por propiedad en los 3 idiomas con SEO completo (title, description, canonical, hreflang, OG, JSON-LD
+  VacationRental + BreadcrumbList/ItemList, contenido pre-armado para buscadores) y `sitemap-reservas.xml`. Una propiedad
+  nueva publicada en el panel aparece sola. Las páginas generadas no se versionan (.gitignore) y el deploy sube solo las que
+  cambiaron (`reservas-manifest.json`).
+- **Publicarla en /reservas** (falta): (1) instalar el `deploy.php` que acepta `reservas/` (repo phpunta-comunicaciones,
+  workflow "Instalar deploy.php en limpiezas/deployer", FTP plano: con OK de Felipe); (2) en deploy.yml
+  `RESERVAS_ES_DIR: reservas` (saca el noindex, arma el sitemap y deja redirecciones en /reservasnueva/);
+  (3) `python3 tools/enlazar-reservas.py` (menús y botones del sitio → /reservas en cada idioma); (4) robots.txt:
+  `Sitemap: https://phpunta.uy/sitemap-reservas.xml`.
+- Textos de las propiedades en PT/EN: los traduce el backend con la IA en el fondo (v2.754, cache en guias_traducciones);
+  mientras no están, salen en español. Estado: `/diag/web-traducciones`.
+- Bases y condiciones y Reglas de la casa: `tools/legales_reserva.py` → `python3 tools/generar-legales.py` arma
+  `condiciones-reserva.html`, `reglas-de-la-casa.html` y sus versiones PT/EN. La reserva exige aceptar los dos y la política
+  (backend v2.753). Horarios de las reglas: check-in 16 h, check-out 10 h.
+
+## Central de reservas (`reservasnueva/`, historia — fase 1 vitrina, 11-nov-2026)
 Reemplaza al sitio de reservas de Avantio (reservas.phpunta.uy). Oculta: `noindex`, fuera del sitemap y sin links desde la web; se publica cuando Felipe la apruebe (ahí: sacar noindex, canonical, sitemap, links del menú y decidir la URL final — `alquileres/` ya está habilitada en el receptor).
 - `reservasnueva/index.html`: buscador (fechas, huéspedes, zona), filtros que sirven (tipo, dormitorios, piscina, frente al mar, playa, parrillero, jacuzzi, orden), lista con scroll continuo y mapa (Leaflet + OpenStreetMap; CARTO pide clave desde nov-2026) con "Buscar en esta zona" / "Buscar al mover el mapa". El estado vive en la URL (se puede compartir).
 - `reservasnueva/_ficha.html`: PLANTILLA de la página de cada propiedad. El deploy corre `tools/generar-fichas.py`, que lee `/web/slugs` del backend y escribe `reservasnueva/<slug>/index.html` (no se versionan: `.gitignore`). Los archivos que empiezan con `_` no se publican. El workflow corre también una vez por día (propiedades nuevas, títulos nuevos). Una propiedad que deja de publicarse conserva su página con "ya no está disponible" (el receptor nunca borra).
