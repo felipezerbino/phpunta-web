@@ -94,7 +94,7 @@ jobs:
         run: |
           [ -n "$TOKEN" ] || { echo "Falta el secret DEPLOY_TOKEN en este repo"; exit 1; }
           UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
-          URL="https://phpunta.uy/deployer/deploy.php"
+          URL="https://phpunta.uy/limpiezas/deployer/deploy.php"   # acepta el token de la web solo para app=web (11-nov-2026)
           for Z in lotes/*.zip; do
             ok=""
             for intento in 1 2 3 4; do
