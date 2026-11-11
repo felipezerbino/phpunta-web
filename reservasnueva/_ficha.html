@@ -179,6 +179,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 footer { background: var(--navy-deep); color: var(--text-on-dark); padding: 50px 0 28px; }
 .footer-legal { font-size: 11px; color: var(--text-on-dark-soft); letter-spacing: .08em; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; border-top: 1px solid var(--border-dark); padding-top: 22px; margin-top: 22px; }
 footer a:hover { color: var(--gold); }
+.leaflet-tile-pane { filter: grayscale(.82) sepia(.14) brightness(1.04) contrast(.92); }
 </style>
 </head>
 <body>
@@ -374,7 +375,7 @@ function pintar() {
   // Mapa chico
   if (p.coord && typeof L !== 'undefined') {
     const m = L.map('mini', { scrollWheelZoom: false }).setView([p.coord.lat, p.coord.lng], 15);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd', attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(m);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(m);
     if (p.tipo === 'casa') L.circle([p.coord.lat, p.coord.lng], { radius: 180, color: '#a88c3a', weight: 1, fillColor: '#c9a84c', fillOpacity: .25 }).addTo(m);
     else L.circleMarker([p.coord.lat, p.coord.lng], { radius: 9, color: '#0d1b2a', weight: 2, fillColor: '#c9a84c', fillOpacity: 1 }).addTo(m);
   }
