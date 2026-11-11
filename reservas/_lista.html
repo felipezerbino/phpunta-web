@@ -197,7 +197,10 @@ body.ver-sel .layout { grid-template-columns: 1fr !important; }
   body.es-equipo .fbar .res-n { display: none; }
   #btnEquipo { padding: 7px 11px; font-size: 12.5px; white-space: nowrap; }
 }
-@media (max-width: 380px) { .fbar .res-n { font-size: 12px; padding-left: 4px; } .fbtn, .fbar select { font-size: 13px; } }
+@media (max-width: 380px) { .fbar .res-n { font-size: 12px; padding-left: 4px; } .fbtn { font-size: 13px; } }
+@media (max-width: 420px) { .fbar-in { flex-wrap: wrap; row-gap: 8px; } }
+/* teléfono: los desplegables a 16px, si no iOS agranda la página al tocarlos */
+@media (max-width: 999px) { .sf select, .chip select, .fsheet select { font-size: 16px; } }
 /* hoja de filtros (celular) */
 .fsheet-bg { position: fixed; inset: 0; background: rgba(13,27,42,.45); z-index: 960; opacity: 0; pointer-events: none; transition: opacity .25s; }
 .fsheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 970; background: var(--cream); border-radius: 18px 18px 0 0; max-height: 86vh; display: flex; flex-direction: column; transform: translateY(105%); transition: transform .35s var(--ease); box-shadow: 0 -20px 50px rgba(13,27,42,.3); }
@@ -241,6 +244,7 @@ body.mapa-movil .map-auto { bottom: 86px; left: 16px; }
 @media (min-width: 1100px) { .fab-map { display: none; } }
 .zona-act { display: none; align-items: center; gap: 8px; background: var(--cream-warm); border: 1px solid var(--border-light); padding: 9px 14px; border-radius: 3px; margin-bottom: 16px; font-size: 13.5px; }
 .zona-act.on { display: flex; }
+body.mapa-movil .zona-act.on { position: fixed; left: 16px; right: 16px; bottom: 140px; z-index: 865; margin: 0; box-shadow: 0 8px 24px rgba(13,27,42,.2); }
 
 .card { display: block; color: inherit; min-width: 0; }
 .ph { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--cream-paper); }
@@ -439,6 +443,7 @@ footer {
   display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center;
 }
 .footer-legal .sep { color: rgba(240, 236, 224, .25); }
+@media (max-width: 699px) { .footer-legal-row .sep { display: none; } }
 @media (min-width: 700px) {
   .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; }
   .footer-legal { flex-direction: row; justify-content: space-between; align-items: center; }
@@ -804,6 +809,10 @@ function Calendario(host, opt) {
 // ── Buscador ─────────────────────────────────────────────────────────────────────────────────────────
 const popCal = $('#popCal'), popHues = $('#popHues');
 let cal = null;
+function popEnPantalla(el) {
+  if (window.innerWidth < 860) return;
+  requestAnimationFrame(function () { const r = el.getBoundingClientRect(), falta = r.bottom - window.innerHeight + 16; if (falta > 0) window.scrollBy({ top: Math.min(falta, r.top - 100), behavior: 'smooth' }); });
+}
 function cerrarPops() { popCal.classList.remove('open'); popHues.classList.remove('open'); document.body.classList.remove('pop-on'); }
 function pintarBuscador() {
   $('#vIn').textContent = S.llegada ? fechaCorta(S.llegada) : 'Elegí una fecha'; $('#vIn').classList.toggle('vacia', !S.llegada);
@@ -820,11 +829,11 @@ function abrirCal() {
   cerrarPops();
   if (!cal) cal = Calendario(popCal, { ini: S.llegada, fin: S.salida, cerrar: cerrarPops, cambio: function (a, b) { S.llegada = a; S.salida = b; pintarBuscador(); if (a && b) { cerrarPops(); aplicar(); } else if (!a) aplicar(); } });
   else { cal.ini = S.llegada; cal.fin = S.salida; cal.render(); }
-  popCal.classList.add('open'); document.body.classList.add('pop-on');
+  popCal.classList.add('open'); document.body.classList.add('pop-on'); popEnPantalla(popCal);
 }
 $('#sfIn').addEventListener('click', function (e) { e.stopPropagation(); abrirCal(); });
 $('#sfOut').addEventListener('click', function (e) { e.stopPropagation(); abrirCal(); });
-$('#sfHues').addEventListener('click', function (e) { e.stopPropagation(); const ab = popHues.classList.contains('open'); cerrarPops(); if (!ab) { popHues.classList.add('open'); document.body.classList.add('pop-on'); } });
+$('#sfHues').addEventListener('click', function (e) { e.stopPropagation(); const ab = popHues.classList.contains('open'); cerrarPops(); if (!ab) { popHues.classList.add('open'); document.body.classList.add('pop-on'); popEnPantalla(popHues); } });
 popHues.addEventListener('click', function (e) {
   e.stopPropagation();
   if (e.target.closest('[data-cerrar]')) return cerrarPops();
@@ -1041,6 +1050,7 @@ async function aplicarSinMapa() {
   $('#resN').textContent = visibles.length + (visibles.length === 1 ? ' propiedad' : ' propiedades'); $('#fsVer').textContent = visibles.length ? 'Ver ' + visibles.length + (visibles.length === 1 ? ' propiedad' : ' propiedades') : 'Sin resultados';
   $('#vacio').hidden = visibles.length > 0;
   if (!visibles.length) $('#vacio').innerHTML = '<h3>No hay propiedades en esta zona</h3><p>Mové el mapa o alejá el zoom.</p>';
+  $('#fabTxt').textContent = document.body.classList.contains('mapa-movil') ? 'Lista (' + visibles.length + ')' : 'Mapa';
   pintarMarcas();
 }
 $('#btnZona').addEventListener('click', function () { S.bounds = map.getBounds(); $('#mapSearch').classList.remove('on'); aplicarSinMapa(); });
