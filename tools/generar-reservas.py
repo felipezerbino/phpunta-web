@@ -236,7 +236,12 @@ def main():
     ld_lista = [{'@context': 'https://schema.org', '@type': 'ItemList', 'name': t['lista_h1'], 'url': url_lista(lang),
                  'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'url': url_ficha(lang, p['slug']), 'name': p.get('titulo')} for i, p in enumerate(props)]}]
     seo = head_seo(lang, t['lista_tit'], t['lista_desc'], url_lista(lang), (props[0].get('fotos') or [IMG_DEF])[0] if props else IMG_DEF, alt, 'website', ld_lista)
-    escribir(DIRS[lang] + '/index.html', armar(tpl_lista, lang, base_path, seo, pre_lista(lang, props)))
+    html_lista = armar(tpl_lista, lang, base_path, seo, pre_lista(lang, props))
+    escribir(DIRS[lang] + '/index.html', html_lista)
+    # En el hosting, el .htaccess de la raíz sirve /reservas/ desde reservas.html (regla vieja de la central de Avantio).
+    # Se publica ahí la misma lista (todas sus rutas son absolutas y el canonical es /reservas/), así no hay que tocar el .htaccess.
+    if PUBLICADA and lang == 'es':
+      escribir('reservas.html', html_lista)
     sitemap.append((url_lista(lang), alt, 'daily', '0.9'))
     for p in props:
       slug = p.get('slug') or ''
