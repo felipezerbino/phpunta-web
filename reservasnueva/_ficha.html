@@ -265,7 +265,7 @@ footer a:hover { color: var(--gold); }
 .rmod { background: #fff; width: 100%; max-width: 480px; max-height: 92vh; overflow: auto; border-radius: 10px 10px 0 0; padding: 22px 20px 20px; }
 @media (min-width: 700px) { .rmod { border-radius: 6px; } }
 .rmod h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 26px; margin: 0 0 4px; color: var(--navy); }
-.rmod .res { font-size: 13.5px; color: var(--text-soft, #44505c); margin-bottom: 14px; line-height: 1.5; }
+.rmod .res { overflow-wrap: anywhere; font-size: 13.5px; color: var(--text-soft, #44505c); margin-bottom: 14px; line-height: 1.5; }
 .rmod label { display: block; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); margin: 12px 0 5px; }
 .rmod input[type=text], .rmod input[type=email], .rmod input[type=tel] { width: 100%; box-sizing: border-box; border: 1px solid var(--border-light); border-radius: 3px; padding: 12px; font-size: 16px; font-family: inherit; }
 .rmod label.ck { text-transform: none; letter-spacing: 0; color: var(--navy); }
@@ -732,7 +732,7 @@ function reservar() {
       if (!r.ok || !j || !j.ok || (inm && !j.link)) {
         err((j && j.error) || (inm ? 'No pudimos iniciar el pago.' : 'No pudimos enviar la solicitud.') + ' Escribinos por WhatsApp.');
         b.disabled = false; b.textContent = txtB;
-        if (j && j.estado === 'solicitud') { setTimeout(function () { COT.modo = 'solicitud'; pintarBox(); reservar(); }, 1800); return; }
+        if (j && j.estado === 'solicitud') { setTimeout(function () { if (reservar._gen !== genM || !COT || !$('#rmodBg.open')) return; COT.modo = 'solicitud'; pintarBox(); reservar(); }, 1800); return; }
         if (j && j.estado && j.estado !== 'ok') { setTimeout(function () { if (reservar._gen === genM) cerrarReserva(); cotizar(); }, 2200); }
         return;
       }
