@@ -181,7 +181,10 @@ body.ver-sel .layout { grid-template-columns: 1fr !important; }
   .fchips { display: none; }
   .fbtn { display: inline-flex; }
   .fbar-in { overflow: visible; }
+  body.es-equipo .fbar .res-n { display: none; }
+  #btnEquipo { padding: 7px 11px; font-size: 12.5px; white-space: nowrap; }
 }
+@media (max-width: 380px) { .fbar .res-n { font-size: 12px; padding-left: 4px; } .fbtn, .fbar select { font-size: 13px; } }
 /* hoja de filtros (celular) */
 .fsheet-bg { position: fixed; inset: 0; background: rgba(13,27,42,.45); z-index: 960; opacity: 0; pointer-events: none; transition: opacity .25s; }
 .fsheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 970; background: var(--cream); border-radius: 18px 18px 0 0; max-height: 86vh; display: flex; flex-direction: column; transform: translateY(105%); transition: transform .35s var(--ease); box-shadow: 0 -20px 50px rgba(13,27,42,.3); }
@@ -233,6 +236,7 @@ body.mapa-movil .map-auto { bottom: 86px; left: 16px; }
 .ph-dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; }
 .ph-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.55); }
 .ph-dots i.on { background: #fff; }
+.ph-tag.inm { background: var(--navy); color: #e3c98a; }
 .ph-tag { position: absolute; top: 12px; left: 12px; background: rgba(13,27,42,.85); color: var(--cream); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; padding: 5px 10px; border-radius: 2px; }
 .cinfo { padding: 12px 2px 0; }
 .cz { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep); }
@@ -355,6 +359,7 @@ body.mapa-movil .wa-float { display: none; }
     <button type="button" class="chip" data-f="tipo" data-v="apartamento">Apartamentos</button>
     <span class="sep"></span>
     <span class="chip"><select id="selDorm" aria-label="Dormitorios"><option value="0">Dormitorios</option><option value="1">1+ dormitorios</option><option value="2">2+ dormitorios</option><option value="3">3+ dormitorios</option><option value="4">4+ dormitorios</option><option value="5">5+ dormitorios</option><option value="7">7+ dormitorios</option></select></span>
+    <button type="button" class="chip" data-f="inmediata">⚡ Reserva inmediata</button>
     <button type="button" class="chip" data-f="piscina">Piscina</button>
     <button type="button" class="chip" data-f="frente_mar">Frente al mar</button>
     <button type="button" class="chip" data-f="playa">Cerca de la playa</button>
@@ -414,6 +419,7 @@ body.mapa-movil .wa-float { display: none; }
   <div class="fs-body">
     <div class="fs-sec"><h4>Tipo de propiedad</h4><div class="fs-opts"><button type="button" class="chip" data-f="tipo" data-v="casa">Casas</button><button type="button" class="chip" data-f="tipo" data-v="apartamento">Apartamentos</button></div></div>
     <div class="fs-sec"><h4>Dormitorios</h4><div class="fs-opts" id="fsDorm"><button type="button" class="chip" data-dorm="0">Cualquiera</button><button type="button" class="chip" data-dorm="1">1+</button><button type="button" class="chip" data-dorm="2">2+</button><button type="button" class="chip" data-dorm="3">3+</button><button type="button" class="chip" data-dorm="4">4+</button><button type="button" class="chip" data-dorm="5">5+</button><button type="button" class="chip" data-dorm="7">7+</button></div></div>
+    <div class="fs-sec"><h4>Reserva</h4><div class="fs-opts"><button type="button" class="chip" data-f="inmediata">⚡ Reserva inmediata</button></div></div>
     <div class="fs-sec"><h4>Comodidades</h4><div class="fs-opts"><button type="button" class="chip" data-f="piscina">Piscina</button><button type="button" class="chip" data-f="frente_mar">Frente al mar</button><button type="button" class="chip" data-f="playa">Cerca de la playa</button><button type="button" class="chip" data-f="parrillero">Parrillero</button><button type="button" class="chip" data-f="jacuzzi">Jacuzzi</button></div></div>
   </div>
   <div class="fs-foot"><button type="button" class="lnk" id="fsLimpiar">Limpiar todo</button><button type="button" class="btn-navy" id="fsVer">Ver propiedades</button></div>
@@ -713,7 +719,7 @@ function tarjeta(p) {
   a.innerHTML = '<div class="ph"><div class="ph-track">' +
     (fotos.length ? fotos.map(function (u, i) { return '<img src="' + esc(u) + '" alt="' + esc(p.titulo) + '" loading="' + (i === 0 ? 'lazy' : 'lazy') + '" decoding="async" />'; }).join('') : '') + '</div>' +
     (fotos.length > 1 ? '<button type="button" class="ph-arr l" aria-label="Foto anterior">‹</button><button type="button" class="ph-arr r" aria-label="Foto siguiente">›</button><div class="ph-dots">' + fotos.map(function (u, i) { return '<i' + (i ? '' : ' class="on"') + '></i>'; }).join('') + '</div>' : '') +
-    (p.frente_mar ? '<span class="ph-tag">Frente al mar</span>' : '') + '<button type="button" class="sel-ck' + (SEL.indexOf(p.slug) >= 0 ? ' on' : '') + '" aria-label="Sumar a la selección">' + (SEL.indexOf(p.slug) >= 0 ? '✓' : '+') + '</button></div>' +
+    (p.inmediata ? '<span class="ph-tag inm" title="Reservás y pagás online, sin esperar aprobación">⚡ Reserva inmediata</span>' : (p.frente_mar ? '<span class="ph-tag">Frente al mar</span>' : '')) + '<button type="button" class="sel-ck' + (SEL.indexOf(p.slug) >= 0 ? ' on' : '') + '" aria-label="Sumar a la selección">' + (SEL.indexOf(p.slug) >= 0 ? '✓' : '+') + '</button></div>' +
     '<div class="cinfo"><div class="cz">' + esc(BARRIO_NOMBRE[p.barrio] || 'Punta del Este') + '</div><h3 class="ct">' + esc(p.titulo) + '</h3>' +
     '<div class="cm">' + esc(meta) + (extras ? '<br>' + esc(extras) : '') + '</div><div class="cp">' + lineaPrecio(p) + '</div></div>';
   // Carrusel: flechas en PC, deslizar en el teléfono.
@@ -812,7 +818,7 @@ function selToggle(slug, btn) {
 function modal(html) { $('#modal').innerHTML = html; $('#modalBg').classList.add('open'); }
 function cerrarModal() { $('#modalBg').classList.remove('open'); }
 $('#modalBg').addEventListener('click', function (e) { if (e.target === this) cerrarModal(); });
-function modoEquipo(on) { document.body.classList.toggle('modo-equipo', on); $('#btnEquipo').textContent = on ? 'Armando selección…' : 'Armar selección'; selPintarBarra(); }
+function modoEquipo(on) { document.body.classList.toggle('modo-equipo', on); $('#btnEquipo').textContent = on ? (innerWidth < 1000 ? 'Armando…' : 'Armando selección…') : (innerWidth < 1000 ? 'Selección' : 'Armar selección'); selPintarBarra(); }
 $('#btnEquipo').addEventListener('click', function () { modoEquipo(!document.body.classList.contains('modo-equipo')); });
 $('#selSalir').addEventListener('click', function () { modoEquipo(false); });
 function loginEquipo(despues) {
@@ -862,7 +868,7 @@ $('#selCrear').addEventListener('click', function () {
     } catch (e) { $('#selE').textContent = e.message; b.disabled = false; b.textContent = 'Crear link'; }
   };
 });
-if (teamToken()) document.body.classList.add('es-equipo');
+if (teamToken()) { document.body.classList.add('es-equipo'); if (innerWidth < 1000) $('#btnEquipo').textContent = 'Selección'; }
 if (Q.get('equipo') && !teamToken()) setTimeout(function () { loginEquipo(function () { modoEquipo(true); }); }, 300);
 else if (Q.get('equipo')) setTimeout(function () { modoEquipo(true); }, 300);
 selPintarBarra();

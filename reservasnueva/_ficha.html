@@ -71,7 +71,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 
 .volver { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--text-soft); padding: 18px 0 10px; }
 .volver:hover { color: var(--navy); }
-.tit h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin: 4px 0 6px; }
+.tit h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin: 4px 0 6px; overflow-wrap: anywhere; }
 .tit .sub { color: var(--text-soft); font-size: 14.5px; }
 
 /* GALERÍA */
@@ -104,7 +104,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .datos b { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--navy); margin-right: 4px; }
 .sec { padding: 30px 0; border-bottom: 1px solid var(--border-light); }
 .sec h2 { font-size: 1.9rem; margin-bottom: 14px; }
-.desc { color: var(--text-soft); font-size: 15.5px; line-height: 1.8; white-space: pre-line; }
+.desc { color: var(--text-soft); font-size: 15.5px; line-height: 1.8; white-space: pre-line; overflow-wrap: anywhere; }
 .desc.corta { max-height: 9.2em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
 .amen { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; font-size: 15px; }
 .amen li::before { content: '✓'; color: var(--gold-deep); margin-right: 10px; }
@@ -114,7 +114,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .regla b { font-weight: 500; font-size: 16px; }
 #mini { height: 300px; border-radius: 3px; background: #e8e4da; }
 .nota-mapa { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
-/* v2 (Felipe 11-nov): ficha como en Airbnb */
+/* v2 (Felipe 11-nov): ficha completa */
 .tit-fila { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 .tit .rate { font-size: 14.5px; color: var(--text-soft); margin-top: 2px; }
 .tit .rate b { color: var(--navy); font-weight: 600; }
@@ -278,6 +278,11 @@ footer a:hover { color: var(--gold); }
 .rmod .acc button { flex: 1; }
 .rmod .cancel { background: none; border: 1px solid var(--border-light); color: var(--navy); padding: 14px; border-radius: 2px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; margin-top: 16px; }
 .rmod .seg { font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
+.badge-inm { display: inline-flex; align-items: center; gap: 6px; background: var(--navy); color: var(--gold-soft, #e3c98a); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 6px 10px; border-radius: 2px; margin-top: 8px; }
+.badge-inm svg { width: 13px; height: 13px; }
+.modo-nota { font-size: 12.5px; color: var(--text-muted); text-align: center; margin-top: 8px; line-height: 1.5; }
+.rmod textarea { width: 100%; box-sizing: border-box; border: 1px solid var(--border-light); border-radius: 3px; padding: 12px; font-size: 16px; font-family: inherit; min-height: 74px; resize: vertical; }
+.rmod .ok-sol { padding: 6px 0 4px; font-size: 15px; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -437,6 +442,8 @@ function pintar() {
   const ICO_COMP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>';
   const ICO_CAMA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8"/><path d="M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/></svg>';
   const pu = p.puntaje;
+  const ICO_RAYO = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>';
+  const badgeInm = p.inmediata ? '<div class="badge-inm" title="Reservás y pagás online, sin esperar aprobación">' + ICO_RAYO + 'Reserva inmediata</div>' : '';
   const rate = pu ? '<div class="rate">★ <b>' + String(Math.round(pu.rating * 100) / 100).replace('.', ',') + '</b> · ' + pu.resenas + ' reseñas</div>' : '';
   // Descripción: el resumen a la vista; el resto de las secciones al tocar "Mostrar más".
   const secs = (p.secciones || []).filter(function (x) { return x && x.texto; });
@@ -459,7 +466,7 @@ function pintar() {
     '<div class="qa" id="pregQa"></div><p class="nota">Responde un asistente con IA según la información de esta página. Para confirmar algo puntual, escribinos por WhatsApp.</p></div></div>';
   const masc = p.mascotas == null ? '' : '<div class="regla"><span>Mascotas</span><b>' + (p.mascotas ? 'Se aceptan' : 'No se aceptan') + '</b></div>';
   $('#app').innerHTML = '<a class="volver" id="volver" href="/reservasnueva/">‹ Todas las propiedades</a>' +
-    '<div class="tit"><div class="eyebrow">' + esc(meta) + '</div><div class="tit-fila"><div><h1>' + esc(p.titulo) + '</h1>' + rate + '</div>' +
+    '<div class="tit"><div class="eyebrow">' + esc(meta) + '</div><div class="tit-fila"><div><h1>' + esc(p.titulo) + '</h1>' + rate + badgeInm + '</div>' +
       '<div style="position:relative"><button type="button" class="btn-comp" id="btnComp">' + ICO_COMP + 'Compartir</button><div class="comp-pop" id="compPop"></div></div></div></div>' + gal +
     '<div class="cuerpo"><div>' +
       '<div class="datos">' + datos + '</div>' +
@@ -629,7 +636,7 @@ function pintarBox() {
   const br = $('#btnRes'); if (br) br.onclick = reservar;
   // Barra del teléfono
   $('#mbarT').innerHTML = COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b><br>' + COT.noches + ' noches · ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) : (desde ? 'Desde <b>' + usd(desde) + '</b> / noche' : 'Elegí tus fechas');
-  $('#mbarB').textContent = COT && COT.estado === 'ok' ? 'Reservar' : 'Ver fechas';
+  $('#mbarB').textContent = COT && COT.estado === 'ok' ? (COT.modo === 'inmediata' ? 'Reservar' : 'Solicitar') : 'Ver fechas';
 }
 function cotHtml() {
   if (!(S.llegada && S.salida)) return '<div class="aviso">Elegí las fechas en el calendario para ver el precio final.</div>';
@@ -663,9 +670,12 @@ function polHtml(pol) {
 function botonHtml() {
   if (P && P.vitrina) return '<a class="btn-res" style="display:block;text-align:center;text-decoration:none" href="' + waLink(false) + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>';
   const ok = COT && COT.estado === 'ok';
+  const inm = ok && COT.modo === 'inmediata';
   const consultar = COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0;
-  return '<button type="button" class="btn-res" id="btnRes"' + (ok || consultar ? '' : ' disabled') + '>' + (ok ? 'Reservar' : (consultar ? 'Consultar por WhatsApp' : 'Elegí tus fechas')) + '</button>' +
-    (ok ? '<p style="font-size:12.5px;color:var(--text-muted);text-align:center;margin-top:8px">Pagás online con tarjeta u otros medios. Te confirmamos enseguida.</p>' : '') +
+  const nota = !ok ? '' : (inm ? 'Reserva inmediata: pagás la seña online con tarjeta u otros medios.'
+    : (P.inmediata ? 'Por la cercanía de la fecha, esta reserva se hace por solicitud. ' : '') + 'No se te cobra nada todavía: el equipo confirma la disponibilidad y te manda el link de pago.');
+  return '<button type="button" class="btn-res" id="btnRes"' + (ok || consultar ? '' : ' disabled') + '>' + (ok ? (inm ? 'Reservar' : 'Solicitar reserva') : (consultar ? 'Consultar por WhatsApp' : 'Elegí tus fechas')) + '</button>' +
+    (nota ? '<p class="modo-nota">' + esc(nota) + '</p>' : '') +
     '<a class="btn-sec" href="' + waLink(false) + '" target="_blank" rel="noopener">¿Dudas? Escribinos por WhatsApp</a>';
 }
 function waLink(conDatos) {
@@ -681,24 +691,28 @@ function waLink(conDatos) {
 // Si no hay precio confirmado, la reserva sigue por WhatsApp.
 function reservar() {
   if (!(COT && COT.estado === 'ok')) { window.open(waLink(true), '_blank', 'noopener'); return; }
-  const c = COT, pol = c.politica || {};
+  const c = COT, pol = c.politica || {}, inm = c.modo === 'inmediata';
   let bg = $('#rmodBg');
   if (!bg) { bg = document.createElement('div'); bg.className = 'rmod-bg'; bg.id = 'rmodBg'; document.body.appendChild(bg); bg.addEventListener('click', function (e) { if (e.target === bg) cerrarReserva(); }); }
   const g = function (k) { try { return localStorage.getItem('phweb_res_' + k) || ''; } catch (e) { return ''; } };
-  bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">Tu reserva</h3>' +
+  bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">' + (inm ? 'Tu reserva' : 'Solicitud de reserva') + '</h3>' +
     '<div class="res"><b>' + esc(P.titulo) + '</b><br>' + fechaLarga(S.llegada) + ' al ' + fechaLarga(S.salida) + ' · ' + c.noches + (c.noches === 1 ? ' noche' : ' noches') + ' · ' + huespedes() + (huespedes() === 1 ? ' huésped' : ' huéspedes') +
-    '<br>Total ' + usd(c.total) + ' (incluye la limpieza) · ' + (pol.pago_total ? 'pagás el total ahora' : 'ahora pagás ' + usd(c.sena)) + '</div>' +
+    '<br>Total ' + usd(c.total) + ' (incluye la limpieza) · ' + (inm ? (pol.pago_total ? 'pagás el total ahora' : 'ahora pagás ' + usd(c.sena))
+      : 'no pagás nada ahora. Si el equipo la aprueba, te manda el link para pagar ' + (pol.pago_total ? 'el total' : 'la seña de ' + usd(c.sena)) + '.') + '</div>' +
     '<form id="rmodF" novalidate><label for="rN">Nombre y apellido</label><input type="text" id="rN" autocomplete="name" maxlength="120" value="' + esc(g('n')) + '" />' +
     '<label for="rE">Email</label><input type="email" id="rE" autocomplete="email" maxlength="160" value="' + esc(g('e')) + '" />' +
     '<label for="rT">Teléfono (WhatsApp, con código de país)</label><input type="tel" id="rT" autocomplete="tel" maxlength="24" placeholder="+598 99 123 456" value="' + esc(g('t')) + '" />' +
-    polHtml(pol).replace('class="pol"', 'class="pol"') +
+    (inm ? '' : '<label for="rM">Mensaje para el equipo (opcional)</label><textarea id="rM" maxlength="800" placeholder="Contanos quiénes viajan y cualquier pedido especial."></textarea>') +
+    polHtml(pol) +
     '<label class="ck"><input type="checkbox" id="rA" /> <span>Leí y acepto la política de cancelación.</span></label>' +
     '<div class="err" id="rErr" role="alert"></div>' +
-    '<div class="acc"><button type="button" class="cancel" id="rX">Volver</button><button type="submit" class="btn-res" id="rOk">Ir a pagar ' + usd(c.sena) + '</button></div>' +
-    '<p class="seg">El pago se hace en una página segura de nuestro procesador de pagos (dLocal); tus datos de tarjeta no pasan por nosotros. Después del pago, el equipo de reservas te confirma la reserva por WhatsApp o email. Si por algún motivo no se pudiera confirmar, te devolvemos el 100%.</p></form></div>';
+    '<div class="acc"><button type="button" class="cancel" id="rX">Volver</button><button type="submit" class="btn-res" id="rOk">' + (inm ? 'Ir a pagar ' + usd(c.sena) : 'Enviar solicitud') + '</button></div>' +
+    '<p class="seg">' + (inm ? 'El pago se hace en una página segura de nuestro procesador de pagos (dLocal); tus datos de tarjeta no pasan por nosotros. Después del pago, el equipo de reservas te confirma la reserva por WhatsApp o email. Si por algún motivo no se pudiera confirmar, te devolvemos el 100%.'
+      : 'Te respondemos por WhatsApp o email a la brevedad. El precio y la política que ves acá son los de tu solicitud.') + '</p></form></div>';
   bg.classList.add('open'); document.body.style.overflow = 'hidden';
   $('#rX').onclick = cerrarReserva;
-  setTimeout(function () { const i = $('#rN'); if (i && !i.value) i.focus(); }, 50);
+  reservar._origen = document.activeElement; reservar._gen = (reservar._gen || 0) + 1; const genM = reservar._gen;
+  setTimeout(function () { const i = $('#rN'); if (i) { if (!i.value) i.focus(); else { const x = [$('#rN'), $('#rE'), $('#rT')].find(function (e) { return !e.value; }) || $('#rA'); x.focus(); } } }, 50);
   $('#rmodF').onsubmit = async function (e) {
     e.preventDefault();
     const nombre = $('#rN').value.trim(), email = $('#rE').value.trim(), tel = $('#rT').value.trim();
@@ -709,22 +723,36 @@ function reservar() {
     if (!$('#rA').checked) return err('Para seguir, aceptá la política de cancelación.');
     err('');
     try { localStorage.setItem('phweb_res_n', nombre); localStorage.setItem('phweb_res_e', email); localStorage.setItem('phweb_res_t', tel); } catch (e2) {}
-    const b = $('#rOk'); b.disabled = true; b.textContent = 'Preparando el pago…';
+    const b = $('#rOk'), txtB = b.textContent; b.disabled = true; b.textContent = inm ? 'Preparando el pago…' : 'Enviando…';
+    const msj = $('#rM') ? $('#rM').value.trim() : '';
     try {
-      const r = await fetch(API + '/web/reservar', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify({ slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, acepta: true }) });
+      const r = await fetch(API + (inm ? '/web/reservar' : '/web/solicitar'), { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        body: JSON.stringify({ slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, mensaje: msj, acepta: true }) });
       const j = await r.json().catch(function () { return null; });
-      if (!r.ok || !j || !j.ok || !j.link) {
-        err((j && j.error) || 'No pudimos iniciar el pago. Escribinos por WhatsApp.');
-        b.disabled = false; b.textContent = 'Ir a pagar ' + usd(c.sena);
-        if (j && j.estado && j.estado !== 'ok') { setTimeout(function () { cerrarReserva(); cotizar(); }, 2200); }
+      if (!r.ok || !j || !j.ok || (inm && !j.link)) {
+        err((j && j.error) || (inm ? 'No pudimos iniciar el pago.' : 'No pudimos enviar la solicitud.') + ' Escribinos por WhatsApp.');
+        b.disabled = false; b.textContent = txtB;
+        if (j && j.estado === 'solicitud') { setTimeout(function () { COT.modo = 'solicitud'; pintarBox(); reservar(); }, 1800); return; }
+        if (j && j.estado && j.estado !== 'ok') { setTimeout(function () { if (reservar._gen === genM) cerrarReserva(); cotizar(); }, 2200); }
         return;
       }
-      location.href = j.link;
-    } catch (e3) { err('Sin conexión. Probá de nuevo.'); b.disabled = false; b.textContent = 'Ir a pagar ' + usd(c.sena); }
+      if (inm) { if (!/^https:\/\/phpunta\.uy\/pagos\/\?c=[A-Za-z0-9_-]+$/.test(String(j.link))) { err('No pudimos iniciar el pago. Escribinos por WhatsApp.'); b.disabled = false; b.textContent = txtB; return; } location.href = j.link; return; }
+      $('#rmodF').innerHTML = '<div class="ok-sol"><b>¡Listo! Recibimos tu solicitud.</b><br>Te escribimos por WhatsApp o email a la brevedad para confirmarte la disponibilidad. Si se aprueba, te mandamos el link para pagar y reservar.</div><div class="acc"><button type="button" class="btn-res" id="rFin">Entendido</button></div>';
+      $('#rFin').onclick = cerrarReserva;
+    } catch (e3) { err('Sin conexión. Probá de nuevo.'); b.disabled = false; b.textContent = txtB; }
   };
 }
-function cerrarReserva() { const bg = $('#rmodBg'); if (bg) bg.classList.remove('open'); document.body.style.overflow = ''; }
+function cerrarReserva() { const bg = $('#rmodBg'); if (!bg || !bg.classList.contains('open')) return; bg.classList.remove('open'); document.body.style.overflow = ''; try { if (reservar._origen && reservar._origen.focus) reservar._origen.focus(); } catch (e) {} }
+// Tab no sale del formulario abierto.
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Tab') return;
+  const bg = $('#rmodBg'); if (!bg || !bg.classList.contains('open')) return;
+  const f = [...bg.querySelectorAll('input,textarea,button,a[href]')].filter(function (x) { return !x.disabled && x.offsetParent; });
+  if (!f.length) return;
+  const a = f[0], z = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+  else if (!e.shiftKey && (document.activeElement === z || !bg.contains(document.activeElement))) { e.preventDefault(); a.focus(); }
+});
 document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarReserva(); });
 let cotGen = 0;
 async function cotizar() {
