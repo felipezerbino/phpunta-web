@@ -883,17 +883,23 @@ async function aplicar(centrar) {
   mas();
   pintarMapa(centrar);
 }
+// Columnas de la grilla en este ancho (1, 2 o 3): siempre se muestran filas completas.
+function columnas() { const g = $('#grid'); const t = g ? getComputedStyle(g).gridTemplateColumns : ''; const n = t && t !== 'none' ? t.split(' ').filter(Boolean).length : 1; return Math.max(1, Math.min(4, n)); }
 function mas() {
   const frag = document.createDocumentFragment();
-  visibles.slice(mostradas, mostradas + POR_PAGINA).forEach(function (p) { frag.appendChild(tarjeta(p)); });
-  mostradas = Math.min(visibles.length, mostradas + POR_PAGINA);
+  const c = columnas();
+  // ~10 por vez, redondeado a filas completas (con 3 columnas, 12); si quedó una fila a medias (cambió el ancho), se completa.
+  let hasta = mostradas + Math.ceil(POR_PAGINA / c) * c;
+  hasta -= hasta % c;
+  visibles.slice(mostradas, hasta).forEach(function (p) { frag.appendChild(tarjeta(p)); });
+  mostradas = Math.min(visibles.length, hasta);
   $('#grid').appendChild(frag);
   // Lo que sigue se deja entrever debajo, desvanecido, con el botón "Mostrar más propiedades".
   const resto = visibles.length - mostradas;
   $('#masBox').hidden = resto <= 0;
   const pk = $('#peek'); pk.innerHTML = '';
   if (resto > 0) {
-    visibles.slice(mostradas, mostradas + 2).forEach(function (p) { const t = tarjeta(p); t.removeAttribute('href'); t.tabIndex = -1; pk.appendChild(t); });
+    visibles.slice(mostradas, mostradas + c).forEach(function (p) { const t = tarjeta(p); t.removeAttribute('href'); t.tabIndex = -1; pk.appendChild(t); });
     $('#btnMas').textContent = 'Mostrar más propiedades (' + resto + ')';
   }
 }
