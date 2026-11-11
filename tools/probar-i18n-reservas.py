@@ -9,13 +9,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import i18n_reservas as I
 
 SALIDA = sys.argv[1] if len(sys.argv) > 1 else '/tmp/claude-0/-home-user/33caf91b-d724-55d2-ad8f-a34158e6992d/scratchpad/i18n'
-ARCH = ['index', '_ficha']
+ARCH = ['_lista', '_ficha']
 mal = 0
 usados = {}
 for lang in ('pt', 'en'):
     os.makedirs(os.path.join(SALIDA, lang), exist_ok=True)
     for a in ARCH:
-        src = open(os.path.join(RAIZ, 'reservasnueva', a + '.html'), encoding='utf-8').read()
+        src = open(os.path.join(RAIZ, 'reservas', a + '.html'), encoding='utf-8').read()
         uso = {}
         out = I.traducir(src, lang, uso)
         for k, n in uso.items():

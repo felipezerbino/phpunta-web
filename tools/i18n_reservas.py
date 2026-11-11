@@ -25,6 +25,30 @@ delimita el valor, así se conservan espacios en los bordes; '\\n' = salto de l�
 import os, re, sys
 
 _DATOS = r'''
+
+ES: 'Huéspedes'¦
+PT: 'Hóspedes'¦
+EN: 'Guests'¦
+
+ES: 'Dormitorios'¦
+PT: 'Quartos'¦
+EN: 'Bedrooms'¦
+
+ES: 'Baños'¦
+PT: 'Banheiros'¦
+EN: 'Bathrooms'¦
+
+ES: 'Gimnasio'¦
+PT: 'Academia'¦
+EN: 'Gym'¦
+
+ES: 'Aire acond.'¦
+PT: 'Ar-cond.'¦
+EN: 'A/C'¦
+
+ES: 'Cochera'¦
+PT: 'Garagem'¦
+EN: 'Parking'¦
 ES: <html lang="es">¦
 PT: <html lang="pt-BR">¦
 EN: <html lang="en">¦
@@ -595,6 +619,7 @@ PT: ' propriedade'¦
 EN: ' property'¦
 
 ES: ' propiedades'¦
+PT: ' propriedades'¦
 EN: ' properties'¦
 
 ES: 'Ver '¦
