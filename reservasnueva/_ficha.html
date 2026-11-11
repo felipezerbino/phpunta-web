@@ -154,7 +154,18 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .cat-r { font-size: 13px; color: var(--text-soft); }
 .cat-r i { display: block; height: 4px; background: var(--cream-paper); border-radius: 2px; margin-top: 5px; overflow: hidden; }
 .cat-r i em { display: block; height: 100%; background: var(--navy); }
-.resenas { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.res-sl { position: relative; }
+.res-tr { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 2px 2px 6px; }
+.res-tr::-webkit-scrollbar { display: none; }
+.res-tr .resena { flex: 0 0 calc(50% - 8px); scroll-snap-align: start; }
+@media (max-width: 700px) { .res-tr .resena { flex-basis: 86%; } }
+.resena .rt { display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-line; }
+.resena.abierta .rt { -webkit-line-clamp: unset; display: block; }
+.resena .mas { background: none; border: 0; padding: 0; margin-top: 6px; text-decoration: underline; color: var(--navy); font-size: 13px; }
+.res-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border-light); background: #fff; color: var(--navy); font-size: 22px; line-height: 1; box-shadow: 0 6px 16px -8px rgba(13,27,42,.45); }
+.res-nav.prev { left: -14px; } .res-nav.next { right: -14px; }
+.res-nav:disabled { opacity: 0; pointer-events: none; }
+@media (max-width: 700px) { .res-nav { display: none; } }
 .resena { background: #fff; border: 1px solid var(--border-light); border-radius: 4px; padding: 18px; font-size: 14.5px; line-height: 1.65; color: var(--text-soft); }
 .resena b { display: block; color: var(--navy); font-weight: 600; margin-bottom: 2px; }
 .resena small { display: block; color: var(--text-muted); font-size: 12.5px; margin-bottom: 8px; }
@@ -297,6 +308,16 @@ footer a:hover { color: var(--gold); }
 .rmod .acc button { flex: 1; }
 .rmod .cancel { background: none; border: 1px solid var(--border-light); color: var(--navy); padding: 14px; border-radius: 2px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; margin-top: 16px; }
 .rmod .seg { font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
+.rmod .ck .lnk { font-size: inherit; padding: 0; vertical-align: baseline; }
+.rmod .rres-i { font-size: 14.5px; line-height: 1.55; color: var(--text-soft); margin: 6px 0 10px; }
+.rmod ul.rres { margin: 0 0 12px; padding-left: 20px; font-size: 14.5px; line-height: 1.7; color: var(--navy); }
+.rmod .rres-c { font-size: 13.5px; line-height: 1.5; color: var(--navy); font-weight: 600; margin-bottom: 8px; }
+.doc-bg { z-index: 5100; }
+.rmod.doc { max-width: 640px; }
+.doc-tx { font-size: 14px; line-height: 1.65; color: var(--text-soft); }
+.doc-tx h2 { font-family: var(--sans); font-size: 14.5px; font-weight: 600; color: var(--navy); margin: 14px 0 4px; }
+.doc-tx ol { padding-left: 20px; } .doc-tx li { margin: 3px 0; }
+.doc-tx p { margin: 0 0 8px; } .doc-tx a { text-decoration: underline; }
 .badge-inm { display: inline-flex; align-items: center; gap: 6px; background: var(--navy); color: var(--gold-soft, #e3c98a); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 6px 10px; border-radius: 2px; margin-top: 8px; }
 .badge-inm svg { width: 13px; height: 13px; }
 .modo-nota { font-size: 12.5px; color: var(--text-muted); text-align: center; margin-top: 8px; line-height: 1.5; }
@@ -711,7 +732,7 @@ function pintar() {
   const pu = p.puntaje;
   const ICO_RAYO = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>';
   const badgeInm = p.inmediata ? '<div class="badge-inm" title="Reservás y pagás online, sin esperar aprobación">' + ICO_RAYO + 'Reserva inmediata</div>' : '';
-  const rate = pu ? '<div class="rate">★ <b>' + String(Math.round(pu.rating * 100) / 100).replace('.', ',') + '</b> · ' + pu.resenas + ' reseñas</div>' : '';
+  const rate = '';   // Felipe (11-nov): sin puntaje ni cantidad de reseñas de Airbnb
   // Descripción: el resumen a la vista; el resto de las secciones al tocar "Mostrar más".
   const secs = (p.secciones || []).filter(function (x) { return x && x.texto; });
   const desc0 = secs[0], descResto = secs.slice(1);
@@ -725,10 +746,13 @@ function pintar() {
   const amenHtml = amen.length ? '<div class="sec"><h2>Qué ofrece este lugar</h2><ul class="amen" id="amen">' + amen.map(function (a, i) { return '<li' + (i >= 12 ? ' class="oculta"' : '') + '>' + esc(a) + '</li>'; }).join('') + '</ul>' +
     (amen.length > 12 ? '<button type="button" class="btn-linea" id="amenMas">Mostrar las ' + amen.length + ' comodidades</button>' : '') + '</div>' : '';
   const CATN = { limpieza: 'Limpieza', veracidad: 'Veracidad', checkin: 'Llegada', comunicacion: 'Comunicación', ubicacion: 'Ubicación', valor: 'Calidad-precio' };
-  const resHtml = (pu || (p.resenas && p.resenas.length)) ? '<div class="sec" id="secRes"><h2>Lo que dicen los huéspedes</h2>' +
-    (pu ? '<div class="punt"><div class="big">★ ' + String(Math.round(pu.rating * 100) / 100).replace('.', ',') + '<small>' + pu.resenas + ' reseñas</small></div><div class="cats">' + Object.keys(pu.categorias || {}).map(function (k) { const v = pu.categorias[k]; return '<div class="cat-r">' + CATN[k] + ' · ' + String(v).replace('.', ',') + '<i><em style="width:' + Math.round(v / 5 * 100) + '%"></em></i></div>'; }).join('') + '</div></div>' : '') +
-    (p.resenas && p.resenas.length ? '<div class="resenas">' + p.resenas.slice(0, 6).map(function (r) { const d = parseIso((r.fecha || '') + '-01'); return '<div class="resena"><b>' + esc(r.nombre) + '</b><small>★★★★★' + (d ? ' · ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() : '') + '</small>' + esc(r.texto) + '</div>'; }).join('') + '</div>' : '') + '</div>' : '';
-  const pregHtml = '<div class="sec"><h2>Hacé preguntas sobre este alojamiento</h2><div class="preg"><form id="pregF"><input id="pregI" maxlength="300" placeholder="¿Hay estacionamiento?" autocomplete="off" /><button type="submit" id="pregB">Preguntar</button></form>' +
+  // Felipe (11-nov): solo un slide de reseñas de 5 estrellas, sin promedio ni categorías. Sin ninguna, no hay sección.
+  const res5 = (p.resenas || []).filter(function (r) { return r && r.texto && (r.estrellas == null || Number(r.estrellas) >= 5); });
+  const resHtml = res5.length ? '<div class="sec" id="secRes"><h2>Algunas reseñas de la propiedad</h2><div class="res-sl">' +
+    (res5.length > 1 ? '<button type="button" class="res-nav prev" aria-label="Anterior">‹</button>' : '') +
+    '<div class="res-tr" id="resTr">' + res5.map(function (r) { const d = parseIso((r.fecha || '') + '-01'); return '<div class="resena"><b>' + esc(r.nombre) + '</b><small>★★★★★' + (d ? ' · ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() : '') + '</small><div class="rt">' + esc(r.texto) + '</div></div>'; }).join('') + '</div>' +
+    (res5.length > 1 ? '<button type="button" class="res-nav next" aria-label="Siguiente">›</button>' : '') + '</div></div>' : '';
+  const pregHtml = '<div class="sec"><h2>Hacé preguntas sobre este alojamiento</h2><div class="preg"><form id="pregF"><input id="pregI" maxlength="300" placeholder="Haz cualquier pregunta sobre esta propiedad" autocomplete="off" /><button type="submit" id="pregB">Preguntar</button></form>' +
     '<div class="sug" id="pregSug">' + ['¿Hay estacionamiento?', '¿Qué tan cerca está la playa?', '¿Se aceptan mascotas?', '¿Tiene aire acondicionado?'].map(function (q) { return '<button type="button">' + q + '</button>'; }).join('') + '</div>' +
     '<div class="qa" id="pregQa"></div><p class="nota">Responde un asistente con IA según la información de esta página. Para confirmar algo puntual, escribinos por WhatsApp.</p></div></div>';
   const masc = p.mascotas == null ? '' : '<div class="regla"><span>Mascotas</span><b>' + (p.mascotas ? 'Se aceptan' : 'No se aceptan') + '</b></div>';
@@ -756,6 +780,15 @@ function pintar() {
     '<aside><div class="box" id="box"></div></aside></div>' +
     '<div class="mbar" id="mbar"><div class="t" id="mbarT"></div><button type="button" id="mbarB">Ver precio</button></div><div class="toast" id="toast"></div>';
   urlEstado();
+  // Slide de reseñas: flechas en PC y "Leer más" en las largas.
+  const rtr = $('#resTr');
+  if (rtr) {
+    const prev = $('#secRes .res-nav.prev'), next = $('#secRes .res-nav.next');
+    const flechas = function () { if (!prev) return; prev.disabled = rtr.scrollLeft < 8; next.disabled = rtr.scrollLeft + rtr.clientWidth >= rtr.scrollWidth - 8; };
+    if (prev) { prev.onclick = function () { rtr.scrollBy({ left: -rtr.clientWidth * 0.9, behavior: 'smooth' }); }; next.onclick = function () { rtr.scrollBy({ left: rtr.clientWidth * 0.9, behavior: 'smooth' }); }; }
+    rtr.addEventListener('scroll', flechas, { passive: true }); setTimeout(flechas, 50);
+    rtr.querySelectorAll('.resena').forEach(function (c) { const t = c.querySelector('.rt'); if (t && t.scrollHeight > t.clientHeight + 4) { const b = document.createElement('button'); b.type = 'button'; b.className = 'mas'; b.textContent = 'Leer más'; b.onclick = function () { c.classList.toggle('abierta'); b.textContent = c.classList.contains('abierta') ? 'Leer menos' : 'Leer más'; }; c.appendChild(b); } });
+  }
   // Galería
   const lb = $('#lb');
   const abrirLb = function (i) {
@@ -858,6 +891,7 @@ function iniciarLugares(p) {
       return '<button type="button" class="lug" data-i="' + i + '">' + (x.foto ? '<img src="' + esc(x.foto) + '" alt="" loading="lazy" />' : '<span class="ph2">' + (x.emoji || LUG_EMOJI[x.cat] || '📍') + '</span>') +
         '<span><b>' + esc(x.nombre) + '</b><small>' + esc(sub) + '</small>' + (x.desc && x.desc.es ? '<p>' + esc(x.desc.es) + '</p>' : '') + '</span></button>';
     }).join('');
+    $('#lugLista').querySelectorAll('.lug img').forEach(function (im) { im.addEventListener('error', function () { const x = lista[Number(im.closest('.lug').dataset.i)]; const sp = document.createElement('span'); sp.className = 'ph2'; sp.textContent = (x && (x.emoji || LUG_EMOJI[x.cat])) || '📍'; im.replaceWith(sp); }, { once: true }); });
     $('#lugLista').querySelectorAll('.lug').forEach(function (b) { b.onclick = function () { const x = lista[Number(b.dataset.i)]; m.setView([x.lat, x.lng], 15); x._mk.openPopup(); $('#mini').scrollIntoView({ behavior: 'smooth', block: 'center' }); }; });
   };
   $('#lugChips').addEventListener('click', function (e) { const b = e.target.closest('[data-cat]'); if (b) { cat = b.dataset.cat; pintarLug(); } });
@@ -888,9 +922,8 @@ function pintarBox() {
     return;
   }
   const max = p.huespedes || 20;
-  const desde = p.desde_noche;
   $('#box').innerHTML =
-    '<div class="px">' + (COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b> total' : (desde ? 'Desde <b>' + usd(desde) + '</b> / noche' : 'Consultá el precio')) + '</div>' +
+    '<div class="px">' + (COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b> total' : 'Elegí tus fechas para ver el precio') + '</div>' +
     '<div class="bsel"><button type="button" id="bIn"><span>Llegada</span><div>' + (S.llegada ? fechaCorta(S.llegada) : 'Agregar') + '</div></button>' +
     '<button type="button" id="bOut"><span>Salida</span><div>' + (S.salida ? fechaCorta(S.salida) : 'Agregar') + '</div></button>' +
     '<button type="button" class="h" id="bHues"><div><span>Huéspedes</span><div>' + h + (h === 1 ? ' persona' : ' personas') + (S.be ? ' · ' + S.be + (S.be === 1 ? ' bebé' : ' bebés') : '') + '</div></div><div>⌄</div></button></div>' +
@@ -908,9 +941,19 @@ function pintarBox() {
   $('#huesPop').addEventListener('click', function (e) { const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return; S[b.dataset.k] += Number(b.dataset.d); urlEstado(); pintarBox(); $('#huesPop').classList.add('open'); clearTimeout(window._tq); window._tq = setTimeout(cotizar, 300); });
   const br = $('#btnRes'); if (br) br.onclick = reservar;
   // Barra del teléfono
-  $('#mbarT').innerHTML = COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b><br>' + COT.noches + ' noches · ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) : (desde ? 'Desde <b>' + usd(desde) + '</b> / noche' : 'Elegí tus fechas');
+  $('#mbarT').innerHTML = COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b><br>' + COT.noches + ' noches · ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) : 'Elegí tus fechas<br><small>para ver el precio</small>';
   $('#mbarB').textContent = COT && COT.estado === 'ok' ? (COT.modo === 'inmediata' ? 'Reservar' : 'Solicitar') : 'Ver fechas';
+  ajustarCaja();
 }
+// El cuadro de reserva acompaña al bajar. Si es más alto que la pantalla, se pega por ABAJO (queda a la vista el botón de
+// Reservar) en vez de por arriba (antes el botón aparecía recién al llegar al final de la ficha).
+function ajustarCaja() {
+  const b = $('#box'); if (!b) return;
+  const top = Math.min(108, window.innerHeight - b.offsetHeight - 16);
+  b.style.top = top + 'px';
+}
+window.addEventListener('resize', function () { ajustarCaja(); });
+if (window.ResizeObserver) { const roC = new ResizeObserver(function () { ajustarCaja(); }); setTimeout(function obs() { const b = $('#box'); if (b) roC.observe(b); else setTimeout(obs, 500); }, 500); }
 function cotHtml() {
   if (!(S.llegada && S.salida)) return '<div class="aviso">Elegí las fechas en el calendario para ver el precio final.</div>';
   if (!COT) return '<div class="aviso">Calculando el precio…</div>';
@@ -962,11 +1005,50 @@ function waLink(conDatos) {
 }
 // Reserva online (v2.741): datos del huésped + aceptar la política → el servidor re-cotiza y devuelve el link de pago (dLocal).
 // Si no hay precio confirmado, la reserva sigue por WhatsApp.
-function reservar() {
-  if (!(COT && COT.estado === 'ok')) { window.open(waLink(true), '_blank', 'noopener'); return; }
-  const c = COT, pol = c.politica || {}, inm = c.modo === 'inmediata';
+// Felipe (11-nov): al tocar Reservar, primero un resumen de las reglas de la casa (Aceptar sigue al formulario; Cancelar cierra).
+const DOCS = { bases: { url: '/condiciones-reserva.html', tit: 'Bases y condiciones de la reserva' }, reglas: { url: '/reglas-de-la-casa.html', tit: 'Reglas de la casa' } };
+const RESUMEN_REGLAS = { intro: 'Para que disfrutes tu estadía y todo funcione muy bien, es importante aceptar estas reglas:',
+  items: ['No fiestas, fumar ni invitados sin registro.', 'Mascotas solo con autorización.', 'Titular +25 años con ID.', 'Silencio 22–09 h.', 'Check-in 17 h / Check-out 11 h.', 'Consumos con límites (ver anuncio).'],
+  cierre: 'Debés leer y aceptar todas las Reglas de la Casa. Incumplimientos = cancelación sin reembolso.' };
+function modalBg() {
   let bg = $('#rmodBg');
   if (!bg) { bg = document.createElement('div'); bg.className = 'rmod-bg'; bg.id = 'rmodBg'; document.body.appendChild(bg); bg.addEventListener('click', function (e) { if (e.target === bg) cerrarReserva(); }); }
+  return bg;
+}
+function reservar() {
+  if (!(COT && COT.estado === 'ok')) { window.open(waLink(true), '_blank', 'noopener'); return; }
+  const bg = modalBg();
+  reservar._origen = document.activeElement;
+  bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">Antes de reservar</h3>' +
+    '<p class="rres-i">' + esc(RESUMEN_REGLAS.intro) + '</p><ul class="rres">' + RESUMEN_REGLAS.items.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+    '<p class="rres-c">' + esc(RESUMEN_REGLAS.cierre) + '</p>' +
+    '<button type="button" class="lnk" id="rVerReglas">Ver las reglas completas</button>' +
+    '<div class="acc"><button type="button" class="cancel" id="rX">Cancelar</button><button type="button" class="btn-res" id="rOkR">Aceptar</button></div></div>';
+  bg.classList.add('open'); document.body.style.overflow = 'hidden';
+  $('#rX').onclick = cerrarReserva;
+  $('#rVerReglas').onclick = function () { verDoc('reglas'); };
+  $('#rOkR').onclick = abrirFormulario;
+  setTimeout(function () { const b = $('#rOkR'); if (b) b.focus(); }, 50);
+}
+// Bases y condiciones / reglas en una ventana encima del formulario (el texto sale de la página del sitio: una sola fuente).
+async function verDoc(k) {
+  const d = DOCS[k];
+  let v = $('#docBg');
+  if (!v) { v = document.createElement('div'); v.className = 'rmod-bg doc-bg'; v.id = 'docBg'; document.body.appendChild(v); v.addEventListener('click', function (e) { if (e.target === v) v.classList.remove('open'); }); }
+  v.innerHTML = '<div class="rmod doc" role="dialog" aria-modal="true"><h3>' + esc(d.tit) + '</h3><div class="doc-tx" id="docTx">Cargando…</div><div class="acc"><button type="button" class="btn-res" id="docX">Cerrar</button></div>' +
+    '<p class="seg"><a href="' + d.url + '" target="_blank" rel="noopener">Abrir en una página aparte</a></p></div>';
+  v.classList.add('open');
+  $('#docX').onclick = function () { v.classList.remove('open'); };
+  try {
+    if (!verDoc._c) verDoc._c = {};
+    if (!verDoc._c[k]) { const r = await fetch(d.url, { cache: 'no-cache' }); if (!r.ok) throw new Error(); const t = await r.text(); const dom = new DOMParser().parseFromString(t, 'text/html'); const a = dom.querySelector('#doc'); if (!a) throw new Error(); a.querySelectorAll('a').forEach(function (x) { x.target = '_blank'; x.rel = 'noopener'; }); verDoc._c[k] = a.innerHTML; }
+    if ($('#docTx')) $('#docTx').innerHTML = verDoc._c[k];
+  } catch (e) { if ($('#docTx')) $('#docTx').innerHTML = 'No pudimos cargar el texto acá. <a href="' + d.url + '" target="_blank" rel="noopener">Abrilo en una página aparte</a>.'; }
+}
+function abrirFormulario() {
+  if (!(COT && COT.estado === 'ok')) { cerrarReserva(); return; }
+  const c = COT, pol = c.politica || {}, inm = c.modo === 'inmediata';
+  const bg = modalBg();
   const g = function (k) { try { return localStorage.getItem('phweb_res_' + k) || ''; } catch (e) { return ''; } };
   bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">' + (inm ? 'Tu reserva' : 'Solicitud de reserva') + '</h3>' +
     '<div class="res"><b>' + esc(P.titulo) + '</b><br>' + fechaLarga(S.llegada) + ' al ' + fechaLarga(S.salida) + ' · ' + c.noches + (c.noches === 1 ? ' noche' : ' noches') + ' · ' + huespedes() + (huespedes() === 1 ? ' huésped' : ' huéspedes') +
@@ -978,13 +1060,16 @@ function reservar() {
     (inm ? '' : '<label for="rM">Mensaje para el equipo (opcional)</label><textarea id="rM" maxlength="800" placeholder="Contanos quiénes viajan y cualquier pedido especial."></textarea>') +
     polHtml(pol) +
     '<label class="ck"><input type="checkbox" id="rA" /> <span>Leí y acepto la política de cancelación.</span></label>' +
+    '<label class="ck"><input type="checkbox" id="rB" /> <span>Leí y acepto las <button type="button" class="lnk" data-doc="bases">bases y condiciones</button> de la reserva.</span></label>' +
+    '<label class="ck"><input type="checkbox" id="rR" /> <span>Leí y acepto las <button type="button" class="lnk" data-doc="reglas">reglas de la casa</button>.</span></label>' +
     '<div class="err" id="rErr" role="alert"></div>' +
     '<div class="acc"><button type="button" class="cancel" id="rX">Volver</button><button type="submit" class="btn-res" id="rOk">' + (inm ? 'Ir a pagar ' + usd(c.sena) : 'Enviar solicitud') + '</button></div>' +
     '<p class="seg">' + (inm ? 'El pago se hace en una página segura de nuestro procesador de pagos (dLocal); tus datos de tarjeta no pasan por nosotros. Después del pago, el equipo de reservas te confirma la reserva por WhatsApp o email. Si por algún motivo no se pudiera confirmar, te devolvemos el 100%.'
       : 'Te respondemos por WhatsApp o email a la brevedad. El precio y la política que ves acá son los de tu solicitud.') + '</p></form></div>';
   bg.classList.add('open'); document.body.style.overflow = 'hidden';
   $('#rX').onclick = cerrarReserva;
-  reservar._origen = document.activeElement; reservar._gen = (reservar._gen || 0) + 1; const genM = reservar._gen;
+  $('#rmodF').addEventListener('click', function (e) { const b = e.target.closest('[data-doc]'); if (b) { e.preventDefault(); verDoc(b.dataset.doc); } });
+  reservar._gen = (reservar._gen || 0) + 1; const genM = reservar._gen;
   setTimeout(function () { const i = $('#rN'); if (i) { if (!i.value) i.focus(); else { const x = [$('#rN'), $('#rE'), $('#rT')].find(function (e) { return !e.value; }) || $('#rA'); x.focus(); } } }, 50);
   $('#rmodF').onsubmit = async function (e) {
     e.preventDefault();
@@ -994,25 +1079,40 @@ function reservar() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err('Revisá el email.');
     if (tel.replace(/\D/g, '').length < 7) return err('Revisá el teléfono (con código de país).');
     if (!$('#rA').checked) return err('Para seguir, aceptá la política de cancelación.');
+    if (!$('#rB').checked) return err('Para seguir, aceptá las bases y condiciones.');
+    if (!$('#rR').checked) return err('Para seguir, aceptá las reglas de la casa.');
     err('');
+    // El pago se abre en una pestaña NUEVA (esta queda para volver a mirar la propiedad). La ventana se abre YA, dentro del
+    // clic: si se abriera después de esperar al servidor, el navegador la bloquea.
+    let win = null;
+    if (inm) { try { win = window.open('', '_blank'); if (win) win.document.write('<!doctype html><meta charset="utf-8"><title>Preparando el pago…</title><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:90vh;color:#0d1b2a">Preparando el pago…</body>'); } catch (eW) { win = null; } }
+    const cerrarWin = function () { try { if (win && !win.closed) win.close(); } catch (eC) {} };
     try { localStorage.setItem('phweb_res_n', nombre); localStorage.setItem('phweb_res_e', email); localStorage.setItem('phweb_res_t', tel); } catch (e2) {}
     const b = $('#rOk'), txtB = b.textContent; b.disabled = true; b.textContent = inm ? 'Preparando el pago…' : 'Enviando…';
     const msj = $('#rM') ? $('#rM').value.trim() : '';
     try {
       const r = await fetch(API + (inm ? '/web/reservar' : '/web/solicitar'), { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify({ slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, mensaje: msj, acepta: true }) });
+        body: JSON.stringify({ slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, mensaje: msj, acepta: true, acepta_bases: true, acepta_reglas: true }) });
       const j = await r.json().catch(function () { return null; });
       if (!r.ok || !j || !j.ok || (inm && !j.link)) {
+        cerrarWin();
         err((j && j.error) || (inm ? 'No pudimos iniciar el pago.' : 'No pudimos enviar la solicitud.') + ' Escribinos por WhatsApp.');
         b.disabled = false; b.textContent = txtB;
         if (j && j.estado === 'solicitud') { setTimeout(function () { if (reservar._gen !== genM || !COT || !$('#rmodBg.open')) return; COT.modo = 'solicitud'; pintarBox(); reservar(); }, 1800); return; }
         if (j && j.estado && j.estado !== 'ok') { setTimeout(function () { if (reservar._gen === genM) cerrarReserva(); cotizar(); }, 2200); }
         return;
       }
-      if (inm) { if (!/^https:\/\/phpunta\.uy\/pagos\/\?c=[A-Za-z0-9_-]+$/.test(String(j.link))) { err('No pudimos iniciar el pago. Escribinos por WhatsApp.'); b.disabled = false; b.textContent = txtB; return; } location.href = j.link; return; }
+      if (inm) {
+        if (!/^https:\/\/phpunta\.uy\/pagos\/\?c=[A-Za-z0-9_-]+$/.test(String(j.link))) { cerrarWin(); err('No pudimos iniciar el pago. Escribinos por WhatsApp.'); b.disabled = false; b.textContent = txtB; return; }
+        if (win && !win.closed) { try { win.opener = null; } catch (eO) {} win.location.href = j.link; }
+        else { location.href = j.link; return; }   // el navegador no dejó abrir otra pestaña: el pago sigue en esta
+        $('#rmodF').innerHTML = '<div class="ok-sol"><b>Abrimos el pago en otra pestaña.</b><br>Completalo ahí; esta página queda abierta por si querés volver a mirar la propiedad. Si no se abrió, <a href="' + esc(j.link) + '" target="_blank" rel="noopener" style="text-decoration:underline">tocá acá para ir al pago</a>.</div><div class="acc"><button type="button" class="btn-res" id="rFin">Entendido</button></div>';
+        $('#rFin').onclick = cerrarReserva;
+        return;
+      }
       $('#rmodF').innerHTML = '<div class="ok-sol"><b>¡Listo! Recibimos tu solicitud.</b><br>Te escribimos por WhatsApp o email a la brevedad para confirmarte la disponibilidad. Si se aprueba, te mandamos el link para pagar y reservar.</div><div class="acc"><button type="button" class="btn-res" id="rFin">Entendido</button></div>';
       $('#rFin').onclick = cerrarReserva;
-    } catch (e3) { err('Sin conexión. Probá de nuevo.'); b.disabled = false; b.textContent = txtB; }
+    } catch (e3) { cerrarWin(); err('Sin conexión. Probá de nuevo.'); b.disabled = false; b.textContent = txtB; }
   };
 }
 function cerrarReserva() { const bg = $('#rmodBg'); if (!bg || !bg.classList.contains('open')) return; bg.classList.remove('open'); document.body.style.overflow = ''; try { if (reservar._origen && reservar._origen.focus) reservar._origen.focus(); } catch (e) {} }
@@ -1026,7 +1126,7 @@ document.addEventListener('keydown', function (e) {
   if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
   else if (!e.shiftKey && (document.activeElement === z || !bg.contains(document.activeElement))) { e.preventDefault(); a.focus(); }
 });
-document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarReserva(); });
+document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; const d = $('#docBg.open'); if (d) { d.classList.remove('open'); return; } cerrarReserva(); });
 let cotGen = 0;
 async function cotizar() {
   COT = null;

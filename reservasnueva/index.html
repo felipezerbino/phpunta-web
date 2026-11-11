@@ -208,6 +208,10 @@ body.fsheet-on .fsheet-bg { opacity: 1; pointer-events: auto; }
 @media (min-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr) 42%; } }
 .list { padding: 22px 0 60px; }
 .grid { display: grid; grid-template-columns: 1fr; gap: 28px 22px; }
+.mas-box { position: relative; margin-top: 28px; }
+.grid.peek { max-height: 190px; overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(#000 0%, rgba(0,0,0,.35) 55%, transparent 100%); mask-image: linear-gradient(#000 0%, rgba(0,0,0,.35) 55%, transparent 100%); }
+.btn-mas { display: block; margin: -40px auto 0; position: relative; z-index: 2; background: var(--navy); color: #fff; border: 0; border-radius: 999px; padding: 15px 28px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--sans); box-shadow: 0 14px 30px -14px rgba(13,27,42,.6); cursor: pointer; }
+.btn-mas:hover { background: #1b2d44; }
 @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1600px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
 .mapbox { display: none; }
@@ -527,7 +531,7 @@ body.mapa-movil .topbar { display: none; }
     <main class="list">
       <div class="zona-act" id="zonaAct">Mostrando solo lo que está en la zona del mapa. <button type="button" class="lnk" id="zonaQuitar">Ver todas</button></div>
       <div class="grid" id="grid"></div>
-      <div id="masSent" style="height:1px"></div>
+      <div class="mas-box" id="masBox" hidden><div class="grid peek" id="peek" aria-hidden="true"></div><button type="button" class="btn-mas" id="btnMas">Mostrar más propiedades</button></div>
       <div class="vacio" id="vacio" hidden></div>
     </main>
     <aside class="mapbox" id="mapbox">
@@ -658,7 +662,7 @@ const API = (function () {
 })();
 const BARRIO_NOMBRE = { peninsula: 'Península', mansa: 'Playa Mansa', brava: 'Playa Brava', roosevelt: 'Roosevelt', beverly_hills: 'Beverly Hills', san_rafael: 'San Rafael', la_barra: 'La Barra', manantiales: 'Manantiales', jose_ignacio: 'José Ignacio', punta_ballena: 'Punta Ballena', laguna_sauce: 'Laguna del Sauce', montevideo: 'Montevideo', otro: 'Punta del Este' };
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-const POR_PAGINA = 12;
+const POR_PAGINA = 10;   // Felipe (11-nov): de a 10 y un botón para ver más (así se llega al pie de la página)
 
 // ── Utilidades ───────────────────────────────────────────────────────────────────────────────────────
 const $ = function (s, r) { return (r || document).querySelector(s); };
@@ -884,8 +888,16 @@ function mas() {
   visibles.slice(mostradas, mostradas + POR_PAGINA).forEach(function (p) { frag.appendChild(tarjeta(p)); });
   mostradas = Math.min(visibles.length, mostradas + POR_PAGINA);
   $('#grid').appendChild(frag);
+  // Lo que sigue se deja entrever debajo, desvanecido, con el botón "Mostrar más propiedades".
+  const resto = visibles.length - mostradas;
+  $('#masBox').hidden = resto <= 0;
+  const pk = $('#peek'); pk.innerHTML = '';
+  if (resto > 0) {
+    visibles.slice(mostradas, mostradas + 2).forEach(function (p) { const t = tarjeta(p); t.removeAttribute('href'); t.tabIndex = -1; pk.appendChild(t); });
+    $('#btnMas').textContent = 'Mostrar más propiedades (' + resto + ')';
+  }
 }
-new IntersectionObserver(function (es) { if (es[0].isIntersecting && mostradas < visibles.length) mas(); }, { rootMargin: '800px' }).observe($('#masSent'));
+$('#btnMas').addEventListener('click', function () { const y = window.scrollY; mas(); window.scrollTo(0, y); });
 
 function lineaPrecio(p) {
   if (SELCOT) {
@@ -907,8 +919,8 @@ function lineaPrecio(p) {
     return '<small>Consultá el precio para esas fechas</small>';
   }
   if (p.vitrina) return '<small>Consultá disponibilidad</small>';
-  if (p.desde_noche) return '<small>Desde</small> <b>' + usd(p.desde_noche) + '</b> <small>/ noche</small>';
-  return '<small>Consultá precio y disponibilidad</small>';
+  // Felipe (11-nov): sin "Desde USD …" mientras no hay fechas (la diferencia entre temporadas confunde).
+  return '<small>Elegí tus fechas para ver el precio</small>';
 }
 // Reserva inmediata: solo si la propiedad la tiene y faltan 2 días o más para la llegada elegida (si no, es por solicitud).
 function esInm(p) { if (!p.inmediata) return false; if (!S.llegada) return true; const d = parseIso(S.llegada), h = new Date(); h.setHours(0, 0, 0, 0); return Math.round((d - h) / 86400000) >= 2; }
