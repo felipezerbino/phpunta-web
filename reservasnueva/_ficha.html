@@ -48,11 +48,11 @@ input, select, textarea { font-family: inherit; font-size: 16px; }
 h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; letter-spacing: -.005em; color: var(--navy); }
 .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-deep); }
 
-.nav { background: var(--navy); color: var(--cream); padding: 16px 0; position: sticky; top: 0; z-index: 900; border-bottom: 1px solid var(--border-dark); }
+.nav { background: var(--navy); color: var(--cream); padding: 18px 0; position: sticky; top: 0; z-index: 900; border-bottom: 1px solid var(--border-dark); }
 .nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
 .nav-inner > .logo { margin-right: auto; }
 .logo { display: flex; align-items: center; gap: 12px; color: var(--cream); }
-.logo img { height: 44px; width: auto; }
+.logo img { height: 48px; width: auto; }
 .logo-text { font-family: var(--serif); line-height: 1; }
 .logo-text strong { display: block; font-weight: 400; font-size: 16px; color: var(--gold); letter-spacing: .22em; }
 .logo-text span { display: block; font-weight: 300; font-size: 10px; margin-top: 4px; color: var(--text-on-dark-soft); letter-spacing: .3em; }
@@ -64,7 +64,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .nav-burger span { position: relative; } .nav-burger span::before, .nav-burger span::after { content: ''; position: absolute; left: 0; }
 .nav-burger span::before { top: -6px; } .nav-burger span::after { top: 6px; }
 @media (min-width: 1000px) { .nav-links { display: flex; } .nav-burger { display: none; } }
-.mobile-menu { position: fixed; inset: 0; background: var(--navy); z-index: 880; transform: translateY(-100%); transition: transform .5s var(--ease); padding: 110px 32px 40px; }
+.mobile-menu { position: fixed; inset: 0; background: var(--navy); z-index: 880; transform: translateY(-100%); transition: transform .5s var(--ease); padding: 140px 32px 40px; }
 .mobile-menu.open { transform: none; }
 .mobile-menu ul { list-style: none; } .mobile-menu li { border-bottom: 1px solid var(--border-dark); }
 .mobile-menu a { display: block; font-family: var(--serif); font-size: 2.1rem; color: var(--cream); padding: 18px 0; font-weight: 300; }
@@ -184,29 +184,44 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .mk-casa { background: var(--navy); border: 2px solid var(--gold); border-radius: 50%; width: 38px !important; height: 38px !important; display: flex; align-items: center; justify-content: center; }
 .mk-casa svg { width: 18px; height: 18px; color: var(--gold); }
 
-/* CALENDARIO */
-.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.cal-nav { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border-light); background: #fff; color: var(--navy); font-size: 16px; }
-.cal-nav:disabled { opacity: .3; }
-.cal-months { display: grid; grid-template-columns: 1fr; gap: 26px; }
-@media (min-width: 640px) { .cal-months.dos { grid-template-columns: 1fr 1fr; } }
+/* CALENDARIO (v3: 12 meses, llegada y salida, "solo salida") */
+.cal-head { margin-bottom: 10px; min-height: 22px; }
+.cal-txt { font-size: 14.5px; color: var(--text-soft); }
+.cal-txt b { color: var(--navy); font-weight: 600; }
+.cal-aviso { color: #8a5a1c; background: #fbf3e2; border: 1px solid #ecd6a6; border-radius: 3px; padding: 6px 10px; display: inline-block; font-size: 13.5px; }
+.cal-chips { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 10px; scrollbar-width: thin; }
+.cal-chip { flex: 0 0 auto; border: 1px solid var(--border-light); background: #fff; border-radius: 3px; padding: 6px 10px; font-size: 12.5px; color: var(--navy); text-transform: capitalize; line-height: 1.2; text-align: center; }
+.cal-chip small { display: block; font-size: 10.5px; color: #3c7a52; text-transform: none; margin-top: 1px; }
+.cal-chip.lleno { color: var(--text-muted); } .cal-chip.lleno small { color: var(--text-muted); }
+.cal-chip:hover { border-color: var(--navy); }
+.cal-scroll { max-height: 460px; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--border-light); border-radius: 3px; background: #fff; padding: 14px 12px; }
+@media (min-width: 640px) { .cal-scroll { max-height: 600px; padding: 18px 20px; } }
+.cal-months { display: grid; grid-template-columns: 1fr; gap: 26px 34px; }
+.cal-months.dos { grid-template-columns: 1fr 1fr; }
 .cal-m h4 { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; text-align: center; margin-bottom: 8px; text-transform: capitalize; }
-.cal-g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px 0; }
+.cal-g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
 .cal-g .dw { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); text-align: center; padding: 4px 0; }
-.cal-d { aspect-ratio: 1 / 1; border: 0; background: none; font-size: 14px; color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1; border-radius: 50%; min-height: 40px; }
-.cal-d small { font-size: 9.5px; color: var(--text-muted); margin-top: 1px; }
-.cal-d:hover:not(:disabled) { outline: 1px solid var(--navy); outline-offset: -1px; }
-.cal-d:disabled { color: #c3c6cc; cursor: default; }
-.cal-d.ocup { color: #c3c6cc; text-decoration: line-through; }
-.cal-d.ocup small { display: none; }
-.cal-d.inrange { background: var(--cream-warm); border-radius: 0; }
-.cal-d.sel { background: var(--navy); color: var(--cream); }
-.cal-d.sel small { color: var(--gold-soft); }
+.cal-d { aspect-ratio: 1 / 1; border: 0; background: none; font-size: 14px; color: var(--text); display: flex; align-items: center; justify-content: center; line-height: 1; border-radius: 3px; min-height: 38px; }
+.cal-d.lib { background: #eaf4ec; color: #1f4d30; font-weight: 600; }
+.cal-d.lib:hover { outline: 2px solid var(--navy); outline-offset: -2px; }
+.cal-d.lib.fuera { background: #f2f6f2; color: #7c9a85; font-weight: 500; }
+.cal-d.ocup { background: repeating-linear-gradient(135deg, #eef0f3 0 5px, #e3e6eb 5px 10px); color: #a6acb5; text-decoration: line-through; cursor: not-allowed; }
+.cal-d.sal { background: linear-gradient(135deg, #eaf4ec 0 50%, #dfe3e8 50% 100%); color: #1f4d30; font-weight: 600; }
+.cal-d.sal:hover { outline: 2px solid var(--navy); outline-offset: -2px; }
+.cal-d.pas { color: #cfd3d8; cursor: default; }
+.cal-d.inrange { background: var(--cream-paper); color: var(--navy); }
+.cal-d.sel { background: var(--navy); color: var(--cream); text-decoration: none; }
 .cal-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--text-soft); }
+.cal-ley { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.cal-ley .lg { display: inline-block; width: 16px; height: 16px; border-radius: 3px; vertical-align: -3px; margin-left: 6px; }
+.cal-ley .lg:first-child { margin-left: 0; }
+.cal-ley .lg.lib { background: #eaf4ec; border: 1px solid #b9d9c2; }
+.cal-ley .lg.ocup { background: repeating-linear-gradient(135deg, #eef0f3 0 4px, #dde1e6 4px 8px); border: 1px solid #d3d7dd; }
+.cal-ley .lg.sal { background: linear-gradient(135deg, #eaf4ec 0 50%, #dfe3e8 50% 100%); border: 1px solid #c9d0d7; }
 .lnk { background: none; border: 0; text-decoration: underline; color: var(--navy); font-size: 13px; }
 
 /* RESERVA */
-.box { position: sticky; top: 100px; background: #fff; border: 1px solid var(--border-light); border-radius: 3px; padding: 24px; box-shadow: 0 30px 60px -40px rgba(13,27,42,.4); }
+.box { position: sticky; top: 108px; background: #fff; border: 1px solid var(--border-light); border-radius: 3px; padding: 24px; box-shadow: 0 30px 60px -40px rgba(13,27,42,.4); }
 .box .px { font-size: 15px; color: var(--text-soft); margin-bottom: 16px; }
 .box .px b { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; color: var(--navy); }
 .bsel { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(13,27,42,.25); border-radius: 3px; }
@@ -246,8 +261,6 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .retirada { padding: 90px 0; text-align: center; }
 .retirada h1 { margin-bottom: 14px; }
 .cargando { padding: 90px 0; text-align: center; color: var(--text-muted); }
-footer { background: var(--navy-deep); color: var(--text-on-dark); padding: 50px 0 28px; }
-.footer-legal { font-size: 11px; color: var(--text-on-dark-soft); letter-spacing: .08em; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; border-top: 1px solid var(--border-dark); padding-top: 22px; margin-top: 22px; }
 footer a:hover { color: var(--gold); }
 .leaflet-tile-pane { filter: grayscale(.82) sepia(.14) brightness(1.04) contrast(.92); }
 /* v2.741: política de cancelación y reserva online */
@@ -283,9 +296,164 @@ footer a:hover { color: var(--gold); }
 .modo-nota { font-size: 12.5px; color: var(--text-muted); text-align: center; margin-top: 8px; line-height: 1.5; }
 .rmod textarea { width: 100%; box-sizing: border-box; border: 1px solid var(--border-light); border-radius: 3px; padding: 12px; font-size: 16px; font-family: inherit; min-height: 74px; resize: vertical; }
 .rmod .ok-sol { padding: 6px 0 4px; font-size: 15px; line-height: 1.6; }
+/* TOPBAR y PIE: copiados tal cual de la web (index.html) */
+.topbar-inner { max-width: var(--maxw); }
+/* ---------- TOPBAR SUPERIOR ---------- */
+.topbar {
+  background: var(--navy);
+  border-bottom: 1px solid rgba(240, 236, 224, 0.08);
+  padding: 8px 0;
+  font-size: 11px;
+  color: var(--text-on-dark-soft);
+  letter-spacing: .08em;
+}
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  min-height: 24px;
+}
+.topbar-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.topbar-socials a {
+  color: var(--text-on-dark-soft);
+  display: grid;
+  place-items: center;
+  width: 22px; height: 22px;
+  transition: color .2s;
+  border: none;
+}
+.topbar-socials a:hover { color: var(--gold); }
+.topbar-socials svg { width: 13px; height: 13px; display: block; }
+.topbar-langs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.topbar-langs a, .topbar-langs span {
+  color: var(--text-on-dark);
+  text-decoration: none;
+  padding: 2px 4px;
+  transition: color .2s;
+  border: none !important;
+}
+.topbar-langs a { cursor: pointer; }
+.topbar-langs a:hover { color: var(--gold); }
+.topbar-langs span.active { color: var(--gold); }
+.topbar-langs .sep { color: rgba(240, 236, 224, 0.3); padding: 0; }
+@media (max-width: 640px) {
+  .topbar { padding: 6px 0; font-size: 10px; }
+  .topbar-socials { gap: 12px; }
+  .topbar-langs { gap: 6px; }
+}
+
+footer {
+  background: var(--navy-deep);
+  color: var(--text-on-dark);
+  padding: 80px 0 32px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  margin-bottom: 60px;
+}
+.footer-brand .logo { margin-bottom: 24px; }
+.footer-brand p {
+  color: var(--text-on-dark-soft);
+  max-width: 34ch;
+  font-size: .92rem;
+  line-height: 1.7;
+}
+.footer-col h4 {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 11px; }
+.footer-col a {
+  font-size: .92rem;
+  color: var(--text-on-dark);
+  transition: color .2s;
+}
+.footer-col a:hover { color: var(--gold); }
+.footer-socials {
+  display: flex; gap: 10px; margin-top: 28px;
+}
+.footer-socials a {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-dark);
+  display: grid; place-items: center;
+  transition: all .3s var(--ease);
+  color: var(--text-on-dark-soft);
+}
+.footer-socials a:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-3px);
+}
+.footer-socials svg { width: 15px; height: 15px; }
+.footer-legal {
+  padding: 28px 0 0;
+  border-top: 1px solid var(--border-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--text-on-dark-soft);
+  letter-spacing: .08em;
+}
+.footer-legal-row {
+  display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center;
+}
+.footer-legal .sep { color: rgba(240, 236, 224, .25); }
+@media (min-width: 700px) {
+  .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; }
+  .footer-legal { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+
+.footer-legal a { color: inherit; } .footer-legal a:hover { color: var(--gold); }
+body.mapa-movil .topbar { display: none; }
 </style>
 </head>
 <body>
+<!-- TOPBAR SUPERIOR -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-socials">
+      <a href="https://www.facebook.com/premiumhostpunta" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.1.3-1.9 1.9-1.9H17V2.1C16.6 2.1 15.3 2 13.8 2 10.7 2 8.5 3.8 8.5 7.2V10H5v4h3.5v8H13z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/premiumhostpunta/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="LinkedIn de Felipe Zerbino">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
+      </a>
+    </div>
+    <div class="topbar-langs">
+      <span class="active">ES</span>
+      <span class="sep">·</span>
+      <a href="/pt/index.html" hreflang="pt">PT</a>
+      <span class="sep">·</span>
+      <a href="/en/index.html" hreflang="en">EN</a>
+    </div>
+  </div>
+</div>
+
 <nav class="nav">
   <div class="container nav-inner">
     <a href="/index.html" class="logo">
@@ -313,13 +481,72 @@ footer a:hover { color: var(--gold); }
   <div class="cargando" id="cargando"><h1 style="font-weight:300">__TITULO__</h1><p style="margin-top:10px">Cargando…</p></div>
 </div>
 
-<footer>
+<footer data-bg="dark">
   <div class="container">
-    <div style="display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between;align-items:center">
-      <a href="/index.html" class="logo"><span class="logo-text"><strong>PHPUNTA</strong><span>Premium Host Punta</span></span></a>
-      <div style="font-size:.92rem;display:flex;gap:22px;flex-wrap:wrap"><a href="/reservasnueva/">Reservas</a><a href="/propietarios.html">Propietarios</a><a href="/contacto.html">Contacto</a><a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">+598 99 716 681</a></div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/index.html" class="logo">
+          <img src="/assets/img/logo.webp" alt="Premium Host Punta" />
+        </a>
+        <p>Gestión premium de alquileres vacacionales en Punta del Este, La Barra, Manantiales, Punta Ballena, Montevideo y Rocha.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/premiumhostpunta/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/premiumhostpunta" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.1.3-1.9 1.9-1.9H17V2.1C16.6 2.1 15.3 2 13.8 2 10.7 2 8.5 3.8 8.5 7.2V10H5v4h3.5v8H13z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="LinkedIn de Felipe Zerbino">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.5.8 3.4.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="/index.html">Inicio</a></li>
+          <li><a href="/reservasnueva/">Reservas</a></li>
+          <li><a href="/como-trabajamos.html">Cómo trabajamos</a></li>
+          <li><a href="/conocenos.html">Conócenos</a></li>
+          <li><a href="/propietarios.html">Propietarios</a></li>
+          <li><a href="/contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">+598 99 716 681</a></li>
+          <li><a href="mailto:info@phpunta.uy">info@phpunta.uy</a></li>
+          <li>Punta del Este, Uruguay</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/aviso-legal.html">Aviso legal</a></li>
+          <li><a href="/condiciones-generales.html">Condiciones generales</a></li>
+          <li><a href="/politica-privacidad.html">Política de privacidad</a></li>
+          <li><a href="/politica-cookies.html">Política de cookies</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-legal"><span>© 2026 Premium Host Punta SAS · RUT 220520320015 · Registro MINTUR N°2011</span><span><a href="/condiciones-generales.html">Condiciones generales</a> · <a href="/politica-privacidad.html">Privacidad</a></span></div>
+
+    <div class="footer-legal">
+      <div class="footer-legal-row">
+        <span>© 2026 Premium Host Punta SAS</span>
+        <span class="sep">·</span>
+        <span>RUT 220520320015</span>
+        <span class="sep">·</span>
+        <span>Registro MINTUR N°2011</span>
+      </div>
+      <div>Punta del Este · Uruguay</div>
+    </div>
   </div>
 </footer>
 <div class="lb" id="lb"><button class="lb-x" id="lbX" aria-label="Cerrar">×</button><div class="lb-sc" id="lbSc"></div></div>
@@ -374,52 +601,86 @@ function urlEstado() {
 
 // ── Calendario de rango (mismo componente que el buscador) ──────────────────────────────────────────
 function Calendario(host, opt) {
+  // v3 (Felipe, 11-nov): los 12 meses que vienen a la vista (con atajos por mes), se elige LLEGADA y SALIDA,
+  // y un día cuya noche está ocupada pero la anterior libre se puede elegir como salida ("solo salida").
   const self = { ini: opt.ini || '', fin: opt.fin || '' };
-  const base = parseIso(self.ini) || new Date();
-  self.mes = new Date(base.getFullYear(), base.getMonth(), 1);
   const minMes = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-  const maxMes = new Date(minMes.getFullYear(), minMes.getMonth() + 13, 1);
-  function dos() { return window.matchMedia('(min-width: 640px)').matches && host.clientWidth > 560; }
+  const MESES_N = 13;   // el mes en curso + los 12 que vienen
+  let aviso = '';
+  const libre = function (f) { return f >= hoyIso && !opt.ocupado(f); };
+  const ant = function (f) { const d = parseIso(f); d.setDate(d.getDate() - 1); return iso(d); };
+  const soloSalida = function (f) { return f > hoyIso && opt.ocupado(f) && libre(ant(f)); };
   function libreRango(a, b) { for (let d = parseIso(a); iso(d) < b; d.setDate(d.getDate() + 1)) if (opt.ocupado(iso(d))) return false; return true; }
-  function mesHtml(m) {
+  function ultimaSalida(a) { const d = parseIso(a); for (let g = 0; g < 400; g++) { d.setDate(d.getDate() + 1); if (opt.ocupado(iso(d))) return iso(d); } return ''; }
+  function mesHtml(m, k) {
     const y = m.getFullYear(), mo = m.getMonth();
-    let h = '<div class="cal-m"><h4>' + MESES[mo] + ' ' + y + '</h4><div class="cal-g">';
+    let h = '<div class="cal-m" data-mes="' + k + '"><h4>' + MESES[mo] + ' ' + y + '</h4><div class="cal-g">';
     ['lu', 'ma', 'mi', 'ju', 'vi', 'sá', 'do'].forEach(function (d) { h += '<span class="dw">' + d + '</span>'; });
     const pad = (new Date(y, mo, 1).getDay() + 6) % 7;
     for (let i = 0; i < pad; i++) h += '<span></span>';
     const dias = new Date(y, mo + 1, 0).getDate();
+    const eligeSalida = self.ini && !self.fin;
     for (let d = 1; d <= dias; d++) {
       const f = iso(new Date(y, mo, d));
-      let cls = 'cal-d', dis = f < hoyIso;
-      const oc = opt.ocupado(f);
-      if (self.ini && !self.fin && f > self.ini) dis = dis || !libreRango(self.ini, f);
-      else if (oc) { dis = true; cls += ' ocup'; }
+      let cls = 'cal-d', dis = false, tit = '';
+      if (f < hoyIso) { cls += ' pas'; dis = true; }
+      else if (eligeSalida && f > self.ini) {
+        if (libreRango(self.ini, f)) { cls += libre(f) ? ' lib' : ' sal'; tit = 'Salida posible'; }
+        else if (libre(f)) { cls += ' lib fuera'; tit = 'Hay noches ocupadas antes: tocalo para empezar una nueva llegada'; }
+        else { cls += ' ocup'; dis = true; tit = 'No disponible'; }
+      } else if (libre(f)) { cls += ' lib'; tit = 'Disponible'; }
+      else if (soloSalida(f)) { cls += ' sal'; tit = 'Solo como día de salida'; }
+      else { cls += ' ocup'; dis = true; tit = 'No disponible'; }
       if (f === self.ini || f === self.fin) cls += ' sel';
       else if (self.ini && self.fin && f > self.ini && f < self.fin) cls += ' inrange';
-      h += '<button type="button" class="' + cls + '" data-f="' + f + '"' + (dis ? ' disabled' : '') + '>' + d + '</button>';
+      h += '<button type="button" class="' + cls + '" data-f="' + f + '" title="' + tit + '"' + (dis ? ' disabled' : '') + ' aria-label="' + d + ' de ' + MESES[mo] + ': ' + tit + '">' + d + '</button>';
     }
     return h + '</div></div>';
   }
-  self.render = function () {
-    const m2 = new Date(self.mes.getFullYear(), self.mes.getMonth() + 1, 1);
+  function cabecera() {
+    if (aviso) return '<span class="cal-aviso">' + aviso + '</span>';
+    if (self.ini && !self.fin) { const u = ultimaSalida(self.ini); return 'Llegada ' + fechaCorta(self.ini) + ' · ahora elegí la <b>salida</b>' + (u ? ' (podés salir hasta el ' + fechaCorta(u) + ')' : ''); }
     const n = self.ini && self.fin ? noches(self.ini, self.fin) : 0;
-    host.innerHTML = '<div class="cal-head"><button type="button" class="cal-nav" data-nav="-1" ' + (self.mes <= minMes ? 'disabled' : '') + ' aria-label="Mes anterior">‹</button>' +
-      '<span style="font-size:13.5px;color:var(--text-soft)">' + (self.ini && !self.fin ? 'Elegí la fecha de salida' : (n ? n + (n === 1 ? ' noche' : ' noches') + ' · ' + fechaCorta(self.ini) + ' – ' + fechaCorta(self.fin) : 'Elegí la fecha de llegada')) + '</span>' +
-      '<button type="button" class="cal-nav" data-nav="1" ' + (self.mes >= maxMes ? 'disabled' : '') + ' aria-label="Mes siguiente">›</button></div>' +
-      '<div class="cal-months' + (dos() ? ' dos' : '') + '">' + mesHtml(self.mes) + (dos() ? mesHtml(m2) : '') + '</div>' +
-      '<div class="cal-foot"><button type="button" class="lnk" data-borrar="1">Borrar fechas</button><span>Tachado = no disponible</span></div>';
+    return n ? '<b>' + n + (n === 1 ? ' noche' : ' noches') + '</b> · ' + fechaCorta(self.ini) + ' – ' + fechaCorta(self.fin) : 'Elegí tu <b>llegada</b> y después tu <b>salida</b>';
+  }
+  self.render = function () {
+    const sc = host.querySelector('.cal-scroll'), top = sc ? sc.scrollTop : null;
+    let chips = '', meses = '';
+    for (let k = 0; k < MESES_N; k++) {
+      const m = new Date(minMes.getFullYear(), minMes.getMonth() + k, 1);
+      let libres = 0; const dm = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
+      for (let d = 1; d <= dm; d++) if (libre(iso(new Date(m.getFullYear(), m.getMonth(), d)))) libres++;
+      chips += '<button type="button" class="cal-chip' + (libres ? '' : ' lleno') + '" data-ir="' + k + '">' + MESES[m.getMonth()].slice(0, 3) + (m.getMonth() === 0 || k === 0 ? ' ' + String(m.getFullYear()).slice(2) : '') + '<small>' + (libres ? libres + ' libres' : 'completo') + '</small></button>';
+      meses += mesHtml(m, k);
+    }
+    host.innerHTML = '<div class="cal-head"><span class="cal-txt">' + cabecera() + '</span></div>' +
+      '<div class="cal-chips" aria-label="Ir a un mes">' + chips + '</div>' +
+      '<div class="cal-scroll"><div class="cal-months' + (host.clientWidth > 560 ? ' dos' : '') + '">' + meses + '</div></div>' +
+      '<div class="cal-foot"><span class="cal-ley"><i class="lg lib"></i>Disponible<i class="lg ocup"></i>No disponible<i class="lg sal"></i>Solo salida</span><button type="button" class="lnk" data-borrar="1">Borrar fechas</button></div>';
+    if (top != null) host.querySelector('.cal-scroll').scrollTop = top;
+  };
+  self.irA = function (f) {
+    const d = parseIso(f); if (!d) return;
+    const k = (d.getFullYear() - minMes.getFullYear()) * 12 + d.getMonth() - minMes.getMonth();
+    const sc = host.querySelector('.cal-scroll'), el = host.querySelector('.cal-m[data-mes="' + Math.max(0, Math.min(MESES_N - 1, k)) + '"]');
+    if (sc && el) sc.scrollTop = el.offsetTop - sc.offsetTop - 4;
   };
   host.addEventListener('click', function (e) {
-    const nav = e.target.closest('[data-nav]');
-    if (nav) { self.mes = new Date(self.mes.getFullYear(), self.mes.getMonth() + Number(nav.dataset.nav), 1); return self.render(); }
-    if (e.target.closest('[data-borrar]')) { self.ini = ''; self.fin = ''; self.render(); opt.cambio('', ''); return; }
+    const ir = e.target.closest('[data-ir]');
+    if (ir) { const sc = host.querySelector('.cal-scroll'), el = host.querySelector('.cal-m[data-mes="' + ir.dataset.ir + '"]'); if (sc && el) sc.scrollTo({ top: el.offsetTop - sc.offsetTop - 4, behavior: 'smooth' }); return; }
+    if (e.target.closest('[data-borrar]')) { self.ini = ''; self.fin = ''; aviso = ''; self.render(); opt.cambio('', ''); return; }
     const b = e.target.closest('.cal-d'); if (!b || b.disabled) return;
     const f = b.dataset.f;
-    if (!self.ini || self.fin || f <= self.ini) { self.ini = f; self.fin = ''; } else self.fin = f;
+    aviso = '';
+    if (self.ini && !self.fin && f > self.ini && !b.classList.contains('fuera')) { self.fin = f; }
+    else if (b.classList.contains('sal')) { aviso = 'El ' + fechaCorta(f) + ' entra otro grupo: ese día solo sirve como <b>salida</b>. Elegí primero tu llegada.'; self.render(); return; }
+    else { self.ini = f; self.fin = ''; }
     self.render(); opt.cambio(self.ini, self.fin);
   });
-  window.addEventListener('resize', function () { self.render(); });
+  let anchoPrev = host.clientWidth;
+  window.addEventListener('resize', function () { if ((host.clientWidth > 560) !== (anchoPrev > 560)) self.render(); anchoPrev = host.clientWidth; });
   self.render();
+  setTimeout(function () { if (self.ini) self.irA(self.ini); }, 0);
   return self;
 }
 
@@ -767,7 +1028,7 @@ async function cotizar() {
   } catch (e) { if (g !== cotGen) return; COT = { estado: 'error', msg: e.status === 429 ? 'Demasiadas consultas seguidas. Probá en un minuto.' : 'No pudimos calcular el precio en este momento.' }; }
   pintarBox();
   const cot = $('#cot');
-  cot.querySelectorAll('[data-w]').forEach(function (b) { b.onclick = function () { const w = b.dataset.w.split('|'); S.llegada = w[0]; S.salida = w[1]; calendario.ini = w[0]; calendario.fin = w[1]; calendario.mes = new Date(parseIso(w[0]).getFullYear(), parseIso(w[0]).getMonth(), 1); calendario.render(); urlEstado(); cotizar(); }; });
+  cot.querySelectorAll('[data-w]').forEach(function (b) { b.onclick = function () { const w = b.dataset.w.split('|'); S.llegada = w[0]; S.salida = w[1]; calendario.ini = w[0]; calendario.fin = w[1]; calendario.render(); calendario.irA(w[0]); urlEstado(); cotizar(); }; });
 }
 
 $('#burger').addEventListener('click', function () { $('#mobileMenu').classList.toggle('open'); });

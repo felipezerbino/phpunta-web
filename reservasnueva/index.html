@@ -44,11 +44,11 @@ em { font-style: italic; font-weight: 300; }
 .eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; opacity: .6; }
 
 /* NAV (idéntico al de la web) */
-.nav { background: var(--navy); color: var(--cream); padding: 16px 0; position: sticky; top: 0; z-index: 900; border-bottom: 1px solid var(--border-dark); }
+.nav { background: var(--navy); color: var(--cream); padding: 18px 0; position: sticky; top: 0; z-index: 900; border-bottom: 1px solid var(--border-dark); }
 .nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
 .nav-inner > .logo { margin-right: auto; }
 .logo { display: flex; align-items: center; gap: 12px; color: var(--cream); }
-.logo img { height: 44px; width: auto; }
+.logo img { height: 48px; width: auto; }
 .logo-text { font-family: var(--serif); line-height: 1; }
 .logo-text strong { display: block; font-weight: 400; font-size: 16px; color: var(--gold); letter-spacing: .22em; }
 .logo-text span { display: block; font-weight: 300; font-size: 10px; margin-top: 4px; color: var(--text-on-dark-soft); letter-spacing: .3em; }
@@ -63,7 +63,7 @@ em { font-style: italic; font-weight: 300; }
 .nav-burger span::before, .nav-burger span::after { content: ''; position: absolute; left: 0; }
 .nav-burger span::before { top: -6px; } .nav-burger span::after { top: 6px; }
 @media (min-width: 1000px) { .nav-links { display: flex; } .nav-burger { display: none; } }
-.mobile-menu { position: fixed; inset: 0; background: var(--navy); z-index: 880; transform: translateY(-100%); transition: transform .5s var(--ease); padding: 110px 32px 40px; overflow-y: auto; }
+.mobile-menu { position: fixed; inset: 0; background: var(--navy); z-index: 880; transform: translateY(-100%); transition: transform .5s var(--ease); padding: 140px 32px 40px; overflow-y: auto; }
 .mobile-menu.open { transform: none; }
 .mobile-menu ul { list-style: none; }
 .mobile-menu li { border-bottom: 1px solid var(--border-dark); }
@@ -163,7 +163,7 @@ body.ver-sel .layout { grid-template-columns: 1fr !important; }
 .btn-navy { background: var(--navy); color: var(--cream); border: 0; padding: 11px 20px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; border-radius: 2px; }
 
 /* FILTROS */
-.fbar { position: sticky; top: 77px; z-index: 800; background: var(--cream); border-bottom: 1px solid var(--border-light); }
+.fbar { position: sticky; top: 85px; z-index: 800; background: var(--cream); border-bottom: 1px solid var(--border-light); }
 .fbar-in { display: flex; gap: 8px; align-items: center; overflow-x: auto; padding-top: 12px; padding-bottom: 12px; scrollbar-width: none; }
 .ph img { color: transparent; }
 .fbar-in::-webkit-scrollbar { display: none; }
@@ -211,9 +211,9 @@ body.fsheet-on .fsheet-bg { opacity: 1; pointer-events: auto; }
 @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1600px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
 .mapbox { display: none; }
-@media (min-width: 1100px) { .mapbox { display: block; position: sticky; top: 134px; height: calc(100vh - 134px); padding: 16px 0 16px 22px; } }
+@media (min-width: 1100px) { .mapbox { display: block; position: sticky; top: 142px; height: calc(100vh - 142px); padding: 16px 0 16px 22px; } }
 #map { width: 100%; height: 100%; border-radius: 3px; background: #e8e4da; }
-body.mapa-movil .mapbox { display: block; position: fixed; inset: 77px 0 0 0; z-index: 850; padding: 0; height: auto; }
+body.mapa-movil .mapbox { display: block; position: fixed; inset: 85px 0 0 0; z-index: 850; padding: 0; height: auto; }
 body.mapa-movil #map { border-radius: 0; }
 .map-search { position: absolute; z-index: 860; top: 30px; left: 50%; transform: translateX(-50%); display: none; }
 body.mapa-movil .map-search { top: 16px; }
@@ -288,19 +288,167 @@ body.mapa-movil .map-auto { bottom: 86px; left: 16px; }
 .hi p { color: var(--text-soft); font-size: .95rem; }
 
 /* FOOTER */
-footer { background: var(--navy-deep); color: var(--text-on-dark); padding: 60px 0 28px; }
-.footer-grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
-.footer-col h4 { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-.footer-col ul { list-style: none; } .footer-col li { margin-bottom: 9px; } .footer-col a { font-size: .92rem; } .footer-col a:hover { color: var(--gold); }
-.footer-brand p { color: var(--text-on-dark-soft); max-width: 34ch; font-size: .92rem; margin-top: 18px; }
-.footer-legal { padding-top: 24px; border-top: 1px solid var(--border-dark); font-size: 11px; color: var(--text-on-dark-soft); letter-spacing: .08em; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
-@media (min-width: 700px) { .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; } }
 .wa-float { position: fixed; bottom: 22px; right: 22px; width: 56px; height: 56px; background: #25d366; border-radius: 50%; display: grid; place-items: center; color: #fff; box-shadow: 0 12px 32px rgba(37,211,102,.42); z-index: 860; }
 .wa-float svg { width: 28px; height: 28px; }
 body.mapa-movil .wa-float { display: none; }
+/* TOPBAR y PIE: copiados tal cual de la web (index.html) */
+.topbar-inner { max-width: var(--maxw); }
+/* ---------- TOPBAR SUPERIOR ---------- */
+.topbar {
+  background: var(--navy);
+  border-bottom: 1px solid rgba(240, 236, 224, 0.08);
+  padding: 8px 0;
+  font-size: 11px;
+  color: var(--text-on-dark-soft);
+  letter-spacing: .08em;
+}
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  min-height: 24px;
+}
+.topbar-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.topbar-socials a {
+  color: var(--text-on-dark-soft);
+  display: grid;
+  place-items: center;
+  width: 22px; height: 22px;
+  transition: color .2s;
+  border: none;
+}
+.topbar-socials a:hover { color: var(--gold); }
+.topbar-socials svg { width: 13px; height: 13px; display: block; }
+.topbar-langs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.topbar-langs a, .topbar-langs span {
+  color: var(--text-on-dark);
+  text-decoration: none;
+  padding: 2px 4px;
+  transition: color .2s;
+  border: none !important;
+}
+.topbar-langs a { cursor: pointer; }
+.topbar-langs a:hover { color: var(--gold); }
+.topbar-langs span.active { color: var(--gold); }
+.topbar-langs .sep { color: rgba(240, 236, 224, 0.3); padding: 0; }
+@media (max-width: 640px) {
+  .topbar { padding: 6px 0; font-size: 10px; }
+  .topbar-socials { gap: 12px; }
+  .topbar-langs { gap: 6px; }
+}
+
+footer {
+  background: var(--navy-deep);
+  color: var(--text-on-dark);
+  padding: 80px 0 32px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  margin-bottom: 60px;
+}
+.footer-brand .logo { margin-bottom: 24px; }
+.footer-brand p {
+  color: var(--text-on-dark-soft);
+  max-width: 34ch;
+  font-size: .92rem;
+  line-height: 1.7;
+}
+.footer-col h4 {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 11px; }
+.footer-col a {
+  font-size: .92rem;
+  color: var(--text-on-dark);
+  transition: color .2s;
+}
+.footer-col a:hover { color: var(--gold); }
+.footer-socials {
+  display: flex; gap: 10px; margin-top: 28px;
+}
+.footer-socials a {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-dark);
+  display: grid; place-items: center;
+  transition: all .3s var(--ease);
+  color: var(--text-on-dark-soft);
+}
+.footer-socials a:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-3px);
+}
+.footer-socials svg { width: 15px; height: 15px; }
+.footer-legal {
+  padding: 28px 0 0;
+  border-top: 1px solid var(--border-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--text-on-dark-soft);
+  letter-spacing: .08em;
+}
+.footer-legal-row {
+  display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center;
+}
+.footer-legal .sep { color: rgba(240, 236, 224, .25); }
+@media (min-width: 700px) {
+  .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; }
+  .footer-legal { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+
+.footer-legal a { color: inherit; } .footer-legal a:hover { color: var(--gold); }
+body.mapa-movil .topbar { display: none; }
 </style>
 </head>
 <body>
+
+<!-- TOPBAR SUPERIOR -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-socials">
+      <a href="https://www.facebook.com/premiumhostpunta" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.1.3-1.9 1.9-1.9H17V2.1C16.6 2.1 15.3 2 13.8 2 10.7 2 8.5 3.8 8.5 7.2V10H5v4h3.5v8H13z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/premiumhostpunta/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="LinkedIn de Felipe Zerbino">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
+      </a>
+    </div>
+    <div class="topbar-langs">
+      <span class="active">ES</span>
+      <span class="sep">·</span>
+      <a href="/pt/index.html" hreflang="pt">PT</a>
+      <span class="sep">·</span>
+      <a href="/en/index.html" hreflang="en">EN</a>
+    </div>
+  </div>
+</div>
 
 <nav class="nav" id="nav">
   <div class="container nav-inner">
@@ -427,18 +575,72 @@ body.mapa-movil .wa-float { display: none; }
 </div>
 <button type="button" class="fab-map" id="fabMap"><span id="fabTxt">Mapa</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Zm0 0v14m6-12v14"/></svg></button>
 
-<footer>
+<footer data-bg="dark">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="/index.html" class="logo"><span class="logo-text"><strong>PHPUNTA</strong><span>Premium Host Punta</span></span></a>
+        <a href="/index.html" class="logo">
+          <img src="/assets/img/logo.webp" alt="Premium Host Punta" />
+        </a>
         <p>Gestión premium de alquileres vacacionales en Punta del Este, La Barra, Manantiales, Punta Ballena, Montevideo y Rocha.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/premiumhostpunta/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/premiumhostpunta" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.1.3-1.9 1.9-1.9H17V2.1C16.6 2.1 15.3 2 13.8 2 10.7 2 8.5 3.8 8.5 7.2V10H5v4h3.5v8H13z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="LinkedIn de Felipe Zerbino">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.5.8 3.4.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+          </a>
+        </div>
       </div>
-      <div class="footer-col"><h4>Navegación</h4><ul><li><a href="/index.html">Inicio</a></li><li><a href="/reservasnueva/">Reservas</a></li><li><a href="/como-trabajamos.html">Cómo trabajamos</a></li><li><a href="/propietarios.html">Propietarios</a></li><li><a href="/contacto.html">Contacto</a></li></ul></div>
-      <div class="footer-col"><h4>Contacto</h4><ul><li><a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">+598 99 716 681</a></li><li><a href="mailto:info@phpunta.uy">info@phpunta.uy</a></li><li>Punta del Este, Uruguay</li></ul></div>
-      <div class="footer-col"><h4>Legal</h4><ul><li><a href="/condiciones-generales.html">Condiciones generales</a></li><li><a href="/politica-privacidad.html">Política de privacidad</a></li><li><a href="?equipo=1" rel="nofollow">Acceso equipo</a></li><li><a href="/politica-cookies.html">Política de cookies</a></li></ul></div>
+
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="/index.html">Inicio</a></li>
+          <li><a href="/reservasnueva/">Reservas</a></li>
+          <li><a href="/como-trabajamos.html">Cómo trabajamos</a></li>
+          <li><a href="/conocenos.html">Conócenos</a></li>
+          <li><a href="/propietarios.html">Propietarios</a></li>
+          <li><a href="/contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">+598 99 716 681</a></li>
+          <li><a href="mailto:info@phpunta.uy">info@phpunta.uy</a></li>
+          <li>Punta del Este, Uruguay</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/aviso-legal.html">Aviso legal</a></li>
+          <li><a href="/condiciones-generales.html">Condiciones generales</a></li>
+          <li><a href="/politica-privacidad.html">Política de privacidad</a></li>
+          <li><a href="/politica-cookies.html">Política de cookies</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-legal"><span>© 2026 Premium Host Punta SAS · RUT 220520320015 · Registro MINTUR N°2011</span><span>Punta del Este · Uruguay</span></div>
+
+    <div class="footer-legal">
+      <div class="footer-legal-row">
+        <span>© 2026 Premium Host Punta SAS</span>
+        <span class="sep">·</span>
+        <span>RUT 220520320015</span>
+        <span class="sep">·</span>
+        <span>Registro MINTUR N°2011</span>
+      </div>
+      <div>Punta del Este · Uruguay <span class="sep">·</span> <a href="?equipo=1" rel="nofollow" class="acc-eq">Acceso equipo</a></div>
+    </div>
   </div>
 </footer>
 <a href="https://api.whatsapp.com/send/?phone=59899716681" class="wa-float" id="waFloat" aria-label="Escribir por WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.5.8 3.4.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></a>
@@ -798,7 +1000,7 @@ function resaltar(slug, on) { const m = marcas[slug]; if (!m) return; const el =
 $('#fabMap').addEventListener('click', function () {
   const on = document.body.classList.toggle('mapa-movil');
   $('#fabTxt').textContent = on ? 'Lista (' + visibles.length + ')' : 'Mapa';
-  if (on) { initMapa(); setTimeout(function () { map.invalidateSize(); pintarMapa(true); }, 60); }
+  if (on) { initMapa(); setTimeout(function () { if (map) { map.invalidateSize(); pintarMapa(true); } }, 60); }
 });
 
 // ── Menú del teléfono ────────────────────────────────────────────────────────────────────────────────
