@@ -1,2 +1,9 @@
-reservasnueva/*/
+reservasnueva/
+reservas/*/
+reservas/index.html
+en/reservas/
+pt/reservas/
+sitemap-reservas.xml
+reservas-manifest.json
+fichas.txt
 __pycache__/

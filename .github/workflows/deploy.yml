@@ -30,12 +30,32 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Generar las páginas de cada propiedad (central de reservas)
+      - name: Generar la central de reservas (ES/PT/EN, una página por propiedad, SEO)
+        env:
+          # 'reservas' = la central publicada en phpunta.uy/reservas (y redirecciones en reservasnueva/);
+          # 'reservasnueva' = oculta (noindex). Lo cambia el commit que la publica.
+          RESERVAS_ES_DIR: reservasnueva
+          COMPLETO: ${{ inputs.completo }}
         run: |
-          # Lee /web/slugs del backend y arma reservasnueva/<slug>/index.html con la plantilla _ficha.html.
-          # Si el backend no responde, no genera nada y sigue (las páginas ya publicadas quedan como están).
-          python3 tools/generar-fichas.py https://phpunta-backend-production.up.railway.app fichas.txt || true
+          # Lee /web/seo del backend (una vez por idioma) y arma la lista y cada ficha con las plantillas reservas/_lista.html y
+          # reservas/_ficha.html. Si el backend no responde, arma solo las listas: las fichas publicadas quedan como están.
+          python3 tools/generar-reservas.py https://phpunta-backend-production.up.railway.app fichas.txt || true
           touch fichas.txt
+          # Solo se sube lo generado que CAMBIÓ respecto de lo publicado (reservas-manifest.json guarda la huella de cada página).
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+          curl -s --max-time 30 -A "$UA" "https://phpunta.uy/reservas-manifest.json?n=$RANDOM" -o manifest-publicado.json || true
+          python3 - <<'PY'
+          import json, os
+          try: viejo = json.load(open('manifest-publicado.json'))
+          except Exception: viejo = {}
+          try: nuevo = json.load(open('reservas-manifest.json'))
+          except Exception: nuevo = {}
+          completo = os.environ.get('COMPLETO') == 'true'
+          lista = [l.strip() for l in open('fichas.txt').read().split('\n') if l.strip()]
+          sub = [f for f in lista if completo or f == 'reservas-manifest.json' or viejo.get(f) != nuevo.get(f)]
+          open('fichas.txt', 'w').write('\n'.join(sub) + ('\n' if sub else ''))
+          print('Páginas generadas: %d · a subir (cambiaron): %d' % (len(lista), len(sub)))
+          PY
 
       - name: Armar los lotes
         env:
@@ -64,7 +84,7 @@ jobs:
               if not f or not os.path.isfile(f): continue
               if re.search(r'(^|/)\.', f) or not ok_ext.search(f): continue
               if re.search(r'(^|/)_', f): continue   # plantillas (_ficha.html): no se publican
-              if '/' in f and not re.match(r'^(assets|en|pt|reservasnueva|alquileres)/', f): continue
+              if '/' in f and not re.match(r'^(assets|en|pt|reservas|reservasnueva|alquileres)/', f): continue
               if f in files: continue
               files.append(f)
           sha = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
