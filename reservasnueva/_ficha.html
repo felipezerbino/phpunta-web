@@ -170,8 +170,14 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .preg .a { background: #fff; padding: 12px 14px; border-radius: 14px 14px 14px 2px; font-size: 14.5px; line-height: 1.6; color: var(--text); max-width: 92%; white-space: pre-line; }
 .preg .a.cargando { color: var(--text-muted); font-style: italic; }
 .preg .nota { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
-.lug-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-.lug-chips button { background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px; font-size: 13px; color: var(--navy); }
+.lug-chips { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; margin-bottom: 6px; }
+.lug-chips button { background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 8px 10px; font-size: 13px; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lug-hint { font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px; }
+@media (max-width: 600px) {
+  .lug-chips { gap: 6px; }
+  .lug-chips button { border-radius: 12px; padding: 7px 2px; font-size: 11.5px; display: flex; flex-direction: column; align-items: center; gap: 2px; line-height: 1.2; }
+  .lug-chips button .e { font-size: 18px; }
+}
 .lug-chips button.on { background: var(--navy); color: #fff; border-color: var(--navy); }
 #mini { height: 360px; }
 .lug-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
@@ -745,7 +751,7 @@ function pintar() {
         '<div><b>Temporada alta · estadías con alguna noche del 15 de diciembre a fin de febrero</b>Se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para tu llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable. Si una sola noche de tu estadía cae en temporada alta, esta política se aplica a toda la reserva.</div>' +
         '<div><b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 3 días antes de la llegada y no es reembolsable.</div>' +
       '</div><p class="desc" style="margin-top:12px;font-size:14px">Al elegir tus fechas te mostramos los plazos exactos de tu estadía antes de pagar.</p></div>' +
-      (p.coord ? '<div class="sec" id="secLug"><h2>Dónde vas a estar</h2><div class="lug-chips" id="lugChips"></div><div id="mini"></div><p class="nota-mapa">' + (p.tipo === 'casa' ? 'Ubicación aproximada. La dirección exacta se envía al confirmar la reserva.' : 'La dirección exacta se envía al confirmar la reserva.') + ' Las distancias son en línea recta.</p><div class="lug-lista" id="lugLista"></div></div>' : '') +
+      (p.coord ? '<div class="sec" id="secLug"><h2>Dónde vas a estar</h2><div class="lug-chips" id="lugChips"></div><p class="lug-hint">Hacé clic en una categoría para ver nuestras recomendaciones.</p><div id="mini"></div><p class="nota-mapa">' + (p.tipo === 'casa' ? 'Ubicación aproximada. La dirección exacta se envía al confirmar la reserva.' : 'La dirección exacta se envía al confirmar la reserva.') + ' Las distancias son en línea recta.</p><div class="lug-lista" id="lugLista"></div></div>' : '') +
     '</div>' +
     '<aside><div class="box" id="box"></div></aside></div>' +
     '<div class="mbar" id="mbar"><div class="t" id="mbarT"></div><button type="button" id="mbarB">Ver precio</button></div><div class="toast" id="toast"></div>';
@@ -833,7 +839,7 @@ function iniciarLugares(p) {
   const pintarLug = function () {
     capa.clearLayers();
     const lista = LUG.filter(function (x) { return x.cat === cat; }).map(function (x) { return Object.assign({ km: distKm(p.coord.lat, p.coord.lng, x.lat, x.lng) }, x); }).sort(function (a, b) { return a.km - b.km; });
-    $('#lugChips').innerHTML = CATS.map(function (c) { return '<button type="button" data-cat="' + c.id + '" class="' + (c.id === cat ? 'on' : '') + '">' + (LUG_EMOJI[c.id] || '') + ' ' + esc(c.nombre) + '</button>'; }).join('');
+    $('#lugChips').innerHTML = CATS.map(function (c) { return '<button type="button" data-cat="' + c.id + '" class="' + (c.id === cat ? 'on' : '') + '"><span class="e">' + (LUG_EMOJI[c.id] || '') + '</span> <span>' + esc(c.nombre) + '</span></button>'; }).join('');
     const pts = [[p.coord.lat, p.coord.lng]];
     lista.forEach(function (x, i) {
       const ic = L.divIcon({ className: 'mk-lug', html: x.emoji || LUG_EMOJI[x.cat] || '📍', iconSize: [30, 30] });
