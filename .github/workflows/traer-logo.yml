@@ -1,0 +1,30 @@
+name: Traer el logo del menú (una vez)
+
+# El logo de todas las páginas se carga desde reservas.phpunta.uy (Avantio). Este workflow lo baja y lo guarda en
+# assets/img/ para poder dejar de depender de ese sitio. Se corre a mano; no publica nada.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  traer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bajar el logo
+        run: |
+          mkdir -p assets/img
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+          curl -fsSL -A "$UA" -o assets/img/logo.webp "https://reservas.phpunta.uy/alquiler/datosBroker/bk_phpunta/templates/assets/img/logo.webp"
+          file assets/img/logo.webp; ls -l assets/img/logo.webp
+          head -c 4 assets/img/logo.webp | grep -q RIFF || { echo "No es una imagen webp"; exit 1; }
+      - name: Guardar en el repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git add assets/img/logo.webp
+          git diff --cached --quiet && { echo "Sin cambios"; exit 0; }
+          git commit -m "Logo del menú copiado desde reservas.phpunta.uy"
+          git push
