@@ -399,7 +399,7 @@ body.mapa-movil .wa-float { display: none; }
       <a class="huesp-cta" href="https://api.whatsapp.com/send/?phone=59899716681&text=Hola%2C%20tengo%20una%20consulta%20sobre%20una%20reserva" target="_blank" rel="noopener">¿Dudas? Escribinos por WhatsApp</a>
     </div>
     <div class="huesp-items">
-      <div class="hi"><span class="hi-n">01</span><h3>Precio claro desde el principio</h3><p>El total que ves ya incluye la limpieza final. Reservás con una seña del 50&nbsp;% y el resto lo abonás el día de llegada.</p></div>
+      <div class="hi"><span class="hi-n">01</span><h3>Precio claro desde el principio</h3><p>El total que ves ya incluye la limpieza final. Reservás online con el 50&nbsp;% y el saldo lo abonás antes de llegar. La política de cancelación está a la vista en cada propiedad, antes de pagar.</p></div>
       <div class="hi"><span class="hi-n">02</span><h3>Llegada sin vueltas</h3><p>Antes de viajar recibís la guía de tu casa: cómo llegar, cómo entrar, wifi, normas y recomendaciones. En español, inglés o portugués.</p></div>
       <div class="hi"><span class="hi-n">03</span><h3>Limpieza con control</h3><p>Cada limpieza sigue una lista por ambiente, con fotos de control, antes de que entres. Lo que ves en las fotos es lo que encontrás.</p></div>
       <div class="hi"><span class="hi-n">04</span><h3>Personas, no un call center</h3><p>Te atiende nuestro equipo por WhatsApp antes, durante y después de tu estadía, en tu idioma.</p></div>
@@ -632,6 +632,7 @@ function filtrar() {
   if (VER_SEL) return CAT.slice();
   const h = huespedes();
   let L = CAT.filter(function (p) {
+    if (DISPO && p.vitrina) return false;   // sin fechas online: no aparecen al buscar por fechas
     if (S.zona && p.barrio !== S.zona) return false;
     if (S.tipo && p.tipo !== S.tipo) return false;
     if (S.dorm && !(p.dormitorios >= S.dorm)) return false;
@@ -685,6 +686,7 @@ function lineaPrecio(p) {
     if (c.estado === 'ocupado') return '<span class="no">Ya no está disponible en esas fechas</span>';
     if (c.estado === 'minimo') return '<span class="no">Mínimo ' + c.minimo + ' noches para esa llegada</span>';
     if (c.estado === 'capacidad') return '<span class="no">Recibe hasta ' + c.maximo + ' huéspedes</span>';
+    if (c.estado === 'no_disponible') return '<span class="no">Sin fechas online · consultanos</span>';
     return '<small>Precio a confirmar por WhatsApp</small>';
   }
   const d = DISPO && DISPO[p.slug];
@@ -695,6 +697,7 @@ function lineaPrecio(p) {
     if (d.total_aprox) return '<b>' + usd(d.total_aprox) + '</b> <small>total · ' + n + (n === 1 ? ' noche' : ' noches') + '</small>';
     return '<small>Consultá el precio para esas fechas</small>';
   }
+  if (p.vitrina) return '<small>Consultá disponibilidad</small>';
   if (p.desde_noche) return '<small>Desde</small> <b>' + usd(p.desde_noche) + '</b> <small>/ noche</small>';
   return '<small>Consultá precio y disponibilidad</small>';
 }

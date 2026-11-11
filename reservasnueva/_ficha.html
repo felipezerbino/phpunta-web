@@ -250,6 +250,34 @@ footer { background: var(--navy-deep); color: var(--text-on-dark); padding: 50px
 .footer-legal { font-size: 11px; color: var(--text-on-dark-soft); letter-spacing: .08em; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; border-top: 1px solid var(--border-dark); padding-top: 22px; margin-top: 22px; }
 footer a:hover { color: var(--gold); }
 .leaflet-tile-pane { filter: grayscale(.82) sepia(.14) brightness(1.04) contrast(.92); }
+/* v2.741: política de cancelación y reserva online */
+.cot .pol { margin-top: 12px; padding: 12px 14px; background: var(--cream-warm, #faf7f0); border: 1px solid var(--border-light); border-radius: 3px; font-size: 13px; line-height: 1.55; color: var(--text-soft, #44505c); }
+.cot .pol b { display: block; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 4px; font-weight: 600; }
+.cot .pol ul { margin: 0; padding-left: 16px; }
+.cot .pol li { margin: 2px 0; }
+.polgen { display: grid; gap: 12px; }
+.polgen div { background: #fff; border: 1px solid var(--border-light); border-radius: 3px; padding: 14px 16px; font-size: 14px; line-height: 1.6; }
+.polgen b { display: block; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 4px; font-weight: 600; }
+.vitr { padding: 18px; background: #fff; border: 1px dashed var(--border-light); border-radius: 3px; font-size: 14.5px; line-height: 1.6; color: var(--text-soft, #44505c); }
+.rmod-bg { position: fixed; inset: 0; background: rgba(13,27,42,.55); z-index: 5000; display: none; align-items: flex-end; justify-content: center; }
+.rmod-bg.open { display: flex; }
+@media (min-width: 700px) { .rmod-bg { align-items: center; } }
+.rmod { background: #fff; width: 100%; max-width: 480px; max-height: 92vh; overflow: auto; border-radius: 10px 10px 0 0; padding: 22px 20px 20px; }
+@media (min-width: 700px) { .rmod { border-radius: 6px; } }
+.rmod h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 26px; margin: 0 0 4px; color: var(--navy); }
+.rmod .res { font-size: 13.5px; color: var(--text-soft, #44505c); margin-bottom: 14px; line-height: 1.5; }
+.rmod label { display: block; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); margin: 12px 0 5px; }
+.rmod input[type=text], .rmod input[type=email], .rmod input[type=tel] { width: 100%; box-sizing: border-box; border: 1px solid var(--border-light); border-radius: 3px; padding: 12px; font-size: 16px; font-family: inherit; }
+.rmod label.ck { text-transform: none; letter-spacing: 0; color: var(--navy); }
+.rmod .ck { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; line-height: 1.5; margin-top: 14px; }
+.rmod .ck input { margin-top: 3px; width: 18px; height: 18px; flex: 0 0 auto; }
+.rmod .pol { margin-top: 12px; padding: 12px 14px; background: var(--cream-warm, #faf7f0); border: 1px solid var(--border-light); border-radius: 3px; font-size: 13px; line-height: 1.55; }
+.rmod .pol ul { margin: 0; padding-left: 16px; }
+.rmod .err { color: #b23a2e; font-size: 13.5px; margin-top: 10px; }
+.rmod .acc { display: flex; gap: 10px; margin-top: 16px; }
+.rmod .acc button { flex: 1; }
+.rmod .cancel { background: none; border: 1px solid var(--border-light); color: var(--navy); padding: 14px; border-radius: 2px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; margin-top: 16px; }
+.rmod .seg { font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -436,14 +464,19 @@ function pintar() {
     '<div class="cuerpo"><div>' +
       '<div class="datos">' + datos + '</div>' +
       descHtml + dormHtml + amenHtml +
-      '<div class="sec" id="secCal"><h2>Disponibilidad</h2><div id="cal"></div><p class="nota-cal">Nuestros calendarios están actualizados en tiempo real.</p></div>' +
+      (p.vitrina ? '<div class="sec" id="secCal"><h2>Disponibilidad</h2><div class="vitr">Por ahora esta propiedad no tiene fechas abiertas para reservar online. Escribinos por WhatsApp y te avisamos cuando se libere, o te recomendamos opciones parecidas.</div></div>'
+        : '<div class="sec" id="secCal"><h2>Disponibilidad</h2><div id="cal"></div><p class="nota-cal">Nuestros calendarios están actualizados en tiempo real.</p></div>') +
       resHtml + pregHtml +
       '<div class="sec"><h2>Bueno saber</h2><div class="reglas">' +
         '<div class="regla"><span>Entrada</span><b>Desde las ' + esc(p.checkin) + '</b></div>' +
         '<div class="regla"><span>Salida</span><b>Hasta las ' + esc(p.checkout) + '</b></div>' +
         (p.minimo_noches ? '<div class="regla"><span>Estadía mínima</span><b>' + p.minimo_noches + ' noches</b></div>' : '') + masc +
         '<div class="regla"><span>Pago</span><b>' + CFG.sena_pct + '% al reservar</b></div>' +
-      '</div><p class="desc" style="margin-top:14px;font-size:14px">Al reservar se abona el ' + CFG.sena_pct + '% como seña. El ' + (100 - CFG.sena_pct) + '% restante y el depósito en garantía se abonan el día de llegada; la garantía se devuelve al salir, después de revisar la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>' +
+      '</div><p class="desc" style="margin-top:14px;font-size:14px">Se reserva con el ' + CFG.sena_pct + '% y el saldo se paga antes de la llegada (7 días antes en temporada alta, 3 días antes en temporada baja). La garantía se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>' +
+      '<div class="sec" id="secPol"><h2>Política de cancelación</h2><div class="polgen">' +
+        '<div><b>Temporada alta · llegadas del 15 de diciembre a fin de febrero</b>Se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para tu llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable.</div>' +
+        '<div><b>Temporada baja · el resto del año</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 3 días antes de la llegada y no es reembolsable.</div>' +
+      '</div><p class="desc" style="margin-top:12px;font-size:14px">Al elegir tus fechas te mostramos los plazos exactos de tu estadía antes de pagar.</p></div>' +
       (p.coord ? '<div class="sec" id="secLug"><h2>Dónde vas a estar</h2><div class="lug-chips" id="lugChips"></div><div id="mini"></div><p class="nota-mapa">' + (p.tipo === 'casa' ? 'Ubicación aproximada. La dirección exacta se envía al confirmar la reserva.' : 'La dirección exacta se envía al confirmar la reserva.') + ' Las distancias son en línea recta.</p><div class="lug-lista" id="lugLista"></div></div>' : '') +
     '</div>' +
     '<aside><div class="box" id="box"></div></aside></div>' +
@@ -468,7 +501,7 @@ function pintar() {
   // Mapa con los lugares que recomendamos (la guía del huésped)
   if (p.coord && typeof L !== 'undefined') iniciarLugares(p);
   pintarBox();
-  $('#mbarB').onclick = function () { if (COT && COT.estado === 'ok') return reservar(); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  $('#mbarB').onclick = function () { if (P.vitrina) return window.open(waLink(false), '_blank', 'noopener'); if (COT && COT.estado === 'ok') return reservar(); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
 }
 
 // ── Compartir ────────────────────────────────────────────────────────────────────────────────────────
@@ -567,6 +600,13 @@ function iniciarCalendario() {
 function huespedes() { return S.ad + S.ni; }
 function pintarBox() {
   const p = P, h = huespedes();
+  if (p.vitrina) {
+    $('#box').innerHTML = '<div class="px">Sin fechas online</div><p style="font-size:14px;line-height:1.55;color:var(--text-soft)">Consultanos por WhatsApp: te contamos cuándo se libera o te pasamos opciones parecidas.</p>' + botonHtml();
+    $('#mbarT').innerHTML = 'Sin fechas online';
+    $('#mbarB').textContent = 'Consultar';
+    $('#mbarB').onclick = function () { window.open(waLink(false), '_blank', 'noopener'); };
+    return;
+  }
   const max = p.huespedes || 20;
   const desde = p.desde_noche;
   $('#box').innerHTML =
@@ -600,7 +640,7 @@ function cotHtml() {
       '<div class="fila tot"><span>Total por ' + n + (n === 1 ? ' noche' : ' noches') + '</span><span>' + usd(c.total) + '</span></div>' +
       '<div class="incl">Incluye la tarifa de limpieza.</div>' +
       (c.otras_plataformas ? '<div class="otras">Esta misma propiedad en otras plataformas te hubiera costado hasta <b>' + usd(c.otras_plataformas) + '</b>.</div>' : '') +
-      '<div class="pago"><div class="fila"><span>Seña al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo el día de llegada</span><span>' + usd(c.saldo) + '</span></div><div class="fila"><span>Depósito en garantía (se devuelve)</span><span>' + usd(c.garantia) + '</span></div></div>';
+      pagoHtml(c) + polHtml(c.politica);
   }
   if (c.estado === 'ocupado') return '<div class="err">Esas fechas no están disponibles.</div>' + (c.libres_cerca && c.libres_cerca.length ? '<div class="aviso">Libres cerca: ' + c.libres_cerca.map(function (w) { return '<button type="button" class="lnk" data-w="' + w.desde + '|' + w.hasta + '">' + fechaCorta(w.desde) + ' – ' + fechaCorta(w.hasta) + '</button>'; }).join(' · ') + '</div>' : '');
   if (c.estado === 'minimo') return '<div class="err">Para esa llegada la estadía mínima es de ' + c.minimo + ' noches.</div>';
@@ -609,10 +649,23 @@ function cotHtml() {
   if (c.estado === 'error') return '<div class="err">' + esc(c.msg || 'No pudimos calcular el precio.') + '</div>';
   return '<div class="aviso">Para esas fechas confirmamos el precio por WhatsApp en minutos.</div>';
 }
+function pagoHtml(c) {
+  const pol = c.politica || {};
+  return '<div class="pago">' + (pol.pago_total
+    ? '<div class="fila"><span>Al reservar pagás el total</span><b>' + usd(c.sena) + '</b></div>'
+    : '<div class="fila"><span>Al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo' + (pol.saldo_fecha ? ', hasta el ' + fechaCorta(pol.saldo_fecha) : '') + '</span><span>' + usd(c.saldo) + '</span></div>') +
+    '<div class="fila"><span>Garantía (se devuelve)</span><span>' + usd(c.garantia) + '</span></div></div>';
+}
+function polHtml(pol) {
+  if (!pol || !pol.puntos) return '';
+  return '<div class="pol"><b>Política de cancelación</b><ul>' + pol.puntos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+}
 function botonHtml() {
+  if (P && P.vitrina) return '<a class="btn-res" style="display:block;text-align:center;text-decoration:none" href="' + waLink(false) + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>';
   const ok = COT && COT.estado === 'ok';
   const consultar = COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0;
   return '<button type="button" class="btn-res" id="btnRes"' + (ok || consultar ? '' : ' disabled') + '>' + (ok ? 'Reservar' : (consultar ? 'Consultar por WhatsApp' : 'Elegí tus fechas')) + '</button>' +
+    (ok ? '<p style="font-size:12.5px;color:var(--text-muted);text-align:center;margin-top:8px">Pagás online con tarjeta u otros medios. Te confirmamos enseguida.</p>' : '') +
     '<a class="btn-sec" href="' + waLink(false) + '" target="_blank" rel="noopener">¿Dudas? Escribinos por WhatsApp</a>';
 }
 function waLink(conDatos) {
@@ -624,8 +677,55 @@ function waLink(conDatos) {
   t += ' ' + location.origin + location.pathname;
   return 'https://api.whatsapp.com/send/?phone=' + encodeURIComponent(CFG.whatsapp || '59899716681') + '&text=' + encodeURIComponent(t);
 }
-// Fase 1 (vitrina): la reserva se termina por WhatsApp con el equipo de Reservas. El pago online llega en la fase 2.
-function reservar() { window.open(waLink(true), '_blank', 'noopener'); }
+// Reserva online (v2.741): datos del huésped + aceptar la política → el servidor re-cotiza y devuelve el link de pago (dLocal).
+// Si no hay precio confirmado, la reserva sigue por WhatsApp.
+function reservar() {
+  if (!(COT && COT.estado === 'ok')) { window.open(waLink(true), '_blank', 'noopener'); return; }
+  const c = COT, pol = c.politica || {};
+  let bg = $('#rmodBg');
+  if (!bg) { bg = document.createElement('div'); bg.className = 'rmod-bg'; bg.id = 'rmodBg'; document.body.appendChild(bg); bg.addEventListener('click', function (e) { if (e.target === bg) cerrarReserva(); }); }
+  const g = function (k) { try { return localStorage.getItem('phweb_res_' + k) || ''; } catch (e) { return ''; } };
+  bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">Tu reserva</h3>' +
+    '<div class="res"><b>' + esc(P.titulo) + '</b><br>' + fechaLarga(S.llegada) + ' al ' + fechaLarga(S.salida) + ' · ' + c.noches + (c.noches === 1 ? ' noche' : ' noches') + ' · ' + huespedes() + (huespedes() === 1 ? ' huésped' : ' huéspedes') +
+    '<br>Total ' + usd(c.total) + ' (incluye la limpieza) · ' + (pol.pago_total ? 'pagás el total ahora' : 'ahora pagás ' + usd(c.sena)) + '</div>' +
+    '<form id="rmodF" novalidate><label for="rN">Nombre y apellido</label><input type="text" id="rN" autocomplete="name" maxlength="120" value="' + esc(g('n')) + '" />' +
+    '<label for="rE">Email</label><input type="email" id="rE" autocomplete="email" maxlength="160" value="' + esc(g('e')) + '" />' +
+    '<label for="rT">Teléfono (WhatsApp, con código de país)</label><input type="tel" id="rT" autocomplete="tel" maxlength="24" placeholder="+598 99 123 456" value="' + esc(g('t')) + '" />' +
+    polHtml(pol).replace('class="pol"', 'class="pol"') +
+    '<label class="ck"><input type="checkbox" id="rA" /> <span>Leí y acepto la política de cancelación.</span></label>' +
+    '<div class="err" id="rErr" role="alert"></div>' +
+    '<div class="acc"><button type="button" class="cancel" id="rX">Volver</button><button type="submit" class="btn-res" id="rOk">Ir a pagar ' + usd(c.sena) + '</button></div>' +
+    '<p class="seg">El pago se hace en una página segura de nuestro procesador de pagos (dLocal); tus datos de tarjeta no pasan por nosotros. Después del pago, el equipo de reservas te confirma la reserva por WhatsApp o email. Si por algún motivo no se pudiera confirmar, te devolvemos el 100%.</p></form></div>';
+  bg.classList.add('open'); document.body.style.overflow = 'hidden';
+  $('#rX').onclick = cerrarReserva;
+  setTimeout(function () { const i = $('#rN'); if (i && !i.value) i.focus(); }, 50);
+  $('#rmodF').onsubmit = async function (e) {
+    e.preventDefault();
+    const nombre = $('#rN').value.trim(), email = $('#rE').value.trim(), tel = $('#rT').value.trim();
+    const err = function (t) { $('#rErr').textContent = t; };
+    if (nombre.length < 3) return err('Escribí tu nombre y apellido.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err('Revisá el email.');
+    if (tel.replace(/\D/g, '').length < 7) return err('Revisá el teléfono (con código de país).');
+    if (!$('#rA').checked) return err('Para seguir, aceptá la política de cancelación.');
+    err('');
+    try { localStorage.setItem('phweb_res_n', nombre); localStorage.setItem('phweb_res_e', email); localStorage.setItem('phweb_res_t', tel); } catch (e2) {}
+    const b = $('#rOk'); b.disabled = true; b.textContent = 'Preparando el pago…';
+    try {
+      const r = await fetch(API + '/web/reservar', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        body: JSON.stringify({ slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, acepta: true }) });
+      const j = await r.json().catch(function () { return null; });
+      if (!r.ok || !j || !j.ok || !j.link) {
+        err((j && j.error) || 'No pudimos iniciar el pago. Escribinos por WhatsApp.');
+        b.disabled = false; b.textContent = 'Ir a pagar ' + usd(c.sena);
+        if (j && j.estado && j.estado !== 'ok') { setTimeout(function () { cerrarReserva(); cotizar(); }, 2200); }
+        return;
+      }
+      location.href = j.link;
+    } catch (e3) { err('Sin conexión. Probá de nuevo.'); b.disabled = false; b.textContent = 'Ir a pagar ' + usd(c.sena); }
+  };
+}
+function cerrarReserva() { const bg = $('#rmodBg'); if (bg) bg.classList.remove('open'); document.body.style.overflow = ''; }
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarReserva(); });
 let cotGen = 0;
 async function cotizar() {
   COT = null;
@@ -654,6 +754,7 @@ $('#burger').addEventListener('click', function () { $('#mobileMenu').classList.
     const j = await api('/web/propiedad?slug=' + encodeURIComponent(SLUG));
     P = j.propiedad; CFG = Object.assign(CFG, j.cfg || {});
     pintar();
+    if (P.vitrina) return;
     const hasta = iso(new Date(Date.now() + 420 * 86400000));
     try { const c = await api('/web/calendario?slug=' + encodeURIComponent(SLUG) + '&hasta=' + hasta); (c.dias || []).forEach(function (d) { DIAS[d.f] = d; }); } catch (e) {}
     iniciarCalendario(); pintarBox();
