@@ -102,6 +102,12 @@ em { font-style: italic; font-weight: 300; }
 .pop { position: absolute; z-index: 950; top: calc(100% + 8px); left: 0; background: #fff; border: 1px solid var(--border-light); border-radius: 3px; box-shadow: 0 30px 70px -20px rgba(13,27,42,.35); padding: 18px; display: none; color: var(--text); }
 .pop.open { display: block; }
 body.pop-on .hero { z-index: 955; }   /* el calendario y los huéspedes van por encima de la barra de filtros y las fotos */
+/* teléfono: el calendario y los huéspedes se abren como hoja desde abajo (debajo del buscador quedaban fuera de la pantalla) */
+.pop-listo { display: none; }
+@media (max-width: 859px) {
+  #popCal, #popHues { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: auto; max-height: 86vh; overflow-y: auto; -webkit-overflow-scrolling: touch; border: 0; border-radius: 18px 18px 0 0; padding: 20px 18px calc(18px + env(safe-area-inset-bottom)); box-shadow: 0 0 0 100vmax rgba(13,27,42,.45), 0 -20px 50px rgba(13,27,42,.3); }
+  .pop-listo { display: block; width: 100%; margin-top: 14px; }
+}
 /* Selecciones (equipo) */
 .sel-ck { display: none; position: absolute; top: 10px; left: 10px; z-index: 5; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; background: rgba(13,27,42,.35); color: #fff; font-size: 16px; line-height: 1; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
 body.modo-equipo .sel-ck { display: flex; }
@@ -210,16 +216,16 @@ body.fsheet-on .fsheet-bg { opacity: 1; pointer-events: auto; }
 .fs-foot .btn-navy { padding: 14px 22px; font-size: 12px; }
 
 /* LISTA + MAPA */
-.layout { display: grid; grid-template-columns: 1fr; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr) 42%; } }
 .list { padding: 22px 0 60px; }
-.grid { display: grid; grid-template-columns: 1fr; gap: 28px 22px; }
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 22px; }
 .mas-box { position: relative; margin-top: 28px; }
 .grid.peek { max-height: 190px; overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(#000 0%, rgba(0,0,0,.35) 55%, transparent 100%); mask-image: linear-gradient(#000 0%, rgba(0,0,0,.35) 55%, transparent 100%); }
 .btn-mas { display: block; margin: -40px auto 0; position: relative; z-index: 2; background: var(--navy); color: #fff; border: 0; border-radius: 999px; padding: 15px 28px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--sans); box-shadow: 0 14px 30px -14px rgba(13,27,42,.6); cursor: pointer; }
 .btn-mas:hover { background: #1b2d44; }
-@media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1600px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+@media (min-width: 640px) { .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (min-width: 1600px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .mapbox { display: none; }
 @media (min-width: 1100px) { .mapbox { display: block; position: sticky; top: 142px; height: calc(100vh - 142px); padding: 16px 0 16px 22px; } }
 #map { width: 100%; height: 100%; border-radius: 3px; background: #e8e4da; }
@@ -236,7 +242,7 @@ body.mapa-movil .map-auto { bottom: 86px; left: 16px; }
 .zona-act { display: none; align-items: center; gap: 8px; background: var(--cream-warm); border: 1px solid var(--border-light); padding: 9px 14px; border-radius: 3px; margin-bottom: 16px; font-size: 13.5px; }
 .zona-act.on { display: flex; }
 
-.card { display: block; color: inherit; }
+.card { display: block; color: inherit; min-width: 0; }
 .ph { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--cream-paper); }
 .ph-track { display: flex; height: 100%; transition: transform .45s var(--ease); }
 .ph-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; }
@@ -513,6 +519,7 @@ body.mapa-movil .topbar { display: none; }
         <div class="stepper"><div><b>Adultos</b><small>13 años o más</small></div><div class="stp"><button type="button" data-k="ad" data-d="-1">−</button><span id="nAd">2</span><button type="button" data-k="ad" data-d="1">+</button></div></div>
         <div class="stepper"><div><b>Niños</b><small>De 2 a 12 años</small></div><div class="stp"><button type="button" data-k="ni" data-d="-1">−</button><span id="nNi">0</span><button type="button" data-k="ni" data-d="1">+</button></div></div>
         <div class="stepper"><div><b>Bebés</b><small>Menores de 2 (no cuentan)</small></div><div class="stp"><button type="button" data-k="be" data-d="-1">−</button><span id="nBe">0</span><button type="button" data-k="be" data-d="1">+</button></div></div>
+        <button type="button" class="btn-navy pop-listo" data-cerrar="1">Listo</button>
       </div>
     </div>
   </div>
@@ -820,6 +827,7 @@ $('#sfOut').addEventListener('click', function (e) { e.stopPropagation(); abrirC
 $('#sfHues').addEventListener('click', function (e) { e.stopPropagation(); const ab = popHues.classList.contains('open'); cerrarPops(); if (!ab) { popHues.classList.add('open'); document.body.classList.add('pop-on'); } });
 popHues.addEventListener('click', function (e) {
   e.stopPropagation();
+  if (e.target.closest('[data-cerrar]')) return cerrarPops();
   const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return;
   S[b.dataset.k] += Number(b.dataset.d); pintarBuscador(); aplicarDiferido();
 });
