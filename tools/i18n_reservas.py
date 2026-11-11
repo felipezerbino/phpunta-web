@@ -1448,6 +1448,42 @@ ES: 'Ver fechas'¦
 PT: 'Ver datas'¦
 EN: 'See dates'¦
 
+ES: 'Estadía mínima: '¦
+PT: 'Estadia mínima: '¦
+EN: 'Minimum stay: '¦
+
+ES: '<br><small>para esa llegada</small>'¦
+PT: '<br><small>para essa chegada</small>'¦
+EN: '<br><small>for that check-in</small>'¦
+
+ES: 'Cambiar fechas'¦
+PT: 'Mudar datas'¦
+EN: 'Change dates'¦
+
+ES: 'Fechas no disponibles'¦
+PT: 'Datas indisponíveis'¦
+EN: 'Dates not available'¦
+
+ES: '<br><small>probá con otras</small>'¦
+PT: '<br><small>tente outras</small>'¦
+EN: '<br><small>try other dates</small>'¦
+
+ES: 'Recibe hasta '¦
+PT: 'Recebe até '¦
+EN: 'Sleeps up to '¦
+
+ES: 'Precio a confirmar'¦
+PT: 'Preço a confirmar'¦
+EN: 'Price to be confirmed'¦
+
+ES: '<br><small>te respondemos por WhatsApp</small>'¦
+PT: '<br><small>respondemos pelo WhatsApp</small>'¦
+EN: '<br><small>we reply on WhatsApp</small>'¦
+
+ES: 'Cambiá las fechas'¦
+PT: 'Mude as datas'¦
+EN: 'Change your dates'¦
+
 ES: 'Hola! Me interesa '¦
 PT: 'Olá! Tenho interesse em '¦
 EN: 'Hello! I am interested in '¦

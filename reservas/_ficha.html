@@ -259,6 +259,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .btn-res { width: 100%; margin-top: 16px; background: var(--gold); color: var(--navy); border: 0; padding: 16px; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; border-radius: 2px; transition: background .2s; }
 .btn-res:hover { background: var(--gold-soft); }
 .btn-res:disabled { background: var(--cream-paper); color: var(--text-muted); cursor: default; }
+.box.box-alta { overflow-y: auto; overscroll-behavior: contain; padding-bottom: 0; }
+.box.box-alta #btnRes { position: sticky; bottom: 0; box-shadow: 0 -14px 14px -2px #fff; }
+.box.box-alta .btn-sec { padding-bottom: 20px; }
 .btn-sec { display: block; text-align: center; margin-top: 10px; font-size: 13px; color: var(--text-soft); text-decoration: underline; }
 .mbar { display: none; }
 @media (max-width: 979px) {
@@ -307,7 +310,11 @@ footer a:hover { color: var(--gold); }
 .rmod ul.rres { margin: 0 0 12px; padding-left: 20px; font-size: 14.5px; line-height: 1.7; color: var(--navy); }
 .rmod .rres-c { font-size: 13.5px; line-height: 1.5; color: var(--navy); font-weight: 600; margin-bottom: 8px; }
 .doc-bg { z-index: 5100; }
-.rmod.doc { max-width: 640px; }
+.rmod.doc { max-width: 640px; position: relative; }
+.doc-x { position: sticky; top: 0; float: right; margin: -6px -6px 0 8px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-light); background: #fff; color: var(--navy); font-size: 22px; line-height: 1; z-index: 2; }
+details.pol summary { cursor: pointer; list-style: revert; }
+details.pol summary b { display: inline !important; margin: 0; }
+details.pol[open] summary { margin-bottom: 4px; }
 .doc-tx { font-size: 14px; line-height: 1.65; color: var(--text-soft); }
 .doc-tx h2 { font-family: var(--sans); font-size: 14.5px; font-weight: 600; color: var(--navy); margin: 14px 0 4px; }
 .doc-tx ol { padding-left: 20px; } .doc-tx li { margin: 3px 0; }
@@ -815,7 +822,7 @@ function pintar() {
   // Mapa con los lugares que recomendamos (la guía del huésped)
   if (p.coord && typeof L !== 'undefined') iniciarLugares(p);
   pintarBox();
-  $('#mbarB').onclick = function () { if (P.vitrina) return window.open(waLink(false), '_blank', 'noopener'); if (COT && COT.estado === 'ok') return reservar(); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  $('#mbarB').onclick = function () { if (P.vitrina) return window.open(waLink(false), '_blank', 'noopener'); if (COT && COT.estado === 'ok') return reservar(); if (COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0) return window.open(waLink(true), '_blank', 'noopener'); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
 }
 
 // ── Compartir ────────────────────────────────────────────────────────────────────────────────────────
@@ -901,7 +908,7 @@ function iniciarLugares(p) {
     $('#lugLista').querySelectorAll('.lug img').forEach(function (im) { im.addEventListener('error', function () { const x = lista[Number(im.closest('.lug').dataset.i)]; const sp = document.createElement('span'); sp.className = 'ph2'; sp.textContent = (x && (x.emoji || LUG_EMOJI[x.cat])) || '📍'; im.replaceWith(sp); }, { once: true }); });
     $('#lugLista').querySelectorAll('.lug').forEach(function (b) { b.onclick = function () { const x = lista[Number(b.dataset.i)]; m.setView([x.lat, x.lng], 15); x._mk.openPopup(); $('#mini').scrollIntoView({ behavior: 'smooth', block: 'center' }); }; });
   };
-  $('#lugChips').addEventListener('click', function (e) { const b = e.target.closest('[data-cat]'); if (b) { cat = b.dataset.cat; pintarLug(); } });
+  $('#lugChips').addEventListener('click', function (e) { const b = e.target.closest('[data-cat]'); if (b) { cat = b.dataset.cat; const hh = document.querySelector('.lug-hint'); if (hh) hh.style.display = 'none'; pintarLug(); } });
   api('/web/lugares').then(function (j) {
     LUG = j.lugares || [];
     CATS = (j.categorias || []).filter(function (c) { return LUG.some(function (x) { return x.cat === c.id; }); });
@@ -929,6 +936,7 @@ function pintarBox() {
     return;
   }
   const max = p.huespedes || 20;
+  const huesAbierto = !!($('#huesPop') && $('#huesPop').classList.contains('open'));
   $('#box').innerHTML =
     '<div class="px">' + (COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b> total' : 'Elegí tus fechas para ver el precio') + '</div>' +
     '<div class="bsel"><button type="button" id="bIn"><span>Llegada</span><div>' + (S.llegada ? fechaCorta(S.llegada) : 'Agregar') + '</div></button>' +
@@ -944,20 +952,42 @@ function pintarBox() {
     '<div class="cot" id="cot">' + cotHtml() + '</div>' +
     botonHtml();
   $('#bIn').onclick = $('#bOut').onclick = function () { $('#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
-  $('#bHues').onclick = function () { $('#huesPop').classList.toggle('open'); };
+  if (huesAbierto) $('#huesPop').classList.add('open');
+  $('#bHues').onclick = function () { const ab = $('#huesPop').classList.toggle('open'); if (ab) cajaArriba(); };
   $('#huesPop').addEventListener('click', function (e) { const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return; S[b.dataset.k] += Number(b.dataset.d); urlEstado(); pintarBox(); $('#huesPop').classList.add('open'); clearTimeout(window._tq); window._tq = setTimeout(cotizar, 300); });
   const br = $('#btnRes'); if (br) br.onclick = reservar;
   // Barra del teléfono
-  $('#mbarT').innerHTML = COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b><br>' + COT.noches + ' noches · ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) : 'Elegí tus fechas<br><small>para ver el precio</small>';
-  $('#mbarB').textContent = COT && COT.estado === 'ok' ? (COT.modo === 'inmediata' ? 'Reservar' : 'Solicitar') : 'Ver fechas';
+  const est = (S.llegada && S.salida) ? (COT ? COT.estado : 'calc') : 'sin';
+  let mT, mB;
+  if (est === 'ok') { mT = '<b>' + usd(COT.total) + '</b><br>' + COT.noches + ' noches · ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida); mB = COT.modo === 'inmediata' ? 'Reservar' : 'Solicitar'; }
+  else if (est === 'calc') { mT = 'Calculando el precio…'; mB = 'Ver fechas'; }
+  else if (est === 'minimo') { mT = 'Estadía mínima: ' + COT.minimo + ' noches' + '<br><small>para esa llegada</small>'; mB = 'Cambiar fechas'; }
+  else if (est === 'ocupado') { mT = 'Fechas no disponibles' + '<br><small>probá con otras</small>'; mB = 'Cambiar fechas'; }
+  else if (est === 'capacidad') { mT = 'Recibe hasta ' + COT.maximo + ' huéspedes'; mB = 'Cambiar fechas'; }
+  else if (est === 'sin') { mT = 'Elegí tus fechas<br><small>para ver el precio</small>'; mB = 'Ver fechas'; }
+  else { mT = 'Precio a confirmar' + '<br><small>te respondemos por WhatsApp</small>'; mB = 'Consultar'; }
+  $('#mbarT').innerHTML = mT; $('#mbarB').textContent = mB;
   ajustarCaja();
 }
 // El cuadro de reserva acompaña al bajar. Si es más alto que la pantalla, se pega por ABAJO (queda a la vista el botón de
 // Reservar) en vez de por arriba (antes el botón aparecía recién al llegar al final de la ficha).
 function ajustarCaja() {
   const b = $('#box'); if (!b) return;
-  const top = Math.min(108, window.innerHeight - b.offsetHeight - 16);
-  b.style.top = top + 'px';
+  // Si no entra en la pantalla debajo del menú, queda fija debajo del menú con desplazamiento propio y el botón al pie
+  // (antes se pegaba por abajo y la parte de arriba —fechas y huéspedes— quedaba tapada por el menú).
+  const disp = window.innerHeight - 124;
+  if (window.innerWidth >= 980 && b.scrollHeight > disp + 2) {
+    b.classList.add('box-alta'); b.style.top = '108px'; b.style.maxHeight = disp + 'px';
+  } else {
+    b.classList.remove('box-alta'); b.style.maxHeight = ''; b.style.top = Math.min(108, window.innerHeight - b.offsetHeight - 16) + 'px';
+  }
+}
+// Si la caja quedó pegada por abajo y su parte de arriba está bajo el menú, sube la página lo justo para verla entera arriba.
+function cajaArriba() {
+  const b = $('#box'); if (!b) return;
+  if (b.classList.contains('box-alta')) { const pop = $('#huesPop'); if (pop) setTimeout(function () { pop.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }, 30); return; }
+  if (window.innerWidth < 980) return;
+  const r = b.getBoundingClientRect(); if (r.top < 100) window.scrollBy({ top: r.top - 108, behavior: 'smooth' });
 }
 window.addEventListener('resize', function () { ajustarCaja(); });
 if (window.ResizeObserver) { const roC = new ResizeObserver(function () { ajustarCaja(); }); setTimeout(function obs() { const b = $('#box'); if (b) roC.observe(b); else setTimeout(obs, 500); }, 500); }
@@ -986,9 +1016,9 @@ function pagoHtml(c) {
     : '<div class="fila"><span>Al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo' + (pol.saldo_fecha ? ', hasta el ' + fechaCorta(pol.saldo_fecha) : '') + '</span><span>' + usd(c.saldo) + '</span></div>') +
     '<div class="fila"><span>Garantía (se devuelve)</span><span>' + usd(c.garantia) + '</span></div></div>';
 }
-function polHtml(pol) {
+function polHtml(pol, abierto) {
   if (!pol || !pol.puntos) return '';
-  return '<div class="pol"><b>Política de cancelación</b><ul>' + pol.puntos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+  return '<details class="pol"' + (abierto || window.innerHeight >= 950 ? ' open' : '') + '><summary><b>Política de cancelación</b></summary><ul>' + pol.puntos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></details>';
 }
 function botonHtml() {
   if (P && P.vitrina) return '<a class="btn-res" style="display:block;text-align:center;text-decoration:none" href="' + waLink(false) + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>';
@@ -997,7 +1027,7 @@ function botonHtml() {
   const consultar = COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0;
   const nota = !ok ? '' : (inm ? 'Reserva inmediata: pagás la seña online con tarjeta u otros medios.'
     : (P.inmediata ? 'Por la cercanía de la fecha, esta reserva se hace por solicitud. ' : '') + 'No se te cobra nada todavía: el equipo confirma la disponibilidad y te manda el link de pago.');
-  return '<button type="button" class="btn-res" id="btnRes"' + (ok || consultar ? '' : ' disabled') + '>' + (ok ? (inm ? 'Reservar' : 'Solicitar reserva') : (consultar ? 'Consultar por WhatsApp' : 'Elegí tus fechas')) + '</button>' +
+  return '<button type="button" class="btn-res" id="btnRes"' + (ok || consultar ? '' : ' disabled') + '>' + (ok ? (inm ? 'Reservar' : 'Solicitar reserva') : (consultar ? 'Consultar por WhatsApp' : (S.llegada && S.salida ? (COT ? 'Cambiá las fechas' : 'Calculando el precio…') : 'Elegí tus fechas'))) + '</button>' +
     (nota ? '<p class="modo-nota">' + esc(nota) + '</p>' : '') +
     '<a class="btn-sec" href="' + waLink(false) + '" target="_blank" rel="noopener">¿Dudas? Escribinos por WhatsApp</a>';
 }
@@ -1042,10 +1072,10 @@ async function verDoc(k) {
   const d = DOCS[k];
   let v = $('#docBg');
   if (!v) { v = document.createElement('div'); v.className = 'rmod-bg doc-bg'; v.id = 'docBg'; document.body.appendChild(v); v.addEventListener('click', function (e) { if (e.target === v) v.classList.remove('open'); }); }
-  v.innerHTML = '<div class="rmod doc" role="dialog" aria-modal="true"><h3>' + esc(d.tit) + '</h3><div class="doc-tx" id="docTx">Cargando…</div><div class="acc"><button type="button" class="btn-res" id="docX">Cerrar</button></div>' +
+  v.innerHTML = '<div class="rmod doc" role="dialog" aria-modal="true"><button type="button" class="doc-x" id="docXa" aria-label="Cerrar">×</button><h3>' + esc(d.tit) + '</h3><div class="doc-tx" id="docTx">Cargando…</div><div class="acc"><button type="button" class="btn-res" id="docX">Cerrar</button></div>' +
     '<p class="seg"><a href="' + d.url + '" target="_blank" rel="noopener">Abrir en una página aparte</a></p></div>';
   v.classList.add('open');
-  $('#docX').onclick = function () { v.classList.remove('open'); };
+  $('#docX').onclick = $('#docXa').onclick = function () { v.classList.remove('open'); };
   try {
     if (!verDoc._c) verDoc._c = {};
     if (!verDoc._c[k]) { const r = await fetch(d.url, { cache: 'no-cache' }); if (!r.ok) throw new Error(); const t = await r.text(); const dom = new DOMParser().parseFromString(t, 'text/html'); const a = dom.querySelector('#doc'); if (!a) throw new Error(); a.querySelectorAll('a').forEach(function (x) { x.target = '_blank'; x.rel = 'noopener'; }); verDoc._c[k] = a.innerHTML; }
@@ -1065,7 +1095,7 @@ function abrirFormulario() {
     '<label for="rE">Email</label><input type="email" id="rE" autocomplete="email" maxlength="160" value="' + esc(g('e')) + '" />' +
     '<label for="rT">Teléfono (WhatsApp, con código de país)</label><input type="tel" id="rT" autocomplete="tel" maxlength="24" placeholder="+598 99 123 456" value="' + esc(g('t')) + '" />' +
     (inm ? '' : '<label for="rM">Mensaje para el equipo (opcional)</label><textarea id="rM" maxlength="800" placeholder="Contanos quiénes viajan y cualquier pedido especial."></textarea>') +
-    polHtml(pol) +
+    polHtml(pol, true) +
     '<label class="ck"><input type="checkbox" id="rA" /> <span>Leí y acepto la política de cancelación.</span></label>' +
     '<label class="ck"><input type="checkbox" id="rB" /> <span>Leí y acepto las <button type="button" class="lnk" data-doc="bases">bases y condiciones</button> de la reserva.</span></label>' +
     '<label class="ck"><input type="checkbox" id="rR" /> <span>Leí y acepto las <button type="button" class="lnk" data-doc="reglas">reglas de la casa</button>.</span></label>' +
@@ -1133,7 +1163,7 @@ document.addEventListener('keydown', function (e) {
   if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
   else if (!e.shiftKey && (document.activeElement === z || !bg.contains(document.activeElement))) { e.preventDefault(); a.focus(); }
 });
-document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; const d = $('#docBg.open'); if (d) { d.classList.remove('open'); return; } cerrarReserva(); });
+document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; const lbA = $('#lb.open'); if (lbA) { lbA.classList.remove('open'); document.body.style.overflow = ''; return; } const d = $('#docBg.open'); if (d) { d.classList.remove('open'); return; } cerrarReserva(); });
 let cotGen = 0;
 async function cotizar() {
   COT = null;
