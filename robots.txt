@@ -72,3 +72,4 @@ Disallow: /*.php$
 
 # Sitemap
 Sitemap: https://phpunta.uy/sitemap.xml
+Sitemap: https://phpunta.uy/sitemap-reservas.xml

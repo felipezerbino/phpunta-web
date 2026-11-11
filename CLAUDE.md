@@ -21,11 +21,11 @@ Cloudflare: no se usa (la zona se dio de baja el 2-nov-2026; Felipe decidió no 
 - **Push a `main` → `.github/workflows/deploy.yml` → publica en la raíz de phpunta.uy por HTTPS** por el receptor `phpunta.uy/limpiezas/deployer/deploy.php` (app `web`). Secret del repo: `DEPLOY_TOKEN` (= `deployer/deploy_token.txt` de la raíz). Desde el 11-nov ese receptor acepta ese token SOLO para app=web, porque el de la raíz no se puede actualizar por FTP (la cuenta principal está enjaulada en `comunicacion/`). El `deployer/deploy.php` de la raíz quedó viejo y sin uso.
 - Sube SOLO lo que cambió desde lo publicado (`https://phpunta.uy/web-version.json` guarda el commit). La primera vez la base es el commit de importación. "Subir todo": Actions → Publicar la web → Run workflow → tildar "completo".
 - **Nunca borra.** Un archivo eliminado del repo sigue en el hosting: borrarlo a mano.
-- El receptor solo acepta en la web: archivos sueltos en la raíz y carpetas `assets/`, `en/`, `pt/`, `reservasnueva/`, `alquileres/`; html/css/js/imágenes/video/sitemap. Nada `.php`, `.htaccess` ni ocultos. Una carpeta nueva exige cambiar `deploy.php` (repo phpunta-comunicaciones) y correr allá el workflow "Instalar deploy.php en limpiezas/deployer" (FTP plano: solo con OK de Felipe).
+- El receptor solo acepta en la web: archivos sueltos en la raíz y carpetas `assets/`, `en/`, `pt/`, `reservas/`, `reservasnueva/`, `alquileres/`; html/css/js/imágenes/video/sitemap. Nada `.php`, `.htaccess` ni ocultos. Una carpeta nueva exige cambiar `deploy.php` (repo phpunta-comunicaciones) y correr allá el workflow "Instalar deploy.php en limpiezas/deployer" (FTP plano: solo con OK de Felipe).
 - Lotes de ≤1,5 MB: el tope de subida del PHP del hosting no está medido. Un archivo más grande (los videos de 6-7 MB) puede ser rechazado: el workflow lo dice y hay que subirlo por el Administrador de archivos.
 - Verificación: el último paso compara `web-version.json` publicado con el commit.
 
-## Central de reservas (ES/PT/EN — 11-nov-2026; oculta en /reservasnueva hasta habilitar /reservas)
+## Central de reservas (ES/PT/EN — PUBLICADA en /reservas, /pt/reservas, /en/reservas desde el 11-nov-2026)
 - **Plantillas** (no se publican, empiezan con _): `reservas/_lista.html` (buscador + lista + mapa) y `reservas/_ficha.html`
   (cada propiedad). Están en ESPAÑOL; `tools/i18n_reservas.py` (PARES es→pt→en aplicados en el armado) genera PT y EN.
   **Regla: todo texto nuevo que vea el visitante lleva su par PT/EN en ese archivo en el mismo cambio** (probar con
@@ -36,11 +36,12 @@ Cloudflare: no se usa (la zona se dio de baja el 2-nov-2026; Felipe decidió no 
   VacationRental + BreadcrumbList/ItemList, contenido pre-armado para buscadores) y `sitemap-reservas.xml`. Una propiedad
   nueva publicada en el panel aparece sola. Las páginas generadas no se versionan (.gitignore) y el deploy sube solo las que
   cambiaron (`reservas-manifest.json`).
-- **Publicarla en /reservas** (falta): (1) instalar el `deploy.php` que acepta `reservas/` (repo phpunta-comunicaciones,
-  workflow "Instalar deploy.php en limpiezas/deployer", FTP plano: con OK de Felipe); (2) en deploy.yml
-  `RESERVAS_ES_DIR: reservas` (saca el noindex, arma el sitemap y deja redirecciones en /reservasnueva/);
-  (3) `python3 tools/enlazar-reservas.py` (menús y botones del sitio → /reservas en cada idioma); (4) robots.txt:
-  `Sitemap: https://phpunta.uy/sitemap-reservas.xml`.
+- **Publicada (11-nov-2026, OK de Felipe):** deploy.yml con `RESERVAS_ES_DIR: reservas` (sin noindex, con
+  `sitemap-reservas.xml` en robots.txt); `/reservasnueva/…` quedan como redirecciones a `/reservas/…` (conservan fechas y
+  `?sel=`); menús y botones del sitio apuntan a la central de cada idioma (`tools/enlazar-reservas.py`, ya corrido). En el
+  hosting la raíz es `public_html/phpunta.uy/`: ahí había `reservas/index.php` redirigiendo a reservas.phpunta.uy, y el
+  receptor lo renombra a `index.php.anterior` la primera vez que publica `reservas/index.html` (la respuesta trae
+  `retirado`). Para volver atrás: `RESERVAS_ES_DIR: reservasnueva` y renombrar ese archivo a mano.
 - Textos de las propiedades en PT/EN: los traduce el backend con la IA en el fondo (v2.754, cache en guias_traducciones);
   mientras no están, salen en español. Estado: `/diag/web-traducciones`.
 - Bases y condiciones y Reglas de la casa: `tools/legales_reserva.py` → `python3 tools/generar-legales.py` arma
@@ -64,4 +65,4 @@ Reemplaza al sitio de reservas de Avantio (reservas.phpunta.uy). Oculta: `noinde
   "Acceso equipo" en el pie) aparece "Armar selección": círculos en las tarjetas y "Crear link" → `?sel=<id>` muestra solo
   esas propiedades con las fechas y precios elegidos. Funciona solo en `phpunta.uy` (sin www: localStorage es por origen).
 - El calendario del buscador va por encima de la barra de filtros (`body.pop-on .hero`): el `.hero` tiene `isolation`.
-- Logo del menú: `assets/img/logo.webp` (11-nov, copiado de reservas.phpunta.uy). Quedan links a reservas.phpunta.uy en el menú "Reservas" de las páginas: cambiarlos cuando se publique la central.
+- Logo del menú: `assets/img/logo.webp` (11-nov, copiado de reservas.phpunta.uy). Los links del menú "Reservas" ya van a /reservas (11-nov).
