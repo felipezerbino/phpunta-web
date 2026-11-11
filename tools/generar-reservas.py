@@ -42,7 +42,7 @@ TX = {
     'lista_h1': 'Alquileres en Punta del Este',
     'tipo': {'casa': 'Casa', 'apartamento': 'Apartamento'},
     'en': 'en', 'dorm': ('dormitorio', 'dormitorios'), 'banos': ('baño', 'baños'), 'hues': 'hasta {n} huéspedes',
-    'tit_sufijo': ' | Alquiler en {barrio}',
+    'tit_sufijo': ' | Alquiler {lugar}',
     'cola': 'Reservá directo con Premium Host Punta: precio final y disponibilidad al instante.',
     'retirada_tit': 'Propiedad no disponible', 'retirada_desc': 'Esta propiedad ya no está disponible.',
     'inicio': 'Inicio', 'reservas': 'Reservas', 'comodidades': 'Comodidades', 'cargando': 'Cargando…',
@@ -54,7 +54,7 @@ TX = {
     'lista_h1': 'Aluguéis em Punta del Este',
     'tipo': {'casa': 'Casa', 'apartamento': 'Apartamento'},
     'en': 'em', 'dorm': ('quarto', 'quartos'), 'banos': ('banheiro', 'banheiros'), 'hues': 'até {n} hóspedes',
-    'tit_sufijo': ' | Aluguel em {barrio}',
+    'tit_sufijo': ' | Aluguel {lugar}',
     'cola': 'Reserve direto com a Premium Host Punta: preço final e disponibilidade na hora.',
     'retirada_tit': 'Propriedade indisponível', 'retirada_desc': 'Esta propriedade não está mais disponível.',
     'inicio': 'Início', 'reservas': 'Reservas', 'comodidades': 'Comodidades', 'cargando': 'Carregando…',
@@ -66,7 +66,7 @@ TX = {
     'lista_h1': 'Vacation rentals in Punta del Este',
     'tipo': {'casa': 'House', 'apartamento': 'Apartment'},
     'en': 'in', 'dorm': ('bedroom', 'bedrooms'), 'banos': ('bathroom', 'bathrooms'), 'hues': 'up to {n} guests',
-    'tit_sufijo': ' | Rental in {barrio}',
+    'tit_sufijo': ' | Rental {lugar}',
     'cola': 'Book direct with Premium Host Punta: final price and availability instantly.',
     'retirada_tit': 'Property not available', 'retirada_desc': 'This property is no longer available.',
     'inicio': 'Home', 'reservas': 'Book', 'comodidades': 'Amenities', 'cargando': 'Loading…',
@@ -156,10 +156,31 @@ def armar(tpl, lang, base_path, seo, cuerpo_pre=None, slug='', estado=''):
   return out
 
 
+# Barrio tal como se nombra en cada idioma ("otra zona" no es un lugar: va "Punta del Este")
+BARRIO_TX = {
+  'pt': {'la Península': 'Península', 'Playa Brava': 'Praia Brava', 'Playa Mansa': 'Praia Mansa', 'Montevideo': 'Montevidéu'},
+  'en': {'la Península': 'the Peninsula'},
+}
+LUGAR_TX = {'pt': {'Península': 'na Península'}, 'en': {}}
+
+
+def barrio_de(lang, p):
+  b = (p.get('barrio') or '').strip()
+  if not b or b.lower() == 'otra zona': b = 'Punta del Este'
+  if b.startswith('Roosevelt'): b = 'Roosevelt'
+  return BARRIO_TX.get(lang, {}).get(b, b)
+
+
+def en_barrio(lang, p):
+  """'en la Península' / 'na Península' / 'in the Peninsula'."""
+  b = barrio_de(lang, p)
+  return LUGAR_TX.get(lang, {}).get(b) or (TX[lang]['en'] + ' ' + b)
+
+
 def descripcion(lang, p):
   t = TX[lang]
   tipo = t['tipo'].get(p.get('tipo') or 'apartamento', t['tipo']['apartamento'])
-  partes = [tipo + ' ' + t['en'] + ' ' + (p.get('barrio') or 'Punta del Este')]
+  partes = [tipo + ' ' + en_barrio(lang, p)]
   if p.get('dormitorios'): partes.append('%s %s' % (p['dormitorios'], t['dorm'][0 if p['dormitorios'] == 1 else 1]))
   if p.get('huespedes'): partes.append(t['hues'].format(n=p['huespedes']))
   base = ', '.join(partes) + '. '
@@ -175,7 +196,7 @@ def jsonld_ficha(lang, p, url, desc):
   ld = {'@context': 'https://schema.org', '@type': 'VacationRental', 'name': p.get('titulo'), 'url': url, 'description': desc,
         'inLanguage': lang, 'identifier': p.get('slug'),
         'brand': {'@type': 'Organization', 'name': 'Premium Host Punta', 'url': SITIO + '/'},
-        'address': {'@type': 'PostalAddress', 'addressLocality': p.get('barrio') or 'Punta del Este', 'addressRegion': 'Maldonado', 'addressCountry': 'UY'}}
+        'address': {'@type': 'PostalAddress', 'addressLocality': barrio_de(lang, p), 'addressRegion': 'Maldonado', 'addressCountry': 'UY'}}
   if fotos: ld['image'] = fotos
   c = p.get('coord') or {}
   if isinstance(c.get('lat'), (int, float)) and isinstance(c.get('lng'), (int, float)):
@@ -210,7 +231,7 @@ def pre_ficha(lang, p, desc):
 
 def pre_lista(lang, props):
   t = TX[lang]
-  items = ''.join('<li><a href="' + esc(url_ficha(lang, p['slug'])) + '">' + esc(p.get('titulo')) + '</a> — ' + esc(t['tipo'].get(p.get('tipo') or 'apartamento', '')) + ', ' + esc(p.get('barrio') or '') + '</li>' for p in props)
+  items = ''.join('<li><a href="' + esc(url_ficha(lang, p['slug'])) + '">' + esc(p.get('titulo')) + '</a> — ' + esc(t['tipo'].get(p.get('tipo') or 'apartamento', '')) + ', ' + esc(barrio_de(lang, p)) + '</li>' for p in props)
   return '<div class="seo-pre" id="seoPre"><h1 style="font-weight:300;font-size:1.6rem">' + esc(t['lista_h1']) + '</h1><ul>' + items + '</ul></div>'
 
 
@@ -248,7 +269,7 @@ def main():
       if not re.fullmatch(r'[a-z0-9-]{1,60}', slug): continue
       url = url_ficha(lang, slug)
       desc = descripcion(lang, p)
-      titulo = (p.get('titulo') or 'Premium Host Punta') + t['tit_sufijo'].format(barrio=p.get('barrio') or 'Punta del Este')
+      titulo = (p.get('titulo') or 'Premium Host Punta') + t['tit_sufijo'].format(lugar=en_barrio(lang, p))
       alt = {lg: url_ficha(lg, slug) for lg in LANGS}
       seo = head_seo(lang, titulo, desc, url, (p.get('fotos') or [IMG_DEF])[0], alt, 'website', jsonld_ficha(lang, p, url, desc))
       escribir(DIRS[lang] + '/' + slug + '/index.html', armar(tpl_ficha, lang, base_path, seo, pre_ficha(lang, p, desc), slug, 'publicada'))

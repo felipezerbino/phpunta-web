@@ -49,6 +49,7 @@ EN: 'A/C'¦
 ES: 'Cochera'¦
 PT: 'Garagem'¦
 EN: 'Parking'¦
+
 ES: <html lang="es">¦
 PT: <html lang="pt-BR">¦
 EN: <html lang="en">¦
@@ -155,7 +156,7 @@ PT: <a href="/pt/politica-cookies.html">Política de cookies</a>¦
 EN: <a href="/en/cookie-policy.html">Cookie policy</a>¦
 
 ES: <span>RUT 220520320015</span>¦
-PT: <span>CNPJ 220520320015</span>¦
+PT: <span>RUT 220520320015</span>¦
 EN: <span>Tax ID 220520320015</span>¦
 
 ES: <span>Registro MINTUR N°2011</span>¦
@@ -266,15 +267,15 @@ ES: data-v="apartamento">Apartamentos<¦
 EN: data-v="apartamento">Apartments<¦
 
 ES: aria-label="Dormitorios"¦
-PT: aria-label="Dormitórios"¦
+PT: aria-label="Quartos"¦
 EN: aria-label="Bedrooms"¦
 
 ES: <option value="0">Dormitorios</option>¦
-PT: <option value="0">Dormitórios</option>¦
+PT: <option value="0">Quartos</option>¦
 EN: <option value="0">Bedrooms</option>¦
 
 ES: + dormitorios</option>¦
-PT: + dormitórios</option>¦
+PT: + quartos</option>¦
 EN: + bedrooms</option>¦
 
 ES: Reservás y pagás online, sin esperar aprobación¦
@@ -319,7 +320,7 @@ PT: >Preço: maior para menor</option>¦
 EN: >Price: high to low</option>¦
 
 ES: >Más dormitorios</option>¦
-PT: >Mais dormitórios</option>¦
+PT: >Mais quartos</option>¦
 EN: >Most bedrooms</option>¦
 
 ES: id="btnEquipo">Armar selección</button>¦
@@ -442,7 +443,7 @@ PT: <h4>Tipo de propriedade</h4>¦
 EN: <h4>Property type</h4>¦
 
 ES: <h4>Dormitorios</h4>¦
-PT: <h4>Dormitórios</h4>¦
+PT: <h4>Quartos</h4>¦
 EN: <h4>Bedrooms</h4>¦
 
 ES: data-dorm="0">Cualquiera<¦
@@ -719,7 +720,7 @@ PT: ' dormitório'¦
 EN: ' bedroom'¦
 
 ES: ' dormitorios'¦
-PT: ' dormitórios'¦
+PT: ' quartos'¦
 EN: ' bedrooms'¦
 
 ES: 'hasta '¦
@@ -1115,7 +1116,7 @@ PT: 'dormitório'¦
 EN: 'bedroom'¦
 
 ES: 'dormitorios'¦
-PT: 'dormitórios'¦
+PT: 'quartos'¦
 EN: 'bedrooms'¦
 
 ES: 'baño'¦
@@ -1221,7 +1222,7 @@ ES: <h2>Hacé preguntas sobre este alojamiento</h2>¦
 PT: <h2>Faça perguntas sobre esta hospedagem</h2>¦
 EN: <h2>Ask questions about this property</h2>¦
 
-ES: placeholder="Haz cualquier pregunta sobre esta propiedad"¦
+ES: placeholder="Hacé cualquier pregunta sobre esta propiedad"¦
 PT: placeholder="Faça qualquer pergunta sobre esta propriedade"¦
 EN: placeholder="Ask anything about this property"¦
 
@@ -1548,11 +1549,11 @@ PT: Li e aceito a política de cancelamento.¦
 EN: I have read and accept the cancellation policy.¦
 
 ES: Leí y acepto las <button type="button" class="lnk" data-doc="bases">¦
-PT: Li e aceito as <button type="button" class="lnk" data-doc="bases">¦
+PT: Li e aceito os <button type="button" class="lnk" data-doc="bases">¦
 EN: I have read and accept the <button type="button" class="lnk" data-doc="bases">¦
 
 ES: bases y condiciones</button> de la reserva.¦
-PT: bases e condições</button> da reserva.¦
+PT: termos e condições</button> da reserva.¦
 EN: booking terms and conditions</button>.¦
 
 ES: Leí y acepto las <button type="button" class="lnk" data-doc="reglas">¦
@@ -1600,7 +1601,7 @@ PT: 'Para continuar, aceite a política de cancelamento.'¦
 EN: 'To continue, accept the cancellation policy.'¦
 
 ES: 'Para seguir, aceptá las bases y condiciones.'¦
-PT: 'Para continuar, aceite as bases e condições.'¦
+PT: 'Para continuar, aceite os termos e condições.'¦
 EN: 'To continue, accept the booking terms and conditions.'¦
 
 ES: 'Para seguir, aceptá las reglas de la casa.'¦
@@ -1695,6 +1696,8 @@ def _parse(texto):
             m = re.match(r'^(ES|PT|EN): (.*)¦$', linea, re.S)
             if not m:
                 raise ValueError('línea de pares mal formada: %r' % linea[:80])
+            if m.group(1) in v:
+                raise ValueError('bloque con dos %s (falta una línea en blanco): %r' % (m.group(1), bloque[:80]))
             v[m.group(1)] = m.group(2).replace('\\n', '\n')
         if 'ES' not in v:
             raise ValueError('bloque sin ES: %r' % bloque[:80])

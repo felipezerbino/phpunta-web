@@ -6,6 +6,17 @@ import html, json, os, re, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from legales_reserva import BASES, REGLAS, VERSION
 
+MESES = {'es': ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+         'pt': ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'],
+         'en': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']}
+
+
+def fecha_txt(lang):
+  a, m, d = (int(x) for x in VERSION.split('-'))
+  mes = MESES[lang][m - 1]
+  return '%s %d, %d' % (mes, d, a) if lang == 'en' else '%d de %s de %d' % (d, mes, a)
+
+
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITIO = 'https://phpunta.uy'
 PLANTILLA = {'es': 'condiciones-generales.html', 'pt': 'pt/termos.html', 'en': 'en/terms.html'}
@@ -25,7 +36,7 @@ def cuerpo(tipo, lang):
   d = (BASES if tipo == 'bases' else REGLAS)[lang]
   t = TXT[lang]
   h = ['<section class="legal-hero">', '  <div class="container">', '    <span class="eyebrow">' + t['eyebrow'] + '</span>',
-       '    <h1>' + d['h1'] + '</h1>', '    <div class="updated">' + t['version'] + VERSION + '</div>', '  </div>', '</section>', '',
+       '    <h1>' + d['h1'] + '</h1>', '    <div class="updated">' + t['version'] + fecha_txt(lang) + '</div>', '  </div>', '</section>', '',
        '<section class="legal-content">', '  <div class="container">',
        '    <article id="doc" data-tipo="' + tipo + '" data-version="' + VERSION + '">', '    <p>' + html.escape(d['intro']) + '</p>']
   if tipo == 'bases':

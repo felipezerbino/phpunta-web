@@ -11,7 +11,7 @@ BASES = {
   'titulo': 'Bases y condiciones de la reserva',
   'h1': 'Bases y condiciones <em>de la reserva</em>',
   'desc': 'Bases y condiciones que acepta el huésped al reservar una propiedad de Premium Host Punta en Punta del Este.',
-  'intro': 'Estas bases rigen toda reserva hecha en la web de Premium Host Punta (Premium Host Punta SAS, RUT 217869320014, en adelante «PHPunta»), administrador de la propiedad. Al reservar, el titular las acepta para sí y para todo su grupo, junto con la política de cancelación y las reglas de la casa.',
+  'intro': 'Estas bases rigen toda reserva hecha en la web de Premium Host Punta (Premium Host Punta SAS, RUT 220520320015, en adelante «PHPunta»), administrador de la propiedad. Al reservar, el titular las acepta para sí y para todo su grupo, junto con la política de cancelación y las reglas de la casa.',
   'items': [
    ('Uso de la propiedad', 'La propiedad se alquila amueblada y equipada, por temporada, solo como vivienda temporal del titular y de los huéspedes registrados. No se puede subarrendar, ceder ni usar con fines comerciales, para eventos o filmaciones.'),
    ('Reserva y pago', 'La reserva queda firme cuando se paga la seña y el equipo de PHPunta la confirma. El saldo se paga en el plazo que indica la política de cancelación. Los precios son en dólares estadounidenses e incluyen la limpieza final. Si la reserva no se pudiera confirmar, se devuelve el 100% de lo pagado.'),
@@ -33,7 +33,7 @@ BASES = {
   'titulo': 'Termos e condições da reserva',
   'h1': 'Termos e condições <em>da reserva</em>',
   'desc': 'Termos e condições que o hóspede aceita ao reservar uma propriedade da Premium Host Punta em Punta del Este.',
-  'intro': 'Estes termos regem toda reserva feita no site da Premium Host Punta (Premium Host Punta SAS, RUT 217869320014, doravante «PHPunta»), administradora da propriedade. Ao reservar, o titular os aceita para si e para todo o seu grupo, junto com a política de cancelamento e as regras da casa.',
+  'intro': 'Estes termos regem toda reserva feita no site da Premium Host Punta (Premium Host Punta SAS, RUT 220520320015, doravante «PHPunta»), administradora da propriedade. Ao reservar, o titular os aceita para si e para todo o seu grupo, junto com a política de cancelamento e as regras da casa.',
   'items': [
    ('Uso da propriedade', 'A propriedade é alugada mobiliada e equipada, por temporada, apenas como moradia temporária do titular e dos hóspedes registrados. Não pode ser sublocada, cedida nem usada para fins comerciais, eventos ou filmagens.'),
    ('Reserva e pagamento', 'A reserva fica firme quando o sinal é pago e a equipe da PHPunta a confirma. O saldo é pago no prazo indicado na política de cancelamento. Os preços são em dólares americanos e incluem a limpeza final. Se a reserva não puder ser confirmada, devolvemos 100% do valor pago.'),
@@ -55,7 +55,7 @@ BASES = {
   'titulo': 'Booking terms and conditions',
   'h1': 'Booking terms <em>and conditions</em>',
   'desc': 'Terms and conditions a guest accepts when booking a Premium Host Punta property in Punta del Este.',
-  'intro': 'These terms govern every booking made on the Premium Host Punta website (Premium Host Punta SAS, RUT 217869320014, hereinafter “PHPunta”), manager of the property. By booking, the main guest accepts them for themselves and their whole group, together with the cancellation policy and the house rules.',
+  'intro': 'These terms govern every booking made on the Premium Host Punta website (Premium Host Punta SAS, RUT 220520320015, hereinafter “PHPunta”), manager of the property. By booking, the main guest accepts them for themselves and their whole group, together with the cancellation policy and the house rules.',
   'items': [
    ('Use of the property', 'The property is rented furnished and equipped, for a holiday stay, only as temporary accommodation for the main guest and the registered guests. It may not be sublet, assigned or used for commercial purposes, events or filming.'),
    ('Booking and payment', 'The booking is final once the deposit is paid and the PHPunta team confirms it. The balance is paid within the term stated in the cancellation policy. Prices are in US dollars and include the final cleaning. If the booking cannot be confirmed, 100% of the amount paid is refunded.'),
