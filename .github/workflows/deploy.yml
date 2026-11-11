@@ -8,6 +8,8 @@ name: Publicar la web (phpunta.uy)
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '37 9 * * *'   # una vez por día: páginas de propiedades nuevas o con otro título (central de reservas)
   workflow_dispatch:
     inputs:
       completo:
@@ -28,6 +30,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Generar las páginas de cada propiedad (central de reservas)
+        run: |
+          # Lee /web/slugs del backend y arma reservasnueva/<slug>/index.html con la plantilla _ficha.html.
+          # Si el backend no responde, no genera nada y sigue (las páginas ya publicadas quedan como están).
+          python3 tools/generar-fichas.py https://phpunta-backend-production.up.railway.app fichas.txt || true
+          touch fichas.txt
+
       - name: Armar los lotes
         env:
           COMPLETO: ${{ inputs.completo }}
@@ -45,6 +54,7 @@ jobs:
           else
             echo "Subida completa"; git ls-files > cambios.txt
           fi
+          cat fichas.txt >> cambios.txt   # las páginas generadas no están en git: van siempre
           python3 - <<'EOF'
           import os, re, json, zipfile, subprocess, datetime
           ok_ext = re.compile(r'\.(html|css|js|json|xml|txt|webmanifest|png|jpe?g|webp|gif|svg|ico|avif|mp4|webm|woff2?)$', re.I)
@@ -53,7 +63,9 @@ jobs:
               f = f.strip()
               if not f or not os.path.isfile(f): continue
               if re.search(r'(^|/)\.', f) or not ok_ext.search(f): continue
-              if '/' in f and not re.match(r'^(assets|en|pt)/', f): continue
+              if re.search(r'(^|/)_', f): continue   # plantillas (_ficha.html): no se publican
+              if '/' in f and not re.match(r'^(assets|en|pt|reservasnueva|alquileres)/', f): continue
+              if f in files: continue
               files.append(f)
           sha = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
           with open('web-version.json', 'w') as fh:

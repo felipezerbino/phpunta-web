@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- PLANTILLA: el deploy genera reservasnueva/<slug>/index.html reemplazando los __MARCADORES__ (tools/generar-fichas.py). -->
+<title>__TITULO__ | Reservas Premium Host Punta</title>
+<meta name="description" content="__DESC__" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="php-slug" content="__SLUG__" />
+<meta name="php-estado" content="__ESTADO__" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="__TITULO__" />
+<meta property="og:description" content="__DESC__" />
+<meta property="og:image" content="__OG__" />
+<meta property="og:url" content="__URL__" />
+<meta name="theme-color" content="#0d1b2a" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://phpunta-backend-production.up.railway.app" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script type="application/ld+json">__JSONLD__</script>
+<style>
+:root {
+  color-scheme: light;
+  --navy: #0d1b2a; --navy-deep: #07131f;
+  --cream: #faf7f0; --cream-warm: #f5f0e3; --cream-paper: #ede7d6;
+  --gold: #c9a84c; --gold-soft: #d9bc68; --gold-deep: #a88c3a;
+  --text: #1a2332; --text-soft: #556070; --text-muted: #8a92a0;
+  --text-on-dark: #f0ece0; --text-on-dark-soft: #a8a598;
+  --border-light: rgba(13, 27, 42, .1); --border-dark: rgba(240, 236, 224, .14);
+  --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --sans: 'Jost', -apple-system, sans-serif;
+  --maxw: 1240px; --ease: cubic-bezier(.2, .6, .2, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--cream); }
+body { font-family: var(--sans); background: var(--cream); color: var(--text); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+input, select, textarea { font-family: inherit; font-size: 16px; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 1000px) { .container { padding: 0 40px; } }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; letter-spacing: -.005em; color: var(--navy); }
+.eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-deep); }
+
+.nav { background: var(--navy); color: var(--cream); padding: 16px 0; position: sticky; top: 0; z-index: 900; border-bottom: 1px solid var(--border-dark); }
+.nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+.nav-inner > .logo { margin-right: auto; }
+.logo { display: flex; align-items: center; gap: 12px; color: var(--cream); }
+.logo img { height: 44px; width: auto; }
+.logo-text { font-family: var(--serif); line-height: 1; }
+.logo-text strong { display: block; font-weight: 400; font-size: 16px; color: var(--gold); letter-spacing: .22em; }
+.logo-text span { display: block; font-weight: 300; font-size: 10px; margin-top: 4px; color: var(--text-on-dark-soft); letter-spacing: .3em; }
+.nav-links { display: none; list-style: none; align-items: center; gap: 28px; white-space: nowrap; }
+.nav-links a { color: var(--text-on-dark); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; }
+.nav-links a:hover, .nav-links a.current { color: var(--gold); }
+.nav-burger { width: 44px; height: 44px; background: transparent; border: 1px solid var(--border-dark); border-radius: 2px; display: grid; place-items: center; }
+.nav-burger span, .nav-burger span::before, .nav-burger span::after { display: block; width: 18px; height: 1px; background: var(--cream); }
+.nav-burger span { position: relative; } .nav-burger span::before, .nav-burger span::after { content: ''; position: absolute; left: 0; }
+.nav-burger span::before { top: -6px; } .nav-burger span::after { top: 6px; }
+@media (min-width: 1000px) { .nav-links { display: flex; } .nav-burger { display: none; } }
+.mobile-menu { position: fixed; inset: 0; background: var(--navy); z-index: 880; transform: translateY(-100%); transition: transform .5s var(--ease); padding: 110px 32px 40px; }
+.mobile-menu.open { transform: none; }
+.mobile-menu ul { list-style: none; } .mobile-menu li { border-bottom: 1px solid var(--border-dark); }
+.mobile-menu a { display: block; font-family: var(--serif); font-size: 2.1rem; color: var(--cream); padding: 18px 0; font-weight: 300; }
+
+.volver { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--text-soft); padding: 18px 0 10px; }
+.volver:hover { color: var(--navy); }
+.tit h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin: 4px 0 6px; }
+.tit .sub { color: var(--text-soft); font-size: 14.5px; }
+
+/* GALERÍA */
+.gal { margin-top: 18px; position: relative; }
+.gal-grid { display: grid; gap: 8px; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 220px 220px; border-radius: 3px; overflow: hidden; }
+.gal-grid img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; transition: filter .25s; }
+.gal-grid img:hover { filter: brightness(.92); }
+.gal-grid img:first-child { grid-row: span 2; }
+.gal-grid.pocas { grid-template-columns: 1fr; grid-template-rows: auto; }
+.gal-grid.pocas img { aspect-ratio: 16 / 9; grid-row: auto; display: none; }
+.gal-grid.pocas img:first-child { display: block; }
+.gal-movil { display: none; aspect-ratio: 4 / 3; overflow: hidden; position: relative; border-radius: 3px; background: var(--cream-paper); }
+.gal-movil .tr { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.gal-movil .tr::-webkit-scrollbar { display: none; }
+.gal-movil img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+.gal-n { position: absolute; bottom: 12px; right: 12px; background: rgba(13,27,42,.82); color: var(--cream); font-size: 12px; padding: 5px 10px; border-radius: 2px; }
+.gal-todas { position: absolute; bottom: 16px; right: 16px; background: #fff; border: 1px solid var(--navy); color: var(--navy); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; padding: 9px 14px; border-radius: 2px; }
+@media (max-width: 760px) { .gal-grid, .gal-todas { display: none; } .gal-movil { display: block; } }
+.lb { position: fixed; inset: 0; background: rgba(7,19,31,.96); z-index: 1000; display: none; }
+.lb.open { display: block; }
+.lb-sc { position: absolute; inset: 60px 0 0; overflow-y: auto; padding: 0 16px 40px; }
+.lb-sc img { max-width: 980px; width: 100%; margin: 0 auto 12px; border-radius: 2px; }
+.lb-x { position: absolute; top: 12px; right: 16px; background: none; border: 1px solid var(--border-dark); color: var(--cream); width: 40px; height: 40px; border-radius: 50%; font-size: 20px; }
+
+/* CUERPO */
+.cuerpo { display: grid; grid-template-columns: 1fr; gap: 40px; margin: 34px 0 60px; }
+@media (min-width: 980px) { .cuerpo { grid-template-columns: minmax(0, 1fr) 380px; gap: 64px; } }
+.datos { display: flex; flex-wrap: wrap; gap: 10px 26px; padding: 18px 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); font-size: 15px; }
+.datos b { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--navy); margin-right: 4px; }
+.sec { padding: 30px 0; border-bottom: 1px solid var(--border-light); }
+.sec h2 { font-size: 1.9rem; margin-bottom: 14px; }
+.desc { color: var(--text-soft); font-size: 15.5px; line-height: 1.8; white-space: pre-line; }
+.desc.corta { max-height: 9.2em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
+.amen { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; font-size: 15px; }
+.amen li::before { content: '✓'; color: var(--gold-deep); margin-right: 10px; }
+.reglas { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.regla { background: #fff; border: 1px solid var(--border-light); padding: 14px 16px; border-radius: 3px; }
+.regla span { display: block; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep); }
+.regla b { font-weight: 500; font-size: 16px; }
+#mini { height: 300px; border-radius: 3px; background: #e8e4da; }
+.nota-mapa { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+
+/* CALENDARIO */
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.cal-nav { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border-light); background: #fff; color: var(--navy); font-size: 16px; }
+.cal-nav:disabled { opacity: .3; }
+.cal-months { display: grid; grid-template-columns: 1fr; gap: 26px; }
+@media (min-width: 640px) { .cal-months.dos { grid-template-columns: 1fr 1fr; } }
+.cal-m h4 { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; text-align: center; margin-bottom: 8px; text-transform: capitalize; }
+.cal-g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px 0; }
+.cal-g .dw { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); text-align: center; padding: 4px 0; }
+.cal-d { aspect-ratio: 1 / 1; border: 0; background: none; font-size: 14px; color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1; border-radius: 50%; min-height: 40px; }
+.cal-d small { font-size: 9.5px; color: var(--text-muted); margin-top: 1px; }
+.cal-d:hover:not(:disabled) { outline: 1px solid var(--navy); outline-offset: -1px; }
+.cal-d:disabled { color: #c3c6cc; cursor: default; }
+.cal-d.ocup { color: #c3c6cc; text-decoration: line-through; }
+.cal-d.ocup small { display: none; }
+.cal-d.inrange { background: var(--cream-warm); border-radius: 0; }
+.cal-d.sel { background: var(--navy); color: var(--cream); }
+.cal-d.sel small { color: var(--gold-soft); }
+.cal-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--text-soft); }
+.lnk { background: none; border: 0; text-decoration: underline; color: var(--navy); font-size: 13px; }
+
+/* RESERVA */
+.box { position: sticky; top: 100px; background: #fff; border: 1px solid var(--border-light); border-radius: 3px; padding: 24px; box-shadow: 0 30px 60px -40px rgba(13,27,42,.4); }
+.box .px { font-size: 15px; color: var(--text-soft); margin-bottom: 16px; }
+.box .px b { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; color: var(--navy); }
+.bsel { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(13,27,42,.25); border-radius: 3px; }
+.bsel button { background: none; border: 0; text-align: left; padding: 10px 12px; }
+.bsel button + button { border-left: 1px solid rgba(13,27,42,.25); }
+.bsel .h { grid-column: span 2; border-top: 1px solid rgba(13,27,42,.25); border-left: 0 !important; display: flex; justify-content: space-between; align-items: center; }
+.bsel span { display: block; font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep); }
+.bsel div { font-size: 15px; }
+.hues-pop { display: none; padding: 6px 2px 0; }
+.hues-pop.open { display: block; }
+.stepper { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 8px 0; }
+.stepper small { display: block; color: var(--text-muted); font-size: 12px; }
+.stp { display: flex; align-items: center; gap: 14px; }
+.stp button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-light); background: #fff; font-size: 17px; color: var(--navy); }
+.stp button:disabled { opacity: .3; }
+.cot { margin-top: 18px; font-size: 14.5px; }
+.cot .fila { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; color: var(--text-soft); }
+.cot .fila > :last-child { white-space: nowrap; }
+.cot .tot { border-top: 1px solid var(--border-light); margin-top: 6px; padding-top: 12px; color: var(--navy); font-weight: 600; font-size: 16px; }
+.cot .pago { background: var(--cream-warm); border-radius: 3px; padding: 12px 14px; margin-top: 12px; }
+.cot .pago .fila { color: var(--text); padding: 3px 0; }
+.cot .aviso { font-size: 13px; color: var(--text-soft); margin-top: 10px; line-height: 1.5; }
+.cot .err { color: #a25b4a; padding: 6px 0; }
+.btn-res { width: 100%; margin-top: 16px; background: var(--gold); color: var(--navy); border: 0; padding: 16px; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; border-radius: 2px; transition: background .2s; }
+.btn-res:hover { background: var(--gold-soft); }
+.btn-res:disabled { background: var(--cream-paper); color: var(--text-muted); cursor: default; }
+.btn-sec { display: block; text-align: center; margin-top: 10px; font-size: 13px; color: var(--text-soft); text-decoration: underline; }
+.mbar { display: none; }
+@media (max-width: 979px) {
+  .box { position: static; }
+  .mbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 870; background: #fff; border-top: 1px solid var(--border-light); padding: 12px 16px; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 -10px 30px rgba(13,27,42,.12); }
+  .mbar .t { font-size: 13px; color: var(--text-soft); line-height: 1.3; }
+  .mbar .t b { color: var(--navy); font-size: 16px; }
+  .mbar button { background: var(--gold); border: 0; color: var(--navy); padding: 13px 18px; font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; border-radius: 2px; }
+  body { padding-bottom: 76px; }
+}
+.retirada { padding: 90px 0; text-align: center; }
+.retirada h1 { margin-bottom: 14px; }
+.cargando { padding: 90px 0; text-align: center; color: var(--text-muted); }
+footer { background: var(--navy-deep); color: var(--text-on-dark); padding: 50px 0 28px; }
+.footer-legal { font-size: 11px; color: var(--text-on-dark-soft); letter-spacing: .08em; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; border-top: 1px solid var(--border-dark); padding-top: 22px; margin-top: 22px; }
+footer a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="/index.html" class="logo">
+      <img src="https://reservas.phpunta.uy/alquiler/datosBroker/bk_phpunta/templates/assets/img/logo.webp" alt="Premium Host Punta" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+      <span class="logo-text" style="display:none;"><strong>PHPUNTA</strong><span>Premium Host Punta</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/index.html">Inicio</a></li>
+      <li><a href="/reservasnueva/" class="current">Reservas</a></li>
+      <li><a href="/como-trabajamos.html">Cómo&nbsp;trabajamos</a></li>
+      <li><a href="/conocenos.html">Conócenos</a></li>
+      <li><a href="/propietarios.html">Propietarios</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Menú"><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu"><ul>
+  <li><a href="/index.html">Inicio</a></li><li><a href="/reservasnueva/">Reservas</a></li><li><a href="/como-trabajamos.html">Cómo&nbsp;trabajamos</a></li>
+  <li><a href="/conocenos.html">Conócenos</a></li><li><a href="/propietarios.html">Propietarios</a></li><li><a href="/contacto.html">Contacto</a></li>
+</ul></div>
+
+<div class="container" id="app">
+  <a class="volver" id="volver" href="/reservasnueva/">‹ Todas las propiedades</a>
+  <div class="cargando" id="cargando"><h1 style="font-weight:300">__TITULO__</h1><p style="margin-top:10px">Cargando…</p></div>
+</div>
+
+<footer>
+  <div class="container">
+    <div style="display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between;align-items:center">
+      <a href="/index.html" class="logo"><span class="logo-text"><strong>PHPUNTA</strong><span>Premium Host Punta</span></span></a>
+      <div style="font-size:.92rem;display:flex;gap:22px;flex-wrap:wrap"><a href="/reservasnueva/">Reservas</a><a href="/propietarios.html">Propietarios</a><a href="/contacto.html">Contacto</a><a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">+598 99 716 681</a></div>
+    </div>
+    <div class="footer-legal"><span>© 2026 Premium Host Punta SAS · RUT 220520320015 · Registro MINTUR N°2011</span><span><a href="/condiciones-generales.html">Condiciones generales</a> · <a href="/politica-privacidad.html">Privacidad</a></span></div>
+  </div>
+</footer>
+<div class="lb" id="lb"><button class="lb-x" id="lbX" aria-label="Cerrar">×</button><div class="lb-sc" id="lbSc"></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+'use strict';
+const API = (function () {
+  const q = new URLSearchParams(location.search).get('api');
+  if (q && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return q.replace(/\/$/, '');
+  return 'https://phpunta-backend-production.up.railway.app';
+})();
+const BARRIO_NOMBRE = { peninsula: 'Península', mansa: 'Playa Mansa', brava: 'Playa Brava', roosevelt: 'Roosevelt', beverly_hills: 'Beverly Hills', san_rafael: 'San Rafael', la_barra: 'La Barra', manantiales: 'Manantiales', jose_ignacio: 'José Ignacio', punta_ballena: 'Punta Ballena', laguna_sauce: 'Laguna del Sauce', montevideo: 'Montevideo', otro: 'Punta del Este' };
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const $ = function (s, r) { return (r || document).querySelector(s); };
+const esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+const usd = function (n) { return 'USD ' + Math.round(n).toLocaleString('es-UY'); };
+const iso = function (d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const parseIso = function (s) { const p = String(s || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; };
+const fechaLarga = function (s) { const d = parseIso(s); return d ? d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() : ''; };
+const fechaCorta = function (s) { const d = parseIso(s); return d ? d.getDate() + ' ' + MESES[d.getMonth()].slice(0, 3) : ''; };
+const noches = function (a, b) { return Math.round((parseIso(b) - parseIso(a)) / 86400000); };
+const hoyIso = iso(new Date());
+async function api(path) {
+  const r = await fetch(API + path, { headers: { 'Accept': 'application/json' } });
+  const j = await r.json().catch(function () { return null; });
+  if (!r.ok || !j || j.ok === false) { const e = new Error((j && j.error) || ('HTTP ' + r.status)); e.status = r.status; throw e; }
+  return j;
+}
+const SLUG = (function () {
+  const m = document.querySelector('meta[name="php-slug"]').content;
+  if (m && m.indexOf('__') !== 0) return m;
+  const p = location.pathname.split('/').filter(Boolean);
+  return new URLSearchParams(location.search).get('p') || p[p.length - 1] || '';
+})();
+const Q = new URLSearchParams(location.search);
+const S = { llegada: Q.get('llegada') || '', salida: Q.get('salida') || '', ad: Math.max(1, parseInt(Q.get('adultos') || '2', 10) || 2), ni: Math.max(0, parseInt(Q.get('ninos') || '0', 10) || 0), be: Math.max(0, parseInt(Q.get('bebes') || '0', 10) || 0) };
+if (S.llegada && (S.llegada < hoyIso || !parseIso(S.llegada))) { S.llegada = ''; S.salida = ''; }
+if (S.salida && S.salida <= S.llegada) S.salida = '';
+let P = null, CFG = { sena_pct: 50, whatsapp: '59899716681' }, DIAS = Object.create(null), COT = null;
+
+function urlEstado() {
+  const p = new URLSearchParams();
+  if (S.llegada) p.set('llegada', S.llegada); if (S.salida) p.set('salida', S.salida);
+  if (S.ad !== 2) p.set('adultos', S.ad); if (S.ni) p.set('ninos', S.ni); if (S.be) p.set('bebes', S.be);
+  if (Q.get('api')) p.set('api', Q.get('api'));
+  if (Q.get('p')) p.set('p', Q.get('p'));
+  history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
+  const v = new URLSearchParams(p); v.delete('p');
+  $('#volver').href = '/reservasnueva/' + (v.toString() ? '?' + v : '');
+}
+
+// ── Calendario de rango (mismo componente que el buscador) ──────────────────────────────────────────
+function Calendario(host, opt) {
+  const self = { ini: opt.ini || '', fin: opt.fin || '' };
+  const base = parseIso(self.ini) || new Date();
+  self.mes = new Date(base.getFullYear(), base.getMonth(), 1);
+  const minMes = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+  const maxMes = new Date(minMes.getFullYear(), minMes.getMonth() + 13, 1);
+  function dos() { return window.matchMedia('(min-width: 640px)').matches && host.clientWidth > 560; }
+  function libreRango(a, b) { for (let d = parseIso(a); iso(d) < b; d.setDate(d.getDate() + 1)) if (opt.ocupado(iso(d))) return false; return true; }
+  function mesHtml(m) {
+    const y = m.getFullYear(), mo = m.getMonth();
+    let h = '<div class="cal-m"><h4>' + MESES[mo] + ' ' + y + '</h4><div class="cal-g">';
+    ['lu', 'ma', 'mi', 'ju', 'vi', 'sá', 'do'].forEach(function (d) { h += '<span class="dw">' + d + '</span>'; });
+    const pad = (new Date(y, mo, 1).getDay() + 6) % 7;
+    for (let i = 0; i < pad; i++) h += '<span></span>';
+    const dias = new Date(y, mo + 1, 0).getDate();
+    for (let d = 1; d <= dias; d++) {
+      const f = iso(new Date(y, mo, d));
+      let cls = 'cal-d', dis = f < hoyIso;
+      const oc = opt.ocupado(f);
+      if (self.ini && !self.fin && f > self.ini) dis = dis || !libreRango(self.ini, f);
+      else if (oc) { dis = true; cls += ' ocup'; }
+      if (f === self.ini || f === self.fin) cls += ' sel';
+      else if (self.ini && self.fin && f > self.ini && f < self.fin) cls += ' inrange';
+      const pr = opt.precio(f);
+      h += '<button type="button" class="' + cls + '" data-f="' + f + '"' + (dis ? ' disabled' : '') + '>' + d + (pr ? '<small>' + pr + '</small>' : '') + '</button>';
+    }
+    return h + '</div></div>';
+  }
+  self.render = function () {
+    const m2 = new Date(self.mes.getFullYear(), self.mes.getMonth() + 1, 1);
+    const n = self.ini && self.fin ? noches(self.ini, self.fin) : 0;
+    host.innerHTML = '<div class="cal-head"><button type="button" class="cal-nav" data-nav="-1" ' + (self.mes <= minMes ? 'disabled' : '') + ' aria-label="Mes anterior">‹</button>' +
+      '<span style="font-size:13.5px;color:var(--text-soft)">' + (self.ini && !self.fin ? 'Elegí la fecha de salida' : (n ? n + (n === 1 ? ' noche' : ' noches') + ' · ' + fechaCorta(self.ini) + ' – ' + fechaCorta(self.fin) : 'Elegí la fecha de llegada')) + '</span>' +
+      '<button type="button" class="cal-nav" data-nav="1" ' + (self.mes >= maxMes ? 'disabled' : '') + ' aria-label="Mes siguiente">›</button></div>' +
+      '<div class="cal-months' + (dos() ? ' dos' : '') + '">' + mesHtml(self.mes) + (dos() ? mesHtml(m2) : '') + '</div>' +
+      '<div class="cal-foot"><button type="button" class="lnk" data-borrar="1">Borrar fechas</button><span>Precio por noche en USD · tachado = no disponible</span></div>';
+  };
+  host.addEventListener('click', function (e) {
+    const nav = e.target.closest('[data-nav]');
+    if (nav) { self.mes = new Date(self.mes.getFullYear(), self.mes.getMonth() + Number(nav.dataset.nav), 1); return self.render(); }
+    if (e.target.closest('[data-borrar]')) { self.ini = ''; self.fin = ''; self.render(); opt.cambio('', ''); return; }
+    const b = e.target.closest('.cal-d'); if (!b || b.disabled) return;
+    const f = b.dataset.f;
+    if (!self.ini || self.fin || f <= self.ini) { self.ini = f; self.fin = ''; } else self.fin = f;
+    self.render(); opt.cambio(self.ini, self.fin);
+  });
+  window.addEventListener('resize', function () { self.render(); });
+  self.render();
+  return self;
+}
+
+// ── Página ───────────────────────────────────────────────────────────────────────────────────────────
+function pintar() {
+  const p = P;
+  const fotos = (p.galeria && p.galeria.length ? p.galeria : p.fotos) || [];
+  const meta = [p.tipo === 'casa' ? 'Casa' : 'Apartamento', BARRIO_NOMBRE[p.barrio] || 'Punta del Este'].join(' · ');
+  const datos = [
+    p.huespedes ? '<span><b>' + p.huespedes + '</b>huéspedes</span>' : '',
+    p.dormitorios ? '<span><b>' + p.dormitorios + '</b>' + (p.dormitorios === 1 ? 'dormitorio' : 'dormitorios') + '</span>' : '',
+    p.banos ? '<span><b>' + p.banos + '</b>' + (p.banos === 1 ? 'baño' : 'baños') + '</span>' : ''
+  ].join('');
+  let gal = '';
+  if (fotos.length) {
+    gal = '<div class="gal"><div class="gal-grid' + (fotos.length < 5 ? ' pocas' : '') + '">' + fotos.slice(0, 5).map(function (u, i) { return '<img src="' + esc(u) + '" alt="' + esc(p.titulo) + ' — foto ' + (i + 1) + '"' + (i ? ' loading="lazy"' : '') + ' data-i="' + i + '" />'; }).join('') + '</div>' +
+      (fotos.length > 1 ? '<button type="button" class="gal-todas" id="galTodas">Ver las ' + fotos.length + ' fotos</button>' : '') +
+      '<div class="gal-movil"><div class="tr" id="galTr">' + fotos.map(function (u, i) { return '<img src="' + esc(u) + '" alt="" loading="lazy" data-i="' + i + '" />'; }).join('') + '</div><span class="gal-n" id="galN">1 / ' + fotos.length + '</span></div></div>';
+  }
+  $('#app').innerHTML = '<a class="volver" id="volver" href="/reservasnueva/">‹ Todas las propiedades</a>' +
+    '<div class="tit"><div class="eyebrow">' + esc(meta) + '</div><h1>' + esc(p.titulo) + '</h1></div>' + gal +
+    '<div class="cuerpo"><div>' +
+      '<div class="datos">' + datos + '</div>' +
+      (p.descripcion ? '<div class="sec"><h2>La propiedad</h2><div class="desc corta" id="desc">' + esc(p.descripcion) + '</div><button type="button" class="lnk" id="descMas" style="margin-top:10px">Leer más</button></div>' : '') +
+      (p.camas ? '<div class="sec"><h2>Dónde vas a dormir</h2><p class="desc">' + esc(p.camas) + '</p></div>' : '') +
+      (p.amenities && p.amenities.length ? '<div class="sec"><h2>Comodidades</h2><ul class="amen">' + p.amenities.concat(['Wifi', 'Ropa de cama y toallas']).map(function (a) { return '<li>' + esc(a) + '</li>'; }).join('') + '</ul></div>' : '') +
+      '<div class="sec" id="secCal"><h2>Disponibilidad</h2><div id="cal"></div></div>' +
+      '<div class="sec"><h2>Bueno saber</h2><div class="reglas">' +
+        '<div class="regla"><span>Entrada</span><b>Desde las ' + esc(p.checkin) + '</b></div>' +
+        '<div class="regla"><span>Salida</span><b>Hasta las ' + esc(p.checkout) + '</b></div>' +
+        (p.minimo_noches ? '<div class="regla"><span>Estadía mínima</span><b>' + p.minimo_noches + ' noches</b></div>' : '') +
+        '<div class="regla"><span>Pago</span><b>' + CFG.sena_pct + '% al reservar</b></div>' +
+      '</div><p class="desc" style="margin-top:14px;font-size:14px">Al reservar se abona el ' + CFG.sena_pct + '% como seña. El ' + (100 - CFG.sena_pct) + '% restante y el depósito en garantía se abonan el día de llegada; la garantía se devuelve al salir, después de revisar la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>' +
+      (p.coord ? '<div class="sec"><h2>Ubicación</h2><div id="mini"></div><p class="nota-mapa">' + (p.tipo === 'casa' ? 'Ubicación aproximada. La dirección exacta se envía al confirmar la reserva.' : 'La dirección exacta se envía al confirmar la reserva.') + '</p></div>' : '') +
+    '</div>' +
+    '<aside><div class="box" id="box"></div></aside></div>' +
+    '<div class="mbar" id="mbar"><div class="t" id="mbarT"></div><button type="button" id="mbarB">Ver precio</button></div>';
+  urlEstado();
+  // Galería
+  const lb = $('#lb');
+  const abrirLb = function (i) {
+    $('#lbSc').innerHTML = fotos.map(function (u) { return '<img src="' + esc(u) + '" alt="" loading="lazy" />'; }).join('');
+    lb.classList.add('open'); document.body.style.overflow = 'hidden';
+    const im = $('#lbSc').children[i || 0]; if (im) setTimeout(function () { im.scrollIntoView(); }, 30);
+  };
+  document.querySelectorAll('.gal-grid img').forEach(function (im) { im.addEventListener('click', function () { abrirLb(Number(im.dataset.i)); }); });
+  if ($('#galTodas')) $('#galTodas').addEventListener('click', function () { abrirLb(0); });
+  if ($('#galTr')) { const tr = $('#galTr'); tr.addEventListener('scroll', function () { $('#galN').textContent = (Math.round(tr.scrollLeft / tr.clientWidth) + 1) + ' / ' + fotos.length; }, { passive: true }); tr.addEventListener('click', function (e) { const im = e.target.closest('img'); if (im) abrirLb(Number(im.dataset.i)); }); }
+  $('#lbX').onclick = function () { lb.classList.remove('open'); document.body.style.overflow = ''; };
+  if ($('#descMas')) {
+    const d = $('#desc');
+    if (d.scrollHeight <= d.clientHeight + 4) { d.classList.remove('corta'); $('#descMas').remove(); }
+    else $('#descMas').onclick = function () { const c = d.classList.toggle('corta'); this.textContent = c ? 'Leer más' : 'Leer menos'; };
+  }
+  // Mapa chico
+  if (p.coord && typeof L !== 'undefined') {
+    const m = L.map('mini', { scrollWheelZoom: false }).setView([p.coord.lat, p.coord.lng], 15);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd', attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(m);
+    if (p.tipo === 'casa') L.circle([p.coord.lat, p.coord.lng], { radius: 180, color: '#a88c3a', weight: 1, fillColor: '#c9a84c', fillOpacity: .25 }).addTo(m);
+    else L.circleMarker([p.coord.lat, p.coord.lng], { radius: 9, color: '#0d1b2a', weight: 2, fillColor: '#c9a84c', fillOpacity: 1 }).addTo(m);
+  }
+  pintarBox();
+  $('#mbarB').onclick = function () { if (COT && COT.estado === 'ok') return reservar(); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+}
+
+let calendario = null;
+function iniciarCalendario() {
+  calendario = Calendario($('#cal'), {
+    ini: S.llegada, fin: S.salida,
+    ocupado: function (f) { const d = DIAS[f]; return !!(d && d.o === 1); },
+    precio: function (f) { const d = DIAS[f]; return d && d.p && d.o !== 1 ? Math.round(d.p) : null; },
+    cambio: function (a, b) { S.llegada = a; S.salida = b; urlEstado(); cotizar(); }
+  });
+}
+function huespedes() { return S.ad + S.ni; }
+function pintarBox() {
+  const p = P, h = huespedes();
+  const max = p.huespedes || 20;
+  let desde = null;
+  Object.keys(DIAS).forEach(function (f) { const d = DIAS[f]; if (d.p && d.o !== 1 && (desde == null || d.p < desde)) desde = d.p; });
+  if (desde == null) desde = p.desde_noche;
+  $('#box').innerHTML =
+    '<div class="px">' + (COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b> total' : (desde ? 'Desde <b>' + usd(desde) + '</b> / noche' : 'Consultá el precio')) + '</div>' +
+    '<div class="bsel"><button type="button" id="bIn"><span>Llegada</span><div>' + (S.llegada ? fechaCorta(S.llegada) : 'Agregar') + '</div></button>' +
+    '<button type="button" id="bOut"><span>Salida</span><div>' + (S.salida ? fechaCorta(S.salida) : 'Agregar') + '</div></button>' +
+    '<button type="button" class="h" id="bHues"><div><span>Huéspedes</span><div>' + h + (h === 1 ? ' persona' : ' personas') + (S.be ? ' · ' + S.be + (S.be === 1 ? ' bebé' : ' bebés') : '') + '</div></div><div>⌄</div></button></div>' +
+    '<div class="hues-pop" id="huesPop">' +
+      ['ad|Adultos|13 años o más', 'ni|Niños|De 2 a 12 años', 'be|Bebés|Menores de 2 (no cuentan)'].map(function (x) {
+        const k = x.split('|');
+        const menos = k[0] === 'ad' ? S.ad <= 1 : S[k[0]] <= 0;
+        const mas = k[0] === 'be' ? S.be >= 5 : h >= max;
+        return '<div class="stepper"><div><b>' + k[1] + '</b><small>' + k[2] + '</small></div><div class="stp"><button type="button" data-k="' + k[0] + '" data-d="-1"' + (menos ? ' disabled' : '') + '>−</button><span>' + S[k[0]] + '</span><button type="button" data-k="' + k[0] + '" data-d="1"' + (mas ? ' disabled' : '') + '>+</button></div></div>';
+      }).join('') + '<p style="font-size:12.5px;color:var(--text-muted);padding-top:4px">Máximo ' + max + ' huéspedes.</p></div>' +
+    '<div class="cot" id="cot">' + cotHtml() + '</div>' +
+    botonHtml();
+  $('#bIn').onclick = $('#bOut').onclick = function () { $('#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  $('#bHues').onclick = function () { $('#huesPop').classList.toggle('open'); };
+  $('#huesPop').addEventListener('click', function (e) { const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return; S[b.dataset.k] += Number(b.dataset.d); urlEstado(); pintarBox(); $('#huesPop').classList.add('open'); clearTimeout(window._tq); window._tq = setTimeout(cotizar, 300); });
+  const br = $('#btnRes'); if (br) br.onclick = reservar;
+  // Barra del teléfono
+  $('#mbarT').innerHTML = COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b><br>' + COT.noches + ' noches · ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) : (desde ? 'Desde <b>' + usd(desde) + '</b> / noche' : 'Elegí tus fechas');
+  $('#mbarB').textContent = COT && COT.estado === 'ok' ? 'Reservar' : 'Ver fechas';
+}
+function cotHtml() {
+  if (!(S.llegada && S.salida)) return '<div class="aviso">Elegí las fechas en el calendario para ver el precio final.</div>';
+  if (!COT) return '<div class="aviso">Calculando el precio…</div>';
+  const c = COT, n = c.noches;
+  if (c.estado === 'ok') {
+    return '<div class="fila"><span>' + usd(c.por_noche) + ' × ' + n + (n === 1 ? ' noche' : ' noches') + '</span><span>' + usd(c.estadia) + '</span></div>' +
+      (c.limpieza ? '<div class="fila"><span>Limpieza final</span><span>' + usd(c.limpieza) + '</span></div>' : '') +
+      '<div class="fila tot"><span>Total</span><span>' + usd(c.total) + '</span></div>' +
+      (c.descuento_pct ? '<div class="aviso">Incluye ' + c.descuento_pct + '% de descuento por la duración de la estadía.</div>' : '') +
+      '<div class="pago"><div class="fila"><span>Seña al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo el día de llegada</span><span>' + usd(c.saldo) + '</span></div><div class="fila"><span>Depósito en garantía (se devuelve)</span><span>' + usd(c.garantia) + '</span></div></div>';
+  }
+  if (c.estado === 'ocupado') return '<div class="err">Esas fechas no están disponibles.</div>' + (c.libres_cerca && c.libres_cerca.length ? '<div class="aviso">Libres cerca: ' + c.libres_cerca.map(function (w) { return '<button type="button" class="lnk" data-w="' + w.desde + '|' + w.hasta + '">' + fechaCorta(w.desde) + ' – ' + fechaCorta(w.hasta) + '</button>'; }).join(' · ') + '</div>' : '');
+  if (c.estado === 'minimo') return '<div class="err">Para esa llegada la estadía mínima es de ' + c.minimo + ' noches.</div>';
+  if (c.estado === 'capacidad') return '<div class="err">Esta propiedad recibe hasta ' + c.maximo + ' huéspedes.</div>';
+  if (c.estado === 'mensual') return '<div class="aviso">Para estadías largas armamos una propuesta a medida. Escribinos y te la pasamos.</div>';
+  if (c.estado === 'error') return '<div class="err">' + esc(c.msg || 'No pudimos calcular el precio.') + '</div>';
+  return '<div class="aviso">Para esas fechas confirmamos el precio por WhatsApp en minutos.</div>';
+}
+function botonHtml() {
+  const ok = COT && COT.estado === 'ok';
+  const consultar = COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0;
+  return '<button type="button" class="btn-res" id="btnRes"' + (ok || consultar ? '' : ' disabled') + '>' + (ok ? 'Reservar' : (consultar ? 'Consultar por WhatsApp' : 'Elegí tus fechas')) + '</button>' +
+    '<a class="btn-sec" href="' + waLink(false) + '" target="_blank" rel="noopener">¿Dudas? Escribinos por WhatsApp</a>';
+}
+function waLink(conDatos) {
+  let t = 'Hola! Me interesa ' + P.titulo;
+  if (conDatos && S.llegada && S.salida) {
+    t += ' del ' + fechaLarga(S.llegada) + ' al ' + fechaLarga(S.salida) + ', ' + huespedes() + (huespedes() === 1 ? ' persona' : ' personas') + (S.be ? ' y ' + S.be + (S.be === 1 ? ' bebé' : ' bebés') : '') + '.';
+    if (COT && COT.estado === 'ok') t += ' Total ' + usd(COT.total) + '.';
+  } else t += '.';
+  t += ' ' + location.origin + location.pathname;
+  return 'https://api.whatsapp.com/send/?phone=' + encodeURIComponent(CFG.whatsapp || '59899716681') + '&text=' + encodeURIComponent(t);
+}
+// Fase 1 (vitrina): la reserva se termina por WhatsApp con el equipo de Reservas. El pago online llega en la fase 2.
+function reservar() { window.open(waLink(true), '_blank', 'noopener'); }
+let cotGen = 0;
+async function cotizar() {
+  COT = null;
+  if (!(S.llegada && S.salida)) { pintarBox(); return; }
+  const g = ++cotGen;
+  pintarBox();
+  try {
+    const j = await api('/web/cotizar?slug=' + encodeURIComponent(SLUG) + '&desde=' + S.llegada + '&hasta=' + S.salida + '&huespedes=' + huespedes());
+    if (g !== cotGen) return;
+    COT = j;
+  } catch (e) { if (g !== cotGen) return; COT = { estado: 'error', msg: e.status === 429 ? 'Demasiadas consultas seguidas. Probá en un minuto.' : 'No pudimos calcular el precio en este momento.' }; }
+  pintarBox();
+  const cot = $('#cot');
+  cot.querySelectorAll('[data-w]').forEach(function (b) { b.onclick = function () { const w = b.dataset.w.split('|'); S.llegada = w[0]; S.salida = w[1]; calendario.ini = w[0]; calendario.fin = w[1]; calendario.mes = new Date(parseIso(w[0]).getFullYear(), parseIso(w[0]).getMonth(), 1); calendario.render(); urlEstado(); cotizar(); }; });
+}
+
+$('#burger').addEventListener('click', function () { $('#mobileMenu').classList.toggle('open'); });
+
+(async function () {
+  urlEstado();
+  if (document.querySelector('meta[name="php-estado"]').content === 'retirada') {
+    $('#cargando').outerHTML = '<div class="retirada"><h1>Esta propiedad ya no está disponible</h1><p>Mirá las demás opciones que tenemos para tu estadía.</p><p style="margin-top:22px"><a class="btn-res" style="display:inline-block;width:auto;padding:14px 26px" href="/reservasnueva/">Ver propiedades</a></p></div>';
+    return;
+  }
+  try {
+    const j = await api('/web/propiedad?slug=' + encodeURIComponent(SLUG));
+    P = j.propiedad; CFG = Object.assign(CFG, j.cfg || {});
+    pintar();
+    const hasta = iso(new Date(Date.now() + 420 * 86400000));
+    try { const c = await api('/web/calendario?slug=' + encodeURIComponent(SLUG) + '&hasta=' + hasta); (c.dias || []).forEach(function (d) { DIAS[d.f] = d; }); } catch (e) {}
+    iniciarCalendario(); pintarBox();
+    if (S.llegada && S.salida) cotizar();
+  } catch (e) {
+    $('#cargando').innerHTML = e.status === 404
+      ? '<h1>Esta propiedad ya no está disponible</h1><p style="margin-top:12px"><a href="/reservasnueva/" style="text-decoration:underline">Ver las demás propiedades</a></p>'
+      : '<h1 style="font-weight:300">No pudimos cargar la propiedad</h1><p style="margin-top:12px">Probá recargar en un momento, o escribinos por <a href="https://api.whatsapp.com/send/?phone=59899716681" style="text-decoration:underline" target="_blank" rel="noopener">WhatsApp</a>.</p>';
+  }
+})();
+</script>
+</body>
+</html>

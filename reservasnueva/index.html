@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reservas en Punta del Este | Premium Host Punta</title>
+<meta name="description" content="Casas y apartamentos premium en Punta del Este, La Barra, Manantiales y Montevideo. Reservá directo con Premium Host Punta: disponibilidad y precio real al instante." />
+<!-- OCULTA hasta que esté probada: fuera del sitemap y sin indexar. Al publicarla: sacar este noindex, canonical definitivo y sitemap. -->
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#0d1b2a" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://phpunta-backend-production.up.railway.app" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<style>
+:root {
+  color-scheme: light;
+  --navy: #0d1b2a; --navy-deep: #07131f; --navy-800: #142638;
+  --cream: #faf7f0; --cream-warm: #f5f0e3; --cream-paper: #ede7d6;
+  --gold: #c9a84c; --gold-soft: #d9bc68; --gold-deep: #a88c3a;
+  --text: #1a2332; --text-soft: #556070; --text-muted: #8a92a0;
+  --text-on-dark: #f0ece0; --text-on-dark-soft: #a8a598;
+  --border-light: rgba(13, 27, 42, .1); --border-dark: rgba(240, 236, 224, .14);
+  --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --sans: 'Jost', -apple-system, sans-serif;
+  --maxw: 1440px; --ease: cubic-bezier(.2, .6, .2, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--cream); }
+body { font-family: var(--sans); background: var(--cream); color: var(--text); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+input, select { font-family: inherit; font-size: 16px; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 1000px) { .container { padding: 0 40px; } }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.08; letter-spacing: -.005em; }
+em { font-style: italic; font-weight: 300; }
+.eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 14px; }
+.eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; opacity: .6; }
+
+/* NAV (idéntico al de la web) */
+.nav { background: var(--navy); color: var(--cream); padding: 16px 0; position: sticky; top: 0; z-index: 900; border-bottom: 1px solid var(--border-dark); }
+.nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+.nav-inner > .logo { margin-right: auto; }
+.logo { display: flex; align-items: center; gap: 12px; color: var(--cream); }
+.logo img { height: 44px; width: auto; }
+.logo-text { font-family: var(--serif); line-height: 1; }
+.logo-text strong { display: block; font-weight: 400; font-size: 16px; color: var(--gold); letter-spacing: .22em; }
+.logo-text span { display: block; font-weight: 300; font-size: 10px; margin-top: 4px; color: var(--text-on-dark-soft); letter-spacing: .3em; }
+.nav-links { display: none; list-style: none; align-items: center; gap: 28px; white-space: nowrap; }
+.nav-links a { color: var(--text-on-dark); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; padding: 4px 0; position: relative; transition: color .2s; }
+.nav-links a::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 1px; background: var(--gold); transition: width .3s var(--ease); }
+.nav-links a:hover, .nav-links a.current { color: var(--gold); }
+.nav-links a:hover::after, .nav-links a.current::after { width: 100%; }
+.nav-burger { width: 44px; height: 44px; background: transparent; border: 1px solid var(--border-dark); border-radius: 2px; display: grid; place-items: center; }
+.nav-burger span, .nav-burger span::before, .nav-burger span::after { display: block; width: 18px; height: 1px; background: var(--cream); }
+.nav-burger span { position: relative; }
+.nav-burger span::before, .nav-burger span::after { content: ''; position: absolute; left: 0; }
+.nav-burger span::before { top: -6px; } .nav-burger span::after { top: 6px; }
+@media (min-width: 1000px) { .nav-links { display: flex; } .nav-burger { display: none; } }
+.mobile-menu { position: fixed; inset: 0; background: var(--navy); z-index: 880; transform: translateY(-100%); transition: transform .5s var(--ease); padding: 110px 32px 40px; overflow-y: auto; }
+.mobile-menu.open { transform: none; }
+.mobile-menu ul { list-style: none; }
+.mobile-menu li { border-bottom: 1px solid var(--border-dark); }
+.mobile-menu a { display: block; font-family: var(--serif); font-size: 2.1rem; color: var(--cream); padding: 18px 0; font-weight: 300; }
+.mobile-menu a.current { color: var(--gold); font-style: italic; }
+
+/* BUSCADOR */
+.hero { background: var(--navy); color: var(--cream); padding: 40px 0 34px; position: relative; }
+.hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.6rem); font-weight: 300; margin: 14px 0 8px; }
+.hero h1 em { color: var(--gold); }
+.hero p { color: var(--text-on-dark-soft); max-width: 60ch; font-size: .98rem; }
+.search { margin-top: 26px; background: var(--cream); color: var(--text); border-radius: 3px; display: grid; grid-template-columns: 1fr; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); position: relative; }
+.sf { padding: 12px 18px; border-bottom: 1px solid var(--border-light); position: relative; text-align: left; background: none; border-left: 0; border-right: 0; border-top: 0; width: 100%; color: inherit; }
+.sf label, .sf .lbl { display: block; font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 2px; }
+.sf .val { font-size: 15px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sf .val.ph { color: var(--text-muted); }
+.sf select { width: 100%; border: 0; background: transparent; font-size: 15px; color: var(--text); appearance: none; padding: 0; outline: none; }
+.sbtn { background: var(--gold); color: var(--navy); border: 0; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; padding: 16px 26px; border-radius: 0 0 3px 3px; transition: background .25s; }
+.sbtn:hover { background: var(--gold-soft); }
+@media (min-width: 860px) {
+  .search { grid-template-columns: 1.15fr 1.15fr .9fr 1fr auto; }
+  .sf { border-bottom: 0; border-right: 1px solid var(--border-light); }
+  .sbtn { border-radius: 0 3px 3px 0; }
+}
+.pop { position: absolute; z-index: 950; top: calc(100% + 8px); left: 0; background: #fff; border: 1px solid var(--border-light); border-radius: 3px; box-shadow: 0 30px 70px -20px rgba(13,27,42,.35); padding: 18px; display: none; color: var(--text); }
+.pop.open { display: block; }
+.pop-cal { left: 0; right: 0; }
+@media (min-width: 860px) { .pop-cal { right: auto; width: 680px; } }
+.pop-hues { right: 0; left: auto; width: 290px; }
+.stepper { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 6px 0; }
+.stepper b { font-weight: 500; }
+.stepper small { display: block; color: var(--text-muted); font-size: 12px; }
+.stp { display: flex; align-items: center; gap: 14px; }
+.stp button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border-light); background: #fff; font-size: 18px; color: var(--navy); }
+.stp button:disabled { opacity: .3; cursor: default; }
+.stp span { min-width: 22px; text-align: center; font-size: 16px; }
+
+/* CALENDARIO (compartido con la ficha) */
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.cal-nav { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border-light); background: #fff; color: var(--navy); font-size: 16px; }
+.cal-nav:disabled { opacity: .3; }
+.cal-months { display: grid; grid-template-columns: 1fr; gap: 26px; }
+@media (min-width: 640px) { .cal-months.dos { grid-template-columns: 1fr 1fr; } }
+.cal-m h4 { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; text-align: center; margin-bottom: 8px; text-transform: capitalize; }
+.cal-g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px 0; }
+.cal-g .dw { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); text-align: center; padding: 4px 0; }
+.cal-d { aspect-ratio: 1 / 1; border: 0; background: none; font-size: 14px; color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1; position: relative; border-radius: 50%; min-height: 38px; }
+.cal-d small { font-size: 9.5px; color: var(--text-muted); margin-top: 1px; }
+.cal-d:hover:not(:disabled) { outline: 1px solid var(--navy); outline-offset: -1px; }
+.cal-d:disabled { color: #c3c6cc; cursor: default; }
+.cal-d.ocup { color: #c3c6cc; text-decoration: line-through; }
+.cal-d.inrange { background: var(--cream-warm); border-radius: 0; }
+.cal-d.sel { background: var(--navy); color: var(--cream); border-radius: 50%; }
+.cal-d.sel small { color: var(--gold-soft); }
+.cal-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--text-soft); }
+.lnk { background: none; border: 0; text-decoration: underline; color: var(--navy); font-size: 13px; }
+.btn-navy { background: var(--navy); color: var(--cream); border: 0; padding: 11px 20px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; border-radius: 2px; }
+
+/* FILTROS */
+.fbar { position: sticky; top: 77px; z-index: 800; background: var(--cream); border-bottom: 1px solid var(--border-light); }
+.fbar-in { display: flex; gap: 8px; align-items: center; overflow-x: auto; padding-top: 12px; padding-bottom: 12px; scrollbar-width: none; }
+.ph img { color: transparent; }
+.fbar-in::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; border: 1px solid var(--border-light); background: #fff; padding: 8px 14px; border-radius: 40px; font-size: 13px; color: var(--text); white-space: nowrap; transition: all .2s; }
+.chip:hover { border-color: var(--navy); }
+.chip.on { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+.chip select { border: 0; background: transparent; font-size: 13px; color: inherit; outline: none; appearance: none; padding-right: 2px; }
+.fbar .sep { width: 1px; height: 22px; background: var(--border-light); flex: 0 0 auto; }
+.fbar .res-n { margin-left: auto; flex: 0 0 auto; font-size: 13px; color: var(--text-soft); white-space: nowrap; padding-left: 10px; }
+
+/* LISTA + MAPA */
+.layout { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr) 42%; } }
+.list { padding: 22px 0 60px; }
+.grid { display: grid; grid-template-columns: 1fr; gap: 28px 22px; }
+@media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1600px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+.mapbox { display: none; }
+@media (min-width: 1100px) { .mapbox { display: block; position: sticky; top: 134px; height: calc(100vh - 134px); padding: 16px 0 16px 22px; } }
+#map { width: 100%; height: 100%; border-radius: 3px; background: #e8e4da; }
+body.mapa-movil .mapbox { display: block; position: fixed; inset: 77px 0 0 0; z-index: 850; padding: 0; height: auto; }
+body.mapa-movil #map { border-radius: 0; }
+.map-search { position: absolute; z-index: 860; top: 30px; left: 50%; transform: translateX(-50%); display: none; }
+body.mapa-movil .map-search { top: 16px; }
+.map-search.on { display: flex; }
+.map-search button { background: #fff; border: 0; box-shadow: 0 8px 24px rgba(13,27,42,.25); padding: 10px 18px; border-radius: 40px; font-size: 13px; font-weight: 500; color: var(--navy); }
+.map-auto { position: absolute; z-index: 860; bottom: 30px; left: 38px; background: #fff; border-radius: 40px; padding: 8px 14px; font-size: 12.5px; box-shadow: 0 8px 24px rgba(13,27,42,.2); display: flex; gap: 8px; align-items: center; }
+body.mapa-movil .map-auto { bottom: 86px; left: 16px; }
+.fab-map { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 870; background: var(--navy); color: var(--cream); border: 0; padding: 13px 22px; border-radius: 40px; font-size: 13px; letter-spacing: .06em; box-shadow: 0 12px 30px rgba(13,27,42,.4); display: flex; gap: 8px; align-items: center; }
+@media (min-width: 1100px) { .fab-map { display: none; } }
+.zona-act { display: none; align-items: center; gap: 8px; background: var(--cream-warm); border: 1px solid var(--border-light); padding: 9px 14px; border-radius: 3px; margin-bottom: 16px; font-size: 13.5px; }
+.zona-act.on { display: flex; }
+
+.card { display: block; color: inherit; }
+.ph { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--cream-paper); }
+.ph-track { display: flex; height: 100%; transition: transform .45s var(--ease); }
+.ph-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; }
+.ph-arr { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(250,247,240,.92); color: var(--navy); font-size: 15px; display: grid; place-items: center; opacity: 0; transition: opacity .2s; }
+.card:hover .ph-arr { opacity: 1; }
+.ph-arr.l { left: 10px; } .ph-arr.r { right: 10px; }
+@media (hover: none) { .ph-arr { display: none; } }
+.ph-dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; }
+.ph-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.55); }
+.ph-dots i.on { background: #fff; }
+.ph-tag { position: absolute; top: 12px; left: 12px; background: rgba(13,27,42,.85); color: var(--cream); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; padding: 5px 10px; border-radius: 2px; }
+.cinfo { padding: 12px 2px 0; }
+.cz { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep); }
+.ct { font-family: var(--serif); font-size: 1.42rem; line-height: 1.15; margin: 3px 0 4px; color: var(--navy); }
+.cm { font-size: 13.5px; color: var(--text-soft); }
+.cp { margin-top: 8px; font-size: 14px; color: var(--text); }
+.cp b { font-weight: 600; font-size: 15.5px; }
+.cp small { color: var(--text-muted); font-size: 12.5px; }
+.cp .no { color: #a25b4a; }
+.card.ocupada .ph img { filter: grayscale(.7); opacity: .7; }
+.card.hl .ct { text-decoration: underline; text-decoration-color: var(--gold); }
+.vacio { padding: 60px 0; text-align: center; color: var(--text-soft); }
+.vacio h3 { color: var(--navy); font-size: 2rem; margin-bottom: 10px; }
+.skel { aspect-ratio: 4 / 3; background: linear-gradient(90deg, var(--cream-paper), var(--cream-warm), var(--cream-paper)); background-size: 200% 100%; animation: sk 1.4s infinite; border-radius: 3px; }
+@keyframes sk { to { background-position: -200% 0; } }
+
+/* MARCADORES */
+.mk { background: #fff; color: var(--navy); font-family: var(--sans); font-size: 12.5px; font-weight: 600; padding: 4px 9px; border-radius: 40px; box-shadow: 0 2px 8px rgba(13,27,42,.3); white-space: nowrap; transform: translate(-50%, -50%); display: inline-block; transition: all .15s; }
+.mk.hl, .mk:hover { background: var(--navy); color: var(--cream); transform: translate(-50%, -50%) scale(1.08); z-index: 1000; }
+.mk.oc { color: var(--text-muted); font-weight: 400; }
+.mk.dot { width: 14px; height: 14px; padding: 0; background: var(--gold); border: 2px solid #fff; }
+.leaflet-container { font-family: var(--sans); }
+.leaflet-popup-content-wrapper { border-radius: 3px; padding: 0; overflow: hidden; }
+.leaflet-popup-content { margin: 0; width: 240px !important; }
+.mpop img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.mpop div { padding: 10px 12px 12px; }
+.mpop b { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; color: var(--navy); display: block; line-height: 1.15; }
+
+/* FOOTER */
+footer { background: var(--navy-deep); color: var(--text-on-dark); padding: 60px 0 28px; }
+.footer-grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
+.footer-col h4 { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.footer-col ul { list-style: none; } .footer-col li { margin-bottom: 9px; } .footer-col a { font-size: .92rem; } .footer-col a:hover { color: var(--gold); }
+.footer-brand p { color: var(--text-on-dark-soft); max-width: 34ch; font-size: .92rem; margin-top: 18px; }
+.footer-legal { padding-top: 24px; border-top: 1px solid var(--border-dark); font-size: 11px; color: var(--text-on-dark-soft); letter-spacing: .08em; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+@media (min-width: 700px) { .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; } }
+.wa-float { position: fixed; bottom: 22px; right: 22px; width: 56px; height: 56px; background: #25d366; border-radius: 50%; display: grid; place-items: center; color: #fff; box-shadow: 0 12px 32px rgba(37,211,102,.42); z-index: 860; }
+.wa-float svg { width: 28px; height: 28px; }
+body.mapa-movil .wa-float { display: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="/index.html" class="logo">
+      <img src="https://reservas.phpunta.uy/alquiler/datosBroker/bk_phpunta/templates/assets/img/logo.webp" alt="Premium Host Punta" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+      <span class="logo-text" style="display:none;"><strong>PHPUNTA</strong><span>Premium Host Punta</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/index.html">Inicio</a></li>
+      <li><a href="/reservasnueva/" class="current">Reservas</a></li>
+      <li><a href="/como-trabajamos.html">Cómo&nbsp;trabajamos</a></li>
+      <li><a href="/conocenos.html">Conócenos</a></li>
+      <li><a href="/propietarios.html">Propietarios</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Menú"><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="/index.html">Inicio</a></li>
+    <li><a href="/reservasnueva/" class="current">Reservas</a></li>
+    <li><a href="/como-trabajamos.html">Cómo&nbsp;trabajamos</a></li>
+    <li><a href="/conocenos.html">Conócenos</a></li>
+    <li><a href="/propietarios.html">Propietarios</a></li>
+    <li><a href="/contacto.html">Contacto</a></li>
+  </ul>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Reserva directa · Precio real al instante</span>
+    <h1>Tu lugar en <em>Punta del Este</em></h1>
+    <p>Casas y apartamentos que gestionamos nosotros, con el estándar Premium Host Punta. Elegí fechas y ves disponibilidad y precio final, sin sorpresas.</p>
+    <div class="search" id="search">
+      <button type="button" class="sf" id="sfIn"><span class="lbl">Llegada</span><div class="val ph" id="vIn">Elegí una fecha</div></button>
+      <button type="button" class="sf" id="sfOut"><span class="lbl">Salida</span><div class="val ph" id="vOut">Elegí una fecha</div></button>
+      <button type="button" class="sf" id="sfHues"><span class="lbl">Huéspedes</span><div class="val" id="vHues">2 personas</div></button>
+      <div class="sf"><label for="selZona">Zona</label><select id="selZona"><option value="">Todas las zonas</option></select></div>
+      <button type="button" class="sbtn" id="btnBuscar">Buscar</button>
+      <div class="pop pop-cal" id="popCal"></div>
+      <div class="pop pop-hues" id="popHues">
+        <div class="stepper"><div><b>Adultos</b><small>13 años o más</small></div><div class="stp"><button type="button" data-k="ad" data-d="-1">−</button><span id="nAd">2</span><button type="button" data-k="ad" data-d="1">+</button></div></div>
+        <div class="stepper"><div><b>Niños</b><small>De 2 a 12 años</small></div><div class="stp"><button type="button" data-k="ni" data-d="-1">−</button><span id="nNi">0</span><button type="button" data-k="ni" data-d="1">+</button></div></div>
+        <div class="stepper"><div><b>Bebés</b><small>Menores de 2 (no cuentan)</small></div><div class="stp"><button type="button" data-k="be" data-d="-1">−</button><span id="nBe">0</span><button type="button" data-k="be" data-d="1">+</button></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="fbar" id="fbar">
+  <div class="container fbar-in">
+    <button type="button" class="chip" data-f="tipo" data-v="casa">Casas</button>
+    <button type="button" class="chip" data-f="tipo" data-v="apartamento">Apartamentos</button>
+    <span class="sep"></span>
+    <span class="chip"><select id="selDorm" aria-label="Dormitorios"><option value="0">Dormitorios</option><option value="1">1+ dormitorios</option><option value="2">2+ dormitorios</option><option value="3">3+ dormitorios</option><option value="4">4+ dormitorios</option><option value="5">5+ dormitorios</option><option value="7">7+ dormitorios</option></select></span>
+    <button type="button" class="chip" data-f="piscina">Piscina</button>
+    <button type="button" class="chip" data-f="frente_mar">Frente al mar</button>
+    <button type="button" class="chip" data-f="playa">Cerca de la playa</button>
+    <button type="button" class="chip" data-f="parrillero">Parrillero</button>
+    <button type="button" class="chip" data-f="jacuzzi">Jacuzzi</button>
+    <span class="sep"></span>
+    <span class="chip"><select id="selOrden" aria-label="Ordenar"><option value="rec">Recomendadas</option><option value="pa">Precio: menor a mayor</option><option value="pd">Precio: mayor a menor</option><option value="dorm">Más dormitorios</option></select></span>
+    <span class="res-n" id="resN"></span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="layout">
+    <main class="list">
+      <div class="zona-act" id="zonaAct">Mostrando solo lo que está en la zona del mapa. <button type="button" class="lnk" id="zonaQuitar">Ver todas</button></div>
+      <div class="grid" id="grid"></div>
+      <div id="masSent" style="height:1px"></div>
+      <div class="vacio" id="vacio" hidden></div>
+    </main>
+    <aside class="mapbox" id="mapbox">
+      <div style="position:relative;height:100%">
+        <div id="map"></div>
+        <div class="map-search" id="mapSearch"><button type="button" id="btnZona">Buscar en esta zona</button></div>
+        <label class="map-auto"><input type="checkbox" id="chkAuto" /> Buscar al mover el mapa</label>
+      </div>
+    </aside>
+  </div>
+</div>
+<button type="button" class="fab-map" id="fabMap"><span id="fabTxt">Mapa</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Zm0 0v14m6-12v14"/></svg></button>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/index.html" class="logo"><span class="logo-text"><strong>PHPUNTA</strong><span>Premium Host Punta</span></span></a>
+        <p>Gestión premium de alquileres vacacionales en Punta del Este, La Barra, Manantiales, Punta Ballena, Montevideo y Rocha.</p>
+      </div>
+      <div class="footer-col"><h4>Navegación</h4><ul><li><a href="/index.html">Inicio</a></li><li><a href="/reservasnueva/">Reservas</a></li><li><a href="/como-trabajamos.html">Cómo trabajamos</a></li><li><a href="/propietarios.html">Propietarios</a></li><li><a href="/contacto.html">Contacto</a></li></ul></div>
+      <div class="footer-col"><h4>Contacto</h4><ul><li><a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">+598 99 716 681</a></li><li><a href="mailto:info@phpunta.uy">info@phpunta.uy</a></li><li>Punta del Este, Uruguay</li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="/condiciones-generales.html">Condiciones generales</a></li><li><a href="/politica-privacidad.html">Política de privacidad</a></li><li><a href="/politica-cookies.html">Política de cookies</a></li></ul></div>
+    </div>
+    <div class="footer-legal"><span>© 2026 Premium Host Punta SAS · RUT 220520320015 · Registro MINTUR N°2011</span><span>Punta del Este · Uruguay</span></div>
+  </div>
+</footer>
+<a href="https://api.whatsapp.com/send/?phone=59899716681" class="wa-float" id="waFloat" aria-label="Escribir por WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.5.8 3.4.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+'use strict';
+// ── Configuración ────────────────────────────────────────────────────────────────────────────────────
+const API = (function () {
+  const q = new URLSearchParams(location.search).get('api');
+  if (q && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return q.replace(/\/$/, '');
+  return 'https://phpunta-backend-production.up.railway.app';
+})();
+const BARRIO_NOMBRE = { peninsula: 'Península', mansa: 'Playa Mansa', brava: 'Playa Brava', roosevelt: 'Roosevelt', beverly_hills: 'Beverly Hills', san_rafael: 'San Rafael', la_barra: 'La Barra', manantiales: 'Manantiales', jose_ignacio: 'José Ignacio', punta_ballena: 'Punta Ballena', laguna_sauce: 'Laguna del Sauce', montevideo: 'Montevideo', otro: 'Punta del Este' };
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const POR_PAGINA = 12;
+
+// ── Utilidades ───────────────────────────────────────────────────────────────────────────────────────
+const $ = function (s, r) { return (r || document).querySelector(s); };
+const esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+const usd = function (n) { return 'USD ' + Math.round(n).toLocaleString('es-UY'); };
+const iso = function (d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const parseIso = function (s) { const p = String(s || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; };
+const fechaCorta = function (s) { const d = parseIso(s); return d ? d.getDate() + ' ' + MESES[d.getMonth()].slice(0, 3) : ''; };
+const noches = function (a, b) { return Math.round((parseIso(b) - parseIso(a)) / 86400000); };
+const hoyIso = iso(new Date());
+async function api(path) {
+  const r = await fetch(API + path, { headers: { 'Accept': 'application/json' } });
+  const j = await r.json().catch(function () { return null; });
+  if (!r.ok || !j || j.ok === false) { const e = new Error((j && j.error) || ('HTTP ' + r.status)); e.status = r.status; throw e; }
+  return j;
+}
+
+// ── Estado (vive en la URL: se puede compartir) ──────────────────────────────────────────────────────
+const Q = new URLSearchParams(location.search);
+const S = {
+  llegada: Q.get('llegada') || '', salida: Q.get('salida') || '',
+  ad: Math.max(1, parseInt(Q.get('adultos') || '2', 10) || 2), ni: Math.max(0, parseInt(Q.get('ninos') || '0', 10) || 0), be: Math.max(0, parseInt(Q.get('bebes') || '0', 10) || 0),
+  zona: Q.get('zona') || '', tipo: Q.get('tipo') || '', dorm: parseInt(Q.get('dorm') || '0', 10) || 0,
+  am: (Q.get('con') || '').split(',').filter(Boolean), orden: Q.get('orden') || 'rec',
+  bounds: null
+};
+if (S.llegada && (S.llegada < hoyIso || !parseIso(S.llegada))) { S.llegada = ''; S.salida = ''; }
+if (S.salida && (!parseIso(S.salida) || S.salida <= S.llegada)) S.salida = '';
+function urlEstado() {
+  const p = new URLSearchParams();
+  if (S.llegada) p.set('llegada', S.llegada); if (S.salida) p.set('salida', S.salida);
+  if (S.ad !== 2) p.set('adultos', S.ad); if (S.ni) p.set('ninos', S.ni); if (S.be) p.set('bebes', S.be);
+  if (S.zona) p.set('zona', S.zona); if (S.tipo) p.set('tipo', S.tipo); if (S.dorm) p.set('dorm', S.dorm);
+  if (S.am.length) p.set('con', S.am.join(',')); if (S.orden !== 'rec') p.set('orden', S.orden);
+  if (Q.get('api')) p.set('api', Q.get('api'));
+  history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
+}
+function huespedes() { return S.ad + S.ni; }
+function qsFicha() {
+  const p = new URLSearchParams();
+  if (S.llegada && S.salida) { p.set('llegada', S.llegada); p.set('salida', S.salida); }
+  p.set('adultos', S.ad); if (S.ni) p.set('ninos', S.ni); if (S.be) p.set('bebes', S.be);
+  if (Q.get('api')) p.set('api', Q.get('api'));
+  return '?' + p.toString();
+}
+
+// ── Calendario de rango (el mismo componente que la ficha) ───────────────────────────────────────────
+function Calendario(host, opt) {
+  const self = { ini: opt.ini || '', fin: opt.fin || '', mes: null };
+  const base = parseIso(self.ini) || new Date();
+  self.mes = new Date(base.getFullYear(), base.getMonth(), 1);
+  const minMes = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+  const maxMes = new Date(minMes.getFullYear(), minMes.getMonth() + 17, 1);
+  function dos() { return window.matchMedia('(min-width: 640px)').matches; }
+  function libreRango(a, b) { if (!opt.ocupado) return true; for (let d = parseIso(a); iso(d) < b; d.setDate(d.getDate() + 1)) if (opt.ocupado(iso(d))) return false; return true; }
+  function mesHtml(m) {
+    const y = m.getFullYear(), mo = m.getMonth();
+    let h = '<div class="cal-m"><h4>' + MESES[mo] + ' ' + y + '</h4><div class="cal-g">';
+    ['lu', 'ma', 'mi', 'ju', 'vi', 'sá', 'do'].forEach(function (d) { h += '<span class="dw">' + d + '</span>'; });
+    const pad = (new Date(y, mo, 1).getDay() + 6) % 7;
+    for (let i = 0; i < pad; i++) h += '<span></span>';
+    const dias = new Date(y, mo + 1, 0).getDate();
+    for (let d = 1; d <= dias; d++) {
+      const f = iso(new Date(y, mo, d));
+      let cls = 'cal-d', dis = f < hoyIso;
+      const oc = opt.ocupado && opt.ocupado(f);
+      if (self.ini && !self.fin && f > self.ini) dis = dis || !libreRango(self.ini, f);   // eligiendo la salida
+      else if (oc) { dis = true; cls += ' ocup'; }
+      if (f === self.ini || f === self.fin) cls += ' sel';
+      else if (self.ini && self.fin && f > self.ini && f < self.fin) cls += ' inrange';
+      const pr = opt.precio ? opt.precio(f) : null;
+      h += '<button type="button" class="' + cls + '" data-f="' + f + '"' + (dis ? ' disabled' : '') + '>' + d + (pr ? '<small>' + pr + '</small>' : '') + '</button>';
+    }
+    return h + '</div></div>';
+  }
+  self.render = function () {
+    const m2 = new Date(self.mes.getFullYear(), self.mes.getMonth() + 1, 1);
+    const n = self.ini && self.fin ? noches(self.ini, self.fin) : 0;
+    host.innerHTML = '<div class="cal-head"><button type="button" class="cal-nav" data-nav="-1" ' + (self.mes <= minMes ? 'disabled' : '') + ' aria-label="Mes anterior">‹</button>' +
+      '<span style="font-size:13px;color:var(--text-soft)">' + (self.ini && !self.fin ? 'Elegí la fecha de salida' : (n ? n + (n === 1 ? ' noche' : ' noches') + ' · ' + fechaCorta(self.ini) + ' – ' + fechaCorta(self.fin) : 'Elegí la fecha de llegada')) + '</span>' +
+      '<button type="button" class="cal-nav" data-nav="1" ' + (self.mes >= maxMes ? 'disabled' : '') + ' aria-label="Mes siguiente">›</button></div>' +
+      '<div class="cal-months' + (dos() ? ' dos' : '') + '">' + mesHtml(self.mes) + (dos() ? mesHtml(m2) : '') + '</div>' +
+      '<div class="cal-foot"><button type="button" class="lnk" data-borrar="1">Borrar fechas</button>' + (opt.nota ? '<span>' + opt.nota + '</span>' : '') + (opt.cerrar ? '<button type="button" class="btn-navy" data-cerrar="1">Listo</button>' : '') + '</div>';
+  };
+  host.addEventListener('click', function (e) {
+    e.stopPropagation();
+    const nav = e.target.closest('[data-nav]');
+    if (nav) { self.mes = new Date(self.mes.getFullYear(), self.mes.getMonth() + Number(nav.dataset.nav), 1); return self.render(); }
+    if (e.target.closest('[data-borrar]')) { self.ini = ''; self.fin = ''; self.render(); if (opt.cambio) opt.cambio(self.ini, self.fin); return; }
+    if (e.target.closest('[data-cerrar]')) { if (opt.cerrar) opt.cerrar(); return; }
+    const b = e.target.closest('.cal-d');
+    if (!b || b.disabled) return;
+    const f = b.dataset.f;
+    if (!self.ini || self.fin || f <= self.ini) { self.ini = f; self.fin = ''; }
+    else self.fin = f;
+    self.render();
+    if (opt.cambio) opt.cambio(self.ini, self.fin);
+  });
+  window.addEventListener('resize', function () { if (host.offsetParent) self.render(); });
+  self.render();
+  return self;
+}
+
+// ── Buscador ─────────────────────────────────────────────────────────────────────────────────────────
+const popCal = $('#popCal'), popHues = $('#popHues');
+let cal = null;
+function cerrarPops() { popCal.classList.remove('open'); popHues.classList.remove('open'); }
+function pintarBuscador() {
+  $('#vIn').textContent = S.llegada ? fechaCorta(S.llegada) : 'Elegí una fecha'; $('#vIn').classList.toggle('ph', !S.llegada);
+  $('#vOut').textContent = S.salida ? fechaCorta(S.salida) : 'Elegí una fecha'; $('#vOut').classList.toggle('ph', !S.salida);
+  const h = huespedes();
+  $('#vHues').textContent = h + (h === 1 ? ' persona' : ' personas') + (S.be ? ' · ' + S.be + (S.be === 1 ? ' bebé' : ' bebés') : '');
+  $('#nAd').textContent = S.ad; $('#nNi').textContent = S.ni; $('#nBe').textContent = S.be;
+  document.querySelectorAll('#popHues button').forEach(function (b) {
+    const k = b.dataset.k, d = Number(b.dataset.d), v = S[k] + d;
+    b.disabled = (k === 'ad' ? v < 1 : v < 0) || (d > 0 && (k === 'be' ? v > 5 : S.ad + S.ni >= 20));
+  });
+}
+function abrirCal() {
+  cerrarPops();
+  if (!cal) cal = Calendario(popCal, { ini: S.llegada, fin: S.salida, cerrar: cerrarPops, cambio: function (a, b) { S.llegada = a; S.salida = b; pintarBuscador(); if (a && b) { cerrarPops(); aplicar(); } else if (!a) aplicar(); } });
+  else { cal.ini = S.llegada; cal.fin = S.salida; cal.render(); }
+  popCal.classList.add('open');
+}
+$('#sfIn').addEventListener('click', function (e) { e.stopPropagation(); abrirCal(); });
+$('#sfOut').addEventListener('click', function (e) { e.stopPropagation(); abrirCal(); });
+$('#sfHues').addEventListener('click', function (e) { e.stopPropagation(); const ab = popHues.classList.contains('open'); cerrarPops(); if (!ab) popHues.classList.add('open'); });
+popHues.addEventListener('click', function (e) {
+  e.stopPropagation();
+  const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return;
+  S[b.dataset.k] += Number(b.dataset.d); pintarBuscador(); aplicarDiferido();
+});
+document.addEventListener('click', cerrarPops);
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarPops(); });
+$('#btnBuscar').addEventListener('click', function () { cerrarPops(); if (S.llegada && !S.salida) return abrirCal(); aplicar(); document.getElementById('fbar').scrollIntoView({ behavior: 'smooth' }); });
+$('#selZona').addEventListener('change', function () { S.zona = this.value; S.bounds = null; aplicar(true); });
+
+// ── Filtros ──────────────────────────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.chip[data-f]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    const f = b.dataset.f;
+    if (f === 'tipo') S.tipo = S.tipo === b.dataset.v ? '' : b.dataset.v;
+    else { const i = S.am.indexOf(f); if (i >= 0) S.am.splice(i, 1); else S.am.push(f); }
+    aplicar();
+  });
+});
+$('#selDorm').addEventListener('change', function () { S.dorm = Number(this.value) || 0; aplicar(); });
+$('#selOrden').addEventListener('change', function () { S.orden = this.value; aplicar(); });
+function pintarChips() {
+  document.querySelectorAll('.chip[data-f]').forEach(function (b) {
+    const f = b.dataset.f;
+    b.classList.toggle('on', f === 'tipo' ? S.tipo === b.dataset.v : S.am.indexOf(f) >= 0);
+  });
+  $('#selDorm').value = String(S.dorm); $('#selDorm').parentNode.classList.toggle('on', S.dorm > 0);
+  $('#selOrden').value = S.orden;
+}
+
+// ── Datos ────────────────────────────────────────────────────────────────────────────────────────────
+let CAT = [], DISPO = null, dispoKey = '', visibles = [], mostradas = 0;
+async function cargarDispo() {
+  const k = S.llegada && S.salida ? S.llegada + '|' + S.salida : '';
+  if (k === dispoKey) return;
+  dispoKey = k; DISPO = null;
+  if (!k) return;
+  try { const j = await api('/web/buscar?desde=' + S.llegada + '&hasta=' + S.salida); if (dispoKey === k) DISPO = j.resultados || {}; }
+  catch (e) { if (dispoKey === k) DISPO = {}; }
+}
+function filtrar() {
+  const h = huespedes();
+  let L = CAT.filter(function (p) {
+    if (S.zona && p.barrio !== S.zona) return false;
+    if (S.tipo && p.tipo !== S.tipo) return false;
+    if (S.dorm && !(p.dormitorios >= S.dorm)) return false;
+    if (p.huespedes && h > p.huespedes) return false;
+    for (let i = 0; i < S.am.length; i++) if (!p[S.am[i]]) return false;
+    if (S.bounds && (!p.coord || !S.bounds.contains([p.coord.lat, p.coord.lng]))) return false;
+    return true;
+  });
+  const precio = function (p) { const d = DISPO && DISPO[p.slug]; return (d && d.total_aprox) || (p.desde_noche ? p.desde_noche * (DISPO ? noches(S.llegada, S.salida) : 1) : null); };
+  const estado = function (p) { const d = DISPO && DISPO[p.slug]; if (!d) return 1; if (d.libre === false) return 3; if (d.cumple_minimo === false) return 2; return d.libre === true ? 0 : 1; };
+  L.sort(function (a, b) {
+    if (DISPO) { const ea = estado(a), eb = estado(b); if (ea !== eb) return ea - eb; }
+    if (S.orden === 'pa' || S.orden === 'pd') { const pa = precio(a), pb = precio(b); if (pa == null) return 1; if (pb == null) return -1; return S.orden === 'pa' ? pa - pb : pb - pa; }
+    if (S.orden === 'dorm') return (b.dormitorios || 0) - (a.dormitorios || 0);
+    return 0;
+  });
+  return L;
+}
+let tAplicar = null;
+function aplicarDiferido() { clearTimeout(tAplicar); tAplicar = setTimeout(aplicar, 350); }
+async function aplicar(centrar) {
+  pintarChips(); urlEstado();
+  await cargarDispo();
+  visibles = filtrar(); mostradas = 0;
+  $('#grid').innerHTML = '';
+  $('#zonaAct').classList.toggle('on', !!S.bounds);
+  const n = visibles.length;
+  $('#resN').textContent = n + (n === 1 ? ' propiedad' : ' propiedades');
+  $('#fabTxt').textContent = document.body.classList.contains('mapa-movil') ? 'Lista (' + n + ')' : 'Mapa';
+  const vac = $('#vacio');
+  if (!n) {
+    vac.hidden = false;
+    vac.innerHTML = '<h3>No encontramos opciones con esos filtros</h3><p>Probá con otra zona o menos filtros. Si buscás algo puntual, <a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener" style="text-decoration:underline">escribinos por WhatsApp</a> y te ayudamos.</p>';
+  } else vac.hidden = true;
+  mas();
+  pintarMapa(centrar);
+}
+function mas() {
+  const frag = document.createDocumentFragment();
+  visibles.slice(mostradas, mostradas + POR_PAGINA).forEach(function (p) { frag.appendChild(tarjeta(p)); });
+  mostradas = Math.min(visibles.length, mostradas + POR_PAGINA);
+  $('#grid').appendChild(frag);
+}
+new IntersectionObserver(function (es) { if (es[0].isIntersecting && mostradas < visibles.length) mas(); }, { rootMargin: '800px' }).observe($('#masSent'));
+
+function lineaPrecio(p) {
+  const d = DISPO && DISPO[p.slug];
+  if (d) {
+    const n = noches(S.llegada, S.salida);
+    if (d.libre === false) return '<span class="no">No disponible en esas fechas</span>';
+    if (d.cumple_minimo === false) return '<span class="no">Mínimo ' + d.minimo + ' noches para esa llegada</span>';
+    if (d.total_aprox) return '<b>' + usd(d.total_aprox) + '</b> <small>total · ' + n + (n === 1 ? ' noche' : ' noches') + '</small>';
+    return '<small>Consultá el precio para esas fechas</small>';
+  }
+  if (p.desde_noche) return '<small>Desde</small> <b>' + usd(p.desde_noche) + '</b> <small>/ noche</small>';
+  return '<small>Consultá precio y disponibilidad</small>';
+}
+function tarjeta(p) {
+  const a = document.createElement('a');
+  const d = DISPO && DISPO[p.slug];
+  a.className = 'card' + (d && d.libre === false ? ' ocupada' : '');
+  a.href = '/reservasnueva/' + encodeURIComponent(p.slug) + '/' + qsFicha();
+  a.dataset.slug = p.slug;
+  const fotos = (p.fotos && p.fotos.length ? p.fotos : []).slice(0, 6);
+  const meta = [p.tipo === 'casa' ? 'Casa' : 'Apartamento', p.dormitorios ? p.dormitorios + (p.dormitorios === 1 ? ' dormitorio' : ' dormitorios') : '', p.huespedes ? 'hasta ' + p.huespedes + ' huéspedes' : ''].filter(Boolean).join(' · ');
+  const extras = [p.frente_mar ? 'Frente al mar' : (p.playa ? 'Cerca de la playa' : ''), p.piscina ? 'Piscina' : '', p.parrillero ? 'Parrillero' : ''].filter(Boolean).slice(0, 3).join(' · ');
+  a.innerHTML = '<div class="ph"><div class="ph-track">' +
+    (fotos.length ? fotos.map(function (u, i) { return '<img src="' + esc(u) + '" alt="' + esc(p.titulo) + '" loading="' + (i === 0 ? 'lazy' : 'lazy') + '" decoding="async" />'; }).join('') : '') + '</div>' +
+    (fotos.length > 1 ? '<button type="button" class="ph-arr l" aria-label="Foto anterior">‹</button><button type="button" class="ph-arr r" aria-label="Foto siguiente">›</button><div class="ph-dots">' + fotos.map(function (u, i) { return '<i' + (i ? '' : ' class="on"') + '></i>'; }).join('') + '</div>' : '') +
+    (p.frente_mar ? '<span class="ph-tag">Frente al mar</span>' : '') + '</div>' +
+    '<div class="cinfo"><div class="cz">' + esc(BARRIO_NOMBRE[p.barrio] || 'Punta del Este') + '</div><h3 class="ct">' + esc(p.titulo) + '</h3>' +
+    '<div class="cm">' + esc(meta) + (extras ? '<br>' + esc(extras) : '') + '</div><div class="cp">' + lineaPrecio(p) + '</div></div>';
+  // Carrusel: flechas en PC, deslizar en el teléfono.
+  if (fotos.length > 1) {
+    let i = 0;
+    const track = a.querySelector('.ph-track'), dots = a.querySelectorAll('.ph-dots i');
+    const ir = function (n) { i = (n + fotos.length) % fotos.length; track.style.transform = 'translateX(' + (-100 * i) + '%)'; dots.forEach(function (x, k) { x.classList.toggle('on', k === i); }); };
+    a.querySelector('.ph-arr.l').addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); ir(i - 1); });
+    a.querySelector('.ph-arr.r').addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); ir(i + 1); });
+    let x0 = null, mov = false;
+    track.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; mov = false; }, { passive: true });
+    track.addEventListener('touchmove', function (e) { if (x0 != null && Math.abs(e.touches[0].clientX - x0) > 12) mov = true; }, { passive: true });
+    track.addEventListener('touchend', function (e) { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) ir(i + (dx < 0 ? 1 : -1)); x0 = null; });
+    a.addEventListener('click', function (e) { if (mov) { e.preventDefault(); mov = false; } });
+  }
+  a.addEventListener('mouseenter', function () { resaltar(p.slug, true); });
+  a.addEventListener('mouseleave', function () { resaltar(p.slug, false); });
+  return a;
+}
+
+// ── Mapa ─────────────────────────────────────────────────────────────────────────────────────────────
+let map = null, capa = null, marcas = {}, moviendoPorCodigo = false;
+function initMapa() {
+  if (map || typeof L === 'undefined') return;
+  map = L.map('map', { zoomControl: true, scrollWheelZoom: true, attributionControl: true }).setView([-34.93, -54.93], 12);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd', attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(map);
+  capa = L.layerGroup().addTo(map);
+  map.on('moveend', function () {
+    if (moviendoPorCodigo) { moviendoPorCodigo = false; return; }
+    if ($('#chkAuto').checked) { S.bounds = map.getBounds(); aplicarSinMapa(); }
+    else $('#mapSearch').classList.add('on');
+  });
+}
+async function aplicarSinMapa() {
+  visibles = filtrar(); mostradas = 0; $('#grid').innerHTML = ''; mas();
+  $('#zonaAct').classList.toggle('on', !!S.bounds);
+  $('#resN').textContent = visibles.length + (visibles.length === 1 ? ' propiedad' : ' propiedades');
+  $('#vacio').hidden = visibles.length > 0;
+  if (!visibles.length) $('#vacio').innerHTML = '<h3>No hay propiedades en esta zona</h3><p>Mové el mapa o alejá el zoom.</p>';
+  pintarMarcas();
+}
+$('#btnZona').addEventListener('click', function () { S.bounds = map.getBounds(); $('#mapSearch').classList.remove('on'); aplicarSinMapa(); });
+$('#zonaQuitar').addEventListener('click', function () { S.bounds = null; aplicar(true); });
+function marcaTxt(p) {
+  const d = DISPO && DISPO[p.slug];
+  if (d && d.libre === false) return 'No disp.';
+  if (d && d.total_aprox) return usd(d.total_aprox).replace('USD ', 'US$');
+  return p.desde_noche ? 'US$' + Math.round(p.desde_noche).toLocaleString('es-UY') : '·';
+}
+function pintarMarcas() {
+  if (!map) return;
+  capa.clearLayers(); marcas = {};
+  visibles.forEach(function (p) {
+    if (!p.coord) return;
+    const d = DISPO && DISPO[p.slug];
+    const txt = marcaTxt(p);
+    const icon = L.divIcon({ className: '', html: '<span class="mk' + (d && d.libre === false ? ' oc' : '') + (txt === '·' ? ' dot' : '') + '" data-slug="' + esc(p.slug) + '">' + (txt === '·' ? '' : esc(txt)) + '</span>', iconSize: [0, 0] });
+    const m = L.marker([p.coord.lat, p.coord.lng], { icon: icon, riseOnHover: true }).addTo(capa);
+    m.bindPopup('<a class="mpop" href="/reservasnueva/' + encodeURIComponent(p.slug) + '/' + qsFicha() + '">' + (p.fotos[0] ? '<img src="' + esc(p.fotos[0]) + '" alt="" />' : '') + '<div><b>' + esc(p.titulo) + '</b><span style="font-size:12.5px;color:#556070">' + lineaPrecio(p) + '</span></div></a>', { closeButton: false, offset: [0, -6] });
+    marcas[p.slug] = m;
+  });
+}
+function pintarMapa(centrar) {
+  initMapa(); if (!map) return;
+  pintarMarcas();
+  if (centrar !== false && !S.bounds) {
+    const pts = visibles.filter(function (p) { return p.coord; }).map(function (p) { return [p.coord.lat, p.coord.lng]; });
+    if (pts.length) { moviendoPorCodigo = true; map.fitBounds(pts, { padding: [40, 40], maxZoom: 14 }); }
+  }
+}
+function resaltar(slug, on) { const m = marcas[slug]; if (!m) return; const el = m.getElement() && m.getElement().querySelector('.mk'); if (el) el.classList.toggle('hl', on); if (on) m.setZIndexOffset(1000); else m.setZIndexOffset(0); }
+$('#fabMap').addEventListener('click', function () {
+  const on = document.body.classList.toggle('mapa-movil');
+  $('#fabTxt').textContent = on ? 'Lista (' + visibles.length + ')' : 'Mapa';
+  if (on) { initMapa(); setTimeout(function () { map.invalidateSize(); pintarMapa(true); }, 60); }
+});
+
+// ── Menú del teléfono ────────────────────────────────────────────────────────────────────────────────
+$('#burger').addEventListener('click', function () { $('#mobileMenu').classList.toggle('open'); document.body.style.overflow = $('#mobileMenu').classList.contains('open') ? 'hidden' : ''; });
+
+// ── Arranque ─────────────────────────────────────────────────────────────────────────────────────────
+(async function () {
+  pintarBuscador(); pintarChips();
+  const g = $('#grid');
+  g.innerHTML = Array(6).fill('<div><div class="skel"></div><div class="skel" style="aspect-ratio:auto;height:16px;margin-top:12px;width:60%"></div></div>').join('');
+  try {
+    const j = await api('/web/catalogo');
+    CAT = j.propiedades || [];
+    const zonas = Object.keys(j.barrios || {}).filter(function (b) { return CAT.some(function (p) { return p.barrio === b; }); })
+      .sort(function (a, b) { return Object.keys(BARRIO_NOMBRE).indexOf(a) - Object.keys(BARRIO_NOMBRE).indexOf(b); });
+    $('#selZona').innerHTML = '<option value="">Todas las zonas</option>' + zonas.map(function (b) { return '<option value="' + esc(b) + '">' + esc(BARRIO_NOMBRE[b] || b) + '</option>'; }).join('');
+    $('#selZona').value = S.zona;
+    if (S.zona && $('#selZona').value !== S.zona) S.zona = '';
+    await aplicar(true);
+  } catch (e) {
+    g.innerHTML = '';
+    $('#vacio').hidden = false;
+    $('#vacio').innerHTML = '<h3>No pudimos cargar las propiedades</h3><p>Probá recargar la página en un momento, o escribinos por <a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener" style="text-decoration:underline">WhatsApp</a>.</p>';
+  }
+})();
+</script>
+</body>
+</html>
