@@ -34,6 +34,7 @@ DIRS = {'es': ES_DIR, 'pt': 'pt/reservas', 'en': 'en/reservas'}
 OG_LOCALE = {'es': 'es_UY', 'pt': 'pt_BR', 'en': 'en_US'}
 HREFLANG = {'es': ['es', 'es-uy'], 'pt': ['pt', 'pt-br'], 'en': ['en', 'en-us']}
 IMG_DEF = SITIO + '/assets/img/home-hero-loop.jpg'
+IMG_LISTA = SITIO + '/assets/img/og-reservas.jpg'   # vista previa de la lista y de las selecciones (?sel=): el logo, no la foto de una propiedad
 
 TX = {
   'es': {
@@ -256,7 +257,7 @@ def main():
     alt = {lg: url_lista(lg) for lg in LANGS}
     ld_lista = [{'@context': 'https://schema.org', '@type': 'ItemList', 'name': t['lista_h1'], 'url': url_lista(lang),
                  'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'url': url_ficha(lang, p['slug']), 'name': p.get('titulo')} for i, p in enumerate(props)]}]
-    seo = head_seo(lang, t['lista_tit'], t['lista_desc'], url_lista(lang), (props[0].get('fotos') or [IMG_DEF])[0] if props else IMG_DEF, alt, 'website', ld_lista)
+    seo = head_seo(lang, t['lista_tit'], t['lista_desc'], url_lista(lang), IMG_LISTA, alt, 'website', ld_lista)
     html_lista = armar(tpl_lista, lang, base_path, seo, pre_lista(lang, props))
     escribir(DIRS[lang] + '/index.html', html_lista)
     # En el hosting, el .htaccess de la raíz sirve /reservas/ desde reservas.html (regla vieja de la central de Avantio).
