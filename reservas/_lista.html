@@ -132,6 +132,9 @@ body.modo-equipo .fab-map, body.modo-equipo .wa-float { bottom: 84px; }
 .modal .lst { list-style: none; display: grid; gap: 6px; font-size: 14px; }
 .modal .lst li { display: flex; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid var(--border-light); padding: 8px 10px; border-radius: 3px; }
 .modal .lst button { background: none; border: 0; color: #a25b4a; font-size: 13px; }
+.modal .lst .sm { display: block; font-size: 12.5px; color: #a25b4a; margin-top: 2px; }
+.modal .sel-av { background: #fbf1ee; border: 1px solid #ecd2cb; color: #7a3f32; padding: 10px 12px; border-radius: 3px; font-size: 13.5px; margin: 10px 0 4px; }
+.modal .sel-av button { background: none; border: 0; color: #7a3f32; text-decoration: underline; font-size: 13.5px; padding: 0; margin-left: 4px; }
 .modal .link { word-break: break-all; background: #fff; border: 1px solid var(--gold); padding: 12px; border-radius: 3px; font-size: 14px; margin-top: 10px; }
 .modal .err { color: #a25b4a; font-size: 14px; margin-top: 10px; }
 .modal .nota { font-size: 13px; color: var(--text-soft); margin-top: 8px; }
@@ -1133,11 +1136,25 @@ $('#selCrear').addEventListener('click', function () {
   if (!SEL.length) return alert('Elegí al menos una propiedad tocando su círculo.');
   const conF = !!(S.llegada && S.salida), n = conF ? noches(S.llegada, S.salida) : 0;
   const nombre = function (sl) { const p = CAT.find(function (x) { return x.slug === sl; }); return p ? p.titulo : sl; };
-  modal('<h3>Crear link de la selección</h3><ul class="lst" id="selLst">' + SEL.map(function (sl) { return '<li><span>' + esc(nombre(sl)) + '</span><button type="button" data-q="' + esc(sl) + '">Quitar</button></li>'; }).join('') + '</ul>' +
+  // Con fechas: cuáles no van a mostrar precio y por qué (mismo dato que la tarjeta de la lista), para sacarlas antes de mandar.
+  const motivoSel = function (sl) {
+    if (!conF) return '';
+    const p = CAT.find(function (x) { return x.slug === sl; }) || {}, d = DISPO && DISPO[sl];
+    if (p.huespedes && huespedes() > p.huespedes) return 'Recibe hasta ' + p.huespedes + ' huéspedes';
+    if (!d) return '';
+    if (d.libre === false) return 'Ocupada en esas fechas';
+    if (d.cumple_minimo === false) return 'Mínimo ' + d.minimo + ' noches para esa llegada';
+    return '';
+  };
+  const sinPrecio = SEL.filter(function (sl) { return motivoSel(sl); });
+  const avisoSel = sinPrecio.length ? '<div class="sel-av" id="selAv"><b>' + sinPrecio.length + ' de ' + SEL.length + '</b> no van a mostrar precio con estas fechas.<button type="button" id="selSacar">Sacarlas</button></div>' : '';
+  modal('<h3>Crear link de la selección</h3>' + avisoSel + '<ul class="lst" id="selLst">' + SEL.map(function (sl) { const m = motivoSel(sl); return '<li><span>' + esc(nombre(sl)) + (m ? '<span class="sm">' + esc(m) + '</span>' : '') + '</span><button type="button" data-q="' + esc(sl) + '">Quitar</button></li>'; }).join('') + '</ul>' +
     (conF ? '<label style="display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-size:14px;color:var(--text)"><input type="checkbox" id="selConF" checked /> Con fechas: ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) + ' (' + n + ' noches, ' + huespedes() + ' personas)</label>' : '<p class="nota">Sin fechas: el interesado ve las propiedades y elige las fechas en cada una. Para mandarla con fechas y precios, elegí las fechas arriba antes de crear el link.</p>') +
     '<label>Título (opcional)</label><input type="text" id="selTit" maxlength="80" placeholder="Opciones para tu estadía en enero" /><label>Nota para el interesado (opcional)</label><textarea id="selNota" rows="3" maxlength="400"></textarea>' +
     '<div class="err" id="selE"></div><div id="selRes"></div><div class="acc" id="selAcc"><button type="button" id="selC">Cerrar</button><button type="button" class="pri" id="selOk">Crear link</button></div>');
-  $('#selLst').addEventListener('click', function (e) { const b = e.target.closest('[data-q]'); if (!b) return; selToggle(b.dataset.q); document.querySelectorAll('.card[data-slug="' + CSS.escape(b.dataset.q) + '"] .sel-ck').forEach(function (x) { x.classList.remove('on'); x.textContent = '+'; }); b.closest('li').remove(); });
+  const quitarSel = function (sl) { if (SEL.indexOf(sl) >= 0) selToggle(sl); document.querySelectorAll('.card[data-slug="' + CSS.escape(sl) + '"] .sel-ck').forEach(function (x) { x.classList.remove('on'); x.textContent = '+'; }); const li = document.querySelector('#selLst [data-q="' + CSS.escape(sl) + '"]'); if (li) li.closest('li').remove(); };
+  $('#selLst').addEventListener('click', function (e) { const b = e.target.closest('[data-q]'); if (!b) return; quitarSel(b.dataset.q); const quedan = SEL.filter(function (sl) { return motivoSel(sl); }).length; if (!quedan && $('#selAv')) $('#selAv').remove(); });
+  if ($('#selSacar')) $('#selSacar').onclick = function () { sinPrecio.forEach(quitarSel); $('#selAv').remove(); if (!SEL.length) $('#selE').textContent = 'No quedó ninguna propiedad: elegí otras o cambiá las fechas.'; };
   $('#selC').onclick = cerrarModal;
   $('#selOk').onclick = async function () {
     const tok = teamToken();

@@ -485,6 +485,26 @@ ES: id="selSalir">Salir<¦
 PT: id="selSalir">Sair<¦
 EN: id="selSalir">Exit<¦
 
+ES: return 'Mínimo ' + d.minimo + ' noches para esa llegada';¦
+PT: return 'Mínimo ' + d.minimo + ' noites para essa chegada';¦
+EN: return 'Minimum ' + d.minimo + ' nights for that check-in';¦
+
+ES: Ocupada en esas fechas¦
+PT: Ocupada nessas datas¦
+EN: Booked on those dates¦
+
+ES: no van a mostrar precio con estas fechas.¦
+PT: não vão mostrar preço com estas datas.¦
+EN: will not show a price for these dates.¦
+
+ES: >Sacarlas<¦
+PT: >Remover<¦
+EN: >Remove them<¦
+
+ES: No quedó ninguna propiedad: elegí otras o cambiá las fechas.¦
+PT: Não sobrou nenhuma propriedade: escolha outras ou mude as datas.¦
+EN: No properties left: pick others or change the dates.¦
+
 ES: Crear link de la selección¦
 PT: Criar link da seleção¦
 EN: Create selection link¦
