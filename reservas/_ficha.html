@@ -1003,7 +1003,7 @@ function cotHtml() {
       pagoHtml(c) + polHtml(c.politica);
   }
   if (c.estado === 'ocupado') return '<div class="err">Esas fechas no están disponibles.</div>' + (c.libres_cerca && c.libres_cerca.length ? '<div class="aviso">Libres cerca: ' + c.libres_cerca.map(function (w) { return '<button type="button" class="lnk" data-w="' + w.desde + '|' + w.hasta + '">' + fechaCorta(w.desde) + ' – ' + fechaCorta(w.hasta) + '</button>'; }).join(' · ') + '</div>' : '');
-  if (c.estado === 'minimo') return '<div class="err">Para esa llegada la estadía mínima es de ' + c.minimo + ' noches.</div>';
+  if (c.estado === 'minimo') return '<div class="err">Para esa llegada la estadía mínima es de ' + c.minimo + ' noches.</div>' + (c.libres_cerca && c.libres_cerca.length ? '<div class="aviso">Libres cerca: ' + c.libres_cerca.map(function (w) { return '<button type="button" class="lnk" data-w="' + w.desde + '|' + w.hasta + '">' + fechaCorta(w.desde) + ' – ' + fechaCorta(w.hasta) + '</button>'; }).join(' · ') + '</div>' : '');
   if (c.estado === 'capacidad') return '<div class="err">Esta propiedad recibe hasta ' + c.maximo + ' huéspedes.</div>';
   if (c.estado === 'mensual') return '<div class="aviso">Para estadías largas armamos una propuesta a medida. Escribinos y te la pasamos.</div>';
   if (c.estado === 'error') return '<div class="err">' + esc(c.msg || 'No pudimos calcular el precio.') + '</div>';

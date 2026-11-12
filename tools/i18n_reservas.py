@@ -682,24 +682,29 @@ ES: Consultá precio y disponibilidad¦
 PT: Consulte preço e disponibilidade¦
 EN: Ask for price and availability¦
 
-ES: Ya no está disponible en esas fechas¦
-PT: Não está mais disponível nessas datas¦
-EN: No longer available on those dates¦
+ES: const RANGO_P = ['del ', ' al ', ' de '];¦
+PT: const RANGO_P = ['de ', ' a ', ' de '];¦
+EN: const RANGO_P = ['from ', ' to ', ' '];¦
 
-ES: <span class="no">Mínimo ¦
-EN: <span class="no">Minimum ¦
+ES: 'Mínimo ' + c.minimo + ' noches para esa llegada'¦
+PT: 'Mínimo ' + c.minimo + ' noites para essa chegada'¦
+EN: 'Minimum ' + c.minimo + ' nights for that check-in'¦
 
-ES: ' noches para esa llegada</span>'¦
-PT: ' noites para essa chegada</span>'¦
-EN: ' nights for that check-in</span>'¦
+ES: 'Mínimo ' + d.minimo + ' noches para esa llegada', min¦
+PT: 'Mínimo ' + d.minimo + ' noites para essa chegada', min¦
+EN: 'Minimum ' + d.minimo + ' nights for that check-in', min¦
 
-ES: <span class="no">Recibe hasta ¦
-PT: <span class="no">Recebe até ¦
-EN: <span class="no">Sleeps up to ¦
+ES: Probá con otras fechas¦
+PT: Tente outras datas¦
+EN: Try other dates¦
 
-ES: ' huéspedes</span>'¦
-PT: ' hóspedes</span>'¦
-EN: ' guests</span>'¦
+ES: '<span class="alt">Disponible con un mínimo de ' + n + ' noches: '¦
+PT: '<span class="alt">Disponível com um mínimo de ' + n + ' noites: '¦
+EN: '<span class="alt">Available with a minimum of ' + n + ' nights: '¦
+
+ES: '<span class="alt">Disponible ' + r + ' ('¦
+PT: '<span class="alt">Disponível ' + r + ' ('¦
+EN: '<span class="alt">Available ' + r + ' ('¦
 
 ES: Sin fechas online · consultanos¦
 PT: Sem datas online · consulte-nos¦
