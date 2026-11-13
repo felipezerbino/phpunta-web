@@ -187,6 +187,13 @@ body.ver-sel .layout { grid-template-columns: 1fr !important; }
 .chip:hover { border-color: var(--navy); }
 .chip.on { background: var(--navy); color: var(--cream); border-color: var(--navy); }
 .chip select { border: 0; background: transparent; font-size: 13px; color: inherit; outline: none; appearance: none; padding-right: 2px; }
+.fbusca { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border-light); background: #fff; border-radius: 40px; padding: 0 10px 0 12px; height: 35px; }
+.fbusca svg { width: 15px; height: 15px; stroke: var(--text-soft); fill: none; stroke-width: 2; flex: 0 0 auto; }
+.fbusca input { border: 0; outline: 0; background: transparent; font: inherit; font-size: 13px; color: var(--text); width: 150px; padding: 0; }
+.fbusca.on { border-color: var(--navy); }
+.fbusca input::-webkit-search-cancel-button, .fbusca input::-webkit-search-decoration { -webkit-appearance: none; display: none; }
+.fbusca button { border: 0; background: none; color: var(--text-soft); font-size: 16px; line-height: 1; padding: 0 2px; cursor: pointer; }
+@media (max-width: 999px) { .fbusca input { font-size: 16px; width: 130px; } }
 .fbar .sep { width: 1px; height: 22px; background: var(--border-light); flex: 0 0 auto; }
 .fbar .res-n { margin-left: auto; flex: 0 0 auto; font-size: 13px; color: var(--text-soft); white-space: nowrap; padding-left: 10px; }
 .fchips { display: contents; }
@@ -540,6 +547,7 @@ body.mapa-movil .topbar { display: none; }
 
 <div class="fbar" id="fbar">
   <div class="container fbar-in">
+    <label class="fbusca" id="fBusca"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="inBusca" placeholder="Buscar por nombre" aria-label="Buscar por nombre" autocomplete="off" enterkeyhint="search" /><button type="button" id="inBuscaX" aria-label="Borrar" hidden>×</button></label>
     <button type="button" class="chip fbtn" id="btnFiltros">Filtros <b id="nFil"></b></button>
     <span class="fchips">
     <button type="button" class="chip" data-f="tipo" data-v="casa">Casas</button>
@@ -735,7 +743,7 @@ const S = {
   ad: Math.max(1, parseInt(Q.get('adultos') || '2', 10) || 2), ni: Math.max(0, parseInt(Q.get('ninos') || '0', 10) || 0), be: Math.max(0, parseInt(Q.get('bebes') || '0', 10) || 0),
   zona: Q.get('zona') || '', tipo: Q.get('tipo') || '', dorm: parseInt(Q.get('dorm') || '0', 10) || 0,
   am: (Q.get('con') || '').split(',').filter(Boolean), orden: Q.get('orden') || 'rec',
-  bounds: null
+  q: (Q.get('q') || '').slice(0, 60), bounds: null
 };
 if (S.llegada && (S.llegada < hoyIso || !parseIso(S.llegada))) { S.llegada = ''; S.salida = ''; }
 if (S.salida && (!parseIso(S.salida) || S.salida <= S.llegada)) S.salida = '';
@@ -744,7 +752,7 @@ function urlEstado() {
   if (S.llegada) p.set('llegada', S.llegada); if (S.salida) p.set('salida', S.salida);
   if (S.ad !== 2) p.set('adultos', S.ad); if (S.ni) p.set('ninos', S.ni); if (S.be) p.set('bebes', S.be);
   if (S.zona) p.set('zona', S.zona); if (S.tipo) p.set('tipo', S.tipo); if (S.dorm) p.set('dorm', S.dorm);
-  if (S.am.length) p.set('con', S.am.join(',')); if (S.orden !== 'rec') p.set('orden', S.orden);
+  if (S.am.length) p.set('con', S.am.join(',')); if (S.orden !== 'rec') p.set('orden', S.orden); if (S.q) p.set('q', S.q);
   if (Q.get('api')) p.set('api', Q.get('api'));
   history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
 }
@@ -872,6 +880,33 @@ $('#fsheetBg').addEventListener('click', function () { abrirFiltros(false); });
 $('#fsVer').addEventListener('click', function () { abrirFiltros(false); document.getElementById('fbar').scrollIntoView({ behavior: 'smooth' }); });
 $('#fsLimpiar').addEventListener('click', function () { S.tipo = ''; S.dorm = 0; S.am = []; aplicar(); });
 $('#selOrden').addEventListener('change', function () { S.orden = this.value; aplicar(); });
+// Buscador por nombre (pedido de Andrea): busca en el título y, con sesión del equipo, también en el nombre interno
+// ("Walmer L104"). Sin tildes ni espacios: "cap ferrat" encuentra "CapFerrat"; cada palabra tiene que aparecer.
+const normB = function (x) { return String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ''); };
+let NOMBRES = {};
+function coincideNombre(p) {
+  if (!S.q) return true;
+  const h = normB(p.titulo) + '|' + normB(p.slug) + '|' + normB(NOMBRES[p.slug]);
+  return S.q.split(/\s+/).map(normB).filter(Boolean).every(function (w) { return h.indexOf(w) >= 0; });
+}
+async function cargarNombres() {
+  const tok = teamToken(); if (!tok) return;
+  try {
+    const r = await fetch(API + '/web/nombres', { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + tok } });
+    const j = await r.json().catch(function () { return null; });
+    if (!r.ok || !j || !Array.isArray(j.nombres)) return;
+    const m = {}; j.nombres.forEach(function (x) { if (x && x.slug) m[x.slug] = String(x.nombre || ''); });
+    NOMBRES = m; if (S.q && CAT.length) aplicar();
+  } catch (e) {}
+}
+(function () {
+  const inp = $('#inBusca'), x = $('#inBuscaX'), box = $('#fBusca'); let t = null;
+  const pintar = function () { x.hidden = !inp.value; box.classList.toggle('on', !!inp.value); };
+  inp.value = S.q; pintar();
+  inp.addEventListener('input', function () { pintar(); clearTimeout(t); t = setTimeout(function () { S.q = inp.value.trim().slice(0, 60); aplicar(); }, 220); });
+  inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(t); S.q = inp.value.trim().slice(0, 60); aplicar(); inp.blur(); } });
+  x.addEventListener('click', function () { inp.value = ''; pintar(); S.q = ''; aplicar(); });
+})();
 function pintarChips() {
   document.querySelectorAll('.chip[data-f]').forEach(function (b) {
     const f = b.dataset.f;
@@ -900,6 +935,7 @@ function filtrar() {
   const h = huespedes();
   let L = CAT.filter(function (p) {
     if (DISPO && p.vitrina) return false;   // sin fechas online: no aparecen al buscar por fechas
+    if (!coincideNombre(p)) return false;
     if (S.zona && p.barrio !== S.zona) return false;
     if (S.tipo && p.tipo !== S.tipo) return false;
     if (S.dorm && !(p.dormitorios >= S.dorm)) return false;
@@ -1159,7 +1195,7 @@ function loginEquipo(despues) {
       if (!r.ok || !j || !j.token) throw new Error((j && j.error) || 'Usuario o contraseña incorrectos.');
       try { localStorage.setItem('phweb_team_token', j.token); } catch (e) {}
       $('#lgP').value = '';
-      cerrarModal(); document.body.classList.add('es-equipo'); if (despues) despues();
+      cerrarModal(); document.body.classList.add('es-equipo'); cargarNombres(); if (despues) despues();
     } catch (e) { $('#lgE').textContent = e.message; }
   };
   $('#lgOk').onclick = ir; $('#lgP').addEventListener('keydown', function (e) { if (e.key === 'Enter') ir(); });
@@ -1209,7 +1245,7 @@ $('#selCrear').addEventListener('click', function () {
     } catch (e) { $('#selE').textContent = e.message; b.disabled = false; b.textContent = 'Crear link'; }
   };
 });
-if (teamToken()) { document.body.classList.add('es-equipo'); if (innerWidth < 1000) $('#btnEquipo').textContent = 'Selección'; }
+if (teamToken()) { cargarNombres(); document.body.classList.add('es-equipo'); if (innerWidth < 1000) $('#btnEquipo').textContent = 'Selección'; }
 if (Q.get('equipo') && !teamToken()) setTimeout(function () { loginEquipo(function () { modoEquipo(true); }); }, 300);
 else if (Q.get('equipo')) setTimeout(function () { modoEquipo(true); }, 300);
 selPintarBarra();

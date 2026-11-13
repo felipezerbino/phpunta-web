@@ -694,6 +694,14 @@ ES: 'Mínimo ' + d.minimo + ' noches para esa llegada', min¦
 PT: 'Mínimo ' + d.minimo + ' noites para essa chegada', min¦
 EN: 'Minimum ' + d.minimo + ' nights for that check-in', min¦
 
+ES: placeholder="Buscar por nombre" aria-label="Buscar por nombre"¦
+PT: placeholder="Buscar por nome" aria-label="Buscar por nome"¦
+EN: placeholder="Search by name" aria-label="Search by name"¦
+
+ES: id="inBuscaX" aria-label="Borrar"¦
+PT: id="inBuscaX" aria-label="Apagar"¦
+EN: id="inBuscaX" aria-label="Clear"¦
+
 ES: Probá con otras fechas¦
 PT: Tente outras datas¦
 EN: Try other dates¦
