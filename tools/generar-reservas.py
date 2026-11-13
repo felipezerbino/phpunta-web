@@ -34,7 +34,7 @@ DIRS = {'es': ES_DIR, 'pt': 'pt/reservas', 'en': 'en/reservas'}
 OG_LOCALE = {'es': 'es_UY', 'pt': 'pt_BR', 'en': 'en_US'}
 HREFLANG = {'es': ['es', 'es-uy'], 'pt': ['pt', 'pt-br'], 'en': ['en', 'en-us']}
 IMG_DEF = SITIO + '/assets/img/home-hero-loop.jpg'
-IMG_LISTA = SITIO + '/assets/img/og-reservas.jpg'   # vista previa de la lista y de las selecciones (?sel=): el logo, no la foto de una propiedad
+IMG_LISTA = SITIO + '/assets/img/og-reservas-2.jpg'   # vista previa de la lista y de las selecciones (?sel=): el logo, no la foto de una propiedad
 
 TX = {
   'es': {
