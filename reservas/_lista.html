@@ -36,7 +36,7 @@
   --maxw: 1440px; --ease: cubic-bezier(.2, .6, .2, 1);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: var(--cream); }
+html { background: var(--cream); overflow-x: clip; }
 body { font-family: var(--sans); background: var(--cream); color: var(--text); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
@@ -193,7 +193,7 @@ body.ver-sel .layout { grid-template-columns: 1fr !important; }
 .fbusca.on { border-color: var(--navy); }
 .fbusca input::-webkit-search-cancel-button, .fbusca input::-webkit-search-decoration { -webkit-appearance: none; display: none; }
 .fbusca button { border: 0; background: none; color: var(--text-soft); font-size: 16px; line-height: 1; padding: 0 2px; cursor: pointer; }
-@media (max-width: 999px) { .fbusca input { font-size: 16px; width: 130px; } }
+@media (max-width: 999px) { .fbusca { flex: 1 1 150px; min-width: 0; } .fbusca input { font-size: 16px; width: 100%; min-width: 0; flex: 1 1 auto; } }
 .fbar .sep { width: 1px; height: 22px; background: var(--border-light); flex: 0 0 auto; }
 .fbar .res-n { margin-left: auto; flex: 0 0 auto; font-size: 13px; color: var(--text-soft); white-space: nowrap; padding-left: 10px; }
 .fchips { display: contents; }
@@ -208,7 +208,8 @@ body.ver-sel .layout { grid-template-columns: 1fr !important; }
   #btnEquipo { padding: 7px 11px; font-size: 12.5px; white-space: nowrap; }
 }
 @media (max-width: 380px) { .fbar .res-n { font-size: 12px; padding-left: 4px; } .fbtn { font-size: 13px; } }
-@media (max-width: 420px) { .fbar-in { flex-wrap: wrap; row-gap: 8px; } }
+/* En el teléfono la barra NUNCA puede ser más ancha que la pantalla: si no, Safari agranda la página entera (se ve achicada y corrida). */
+@media (max-width: 999px) { .fbar-in { flex-wrap: wrap; row-gap: 8px; } }
 /* teléfono: los desplegables a 16px, si no iOS agranda la página al tocarlos */
 @media (max-width: 999px) { .sf select, .chip select, .fsheet select { font-size: 16px; } }
 /* hoja de filtros (celular) */

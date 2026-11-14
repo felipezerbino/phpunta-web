@@ -64,5 +64,6 @@ Reemplaza al sitio de reservas de Avantio (reservas.phpunta.uy). Oculta: `noinde
 - **Selecciones:** con la sesión del equipo (la misma de Comunicaciones o el Portal: mismo dominio; si no, `?equipo=1` o
   "Acceso equipo" en el pie) aparece "Armar selección": círculos en las tarjetas y "Crear link" → `?sel=<id>` muestra solo
   esas propiedades con las fechas y precios elegidos. Funciona solo en `phpunta.uy` (sin www: localStorage es por origen).
+- **Regla (14-nov):** en el teléfono nada puede quedar más ancho que la pantalla: iOS Safari agranda la página entera para que entre (se ve achicada, corrida a la izquierda, con una franja vacía a la derecha) y el `overflow-x:hidden` del body no lo impide. La barra de filtros hace salto de línea en todo ancho ≤999 y `html` lleva `overflow-x: clip`. Chromium no reproduce este efecto: medir que ningún elemento pase el ancho de la pantalla.
 - El calendario del buscador va por encima de la barra de filtros (`body.pop-on .hero`): el `.hero` tiene `isolation`.
 - Logo del menú: `assets/img/logo.webp` (11-nov, copiado de reservas.phpunta.uy). Los links del menú "Reservas" ya van a /reservas (11-nov).
