@@ -76,6 +76,10 @@ EN: <a href="__BASE_ES__" hreflang="es">ES</a>\n      <span class="sep">·</span
 ES: aria-label="LinkedIn de Felipe Zerbino"¦
 EN: aria-label="Felipe Zerbino on LinkedIn"¦
 
+ES: aria-label="Reseñas en Google"¦
+PT: aria-label="Avaliações no Google"¦
+EN: aria-label="Google reviews"¦
+
 ES: aria-label="Menú"¦
 PT: aria-label="Menu"¦
 EN: aria-label="Menu"¦
