@@ -12,7 +12,7 @@ from guia_contenido import ACTUALIZADO, T, WA, ZONAS
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITIO = 'https://phpunta.uy'
 BACKEND = sys.argv[1] if len(sys.argv) > 1 else 'https://phpunta-backend-production.up.railway.app'
-PLANTILLA = {'es': 'condiciones-generales.html', 'pt': 'pt/termos.html', 'en': 'en/terms.html'}
+PLANTILLA = {'es': 'como-trabajamos.html', 'pt': 'pt/como-trabalhamos.html', 'en': 'en/how-we-work.html'}   # topbar con redes e idiomas, menú y pie de las páginas principales
 HREFLANG = {'es': ['es', 'es-uy'], 'pt': ['pt', 'pt-br'], 'en': ['en', 'en-us']}
 PAGINAS = ['hub', 'zonas', 'temporada', 'faq']
 IMG = {'hub': 'home-atmosphere-aerea.jpg', 'zonas': 'gal-01-peninsula-aerea.jpg', 'temporada': 'gal-04-playa-brava.jpg',
@@ -249,7 +249,7 @@ def hero(lang, pag):
   return ('<section class="gp-hero"><img src="/assets/img/' + IMG[pag] + '" alt="" fetchpriority="high" decoding="async" />'
           '<div class="container">' + crumbs(lang, pag) + '<span class="gp-eyebrow">' + u['eyebrow'] + '</span>'
           '<h1>' + d['h1'] + '</h1><p class="gp-sub">' + ESC(d['sub']) + '</p>'
-          '<div class="gp-meta"><span>' + u['actualizado'] + ' ' + fecha_txt(lang, ACTUALIZADO) + '</span>' + langs(lang, pag) + '</div>'
+          '<div class="gp-meta"><span>' + u['actualizado'] + ' ' + fecha_txt(lang, ACTUALIZADO) + '</span></div>'
           '</div></section>')
 
 
@@ -437,9 +437,19 @@ def armar(lang, pag, con_props):
   s = s.replace('@@JSONLD@@', jsonld(lang, pag), 1).replace('@@JSONLD@@', '')
   i = s.index('</style>')
   s = s[:i] + CSS + s[i:]
-  a = s.index('<section class="legal-hero">')
+  # selector de idioma de la barra superior: las tres versiones de ESTA página
+  tl = ['<div class="topbar-langs">']
+  for k, lg in enumerate(('es', 'pt', 'en')):
+    if k:
+      tl.append('      <span class="sep">·</span>')
+    tl.append('      <span class="active">' + lg.upper() + '</span>' if lg == lang else '      <a href="' + href(lg, pag) + '" hreflang="' + lg + '">' + lg.upper() + '</a>')
+  tl.append('    </div>')
+  s = re.sub(r'<div class="topbar-langs">.*?</div>', lambda m: '\n'.join(tl), s, count=1, flags=re.S)
+  s = s.replace(' class="current"', '')
+  m = s.index('id="mobileMenu"')
+  a = s.index('</div>', s.index('</ul>', m)) + len('</div>')
   b = s.index('<footer')
-  s = s[:a] + cuerpo(lang, pag, con_props) + s[b:]
+  s = s[:a] + '\n\n' + cuerpo(lang, pag, con_props) + s[b:]
   out = os.path.join(RAIZ, T[lang]['archivos'][pag])
   open(out, 'w', encoding='utf-8').write(s)
   print('ok', T[lang]['archivos'][pag])

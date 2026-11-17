@@ -72,8 +72,11 @@ Reemplaza al sitio de reservas de Avantio (reservas.phpunta.uy). Oculta: `noinde
 - Páginas de respuestas para buscadores e IA (ES/PT/EN): `guia-punta-del-este.html` (portada), `guia-zonas-punta-del-este.html`,
   `guia-temporada-punta-del-este.html`, `preguntas-frecuentes.html` y sus versiones en `pt/` y `en/`. Enlazadas desde el PIE
   de todas las páginas (no del menú, decisión de Felipe) y en `sitemap.xml`; `llms.txt` en la raíz las lista para las IA.
-- Las arma `python3 tools/generar-guia.py` (molde: la página legal de cada idioma; textos en `tools/guia_contenido.py`, todo
+- Las arma `python3 tools/generar-guia.py` (molde: "Cómo trabajamos" de cada idioma, con barra superior de redes e idiomas y el pie completo; textos en `tools/guia_contenido.py`, todo
   texto en los TRES idiomas). Se commitean. Los botones "Ver propiedades en <zona>" salen solo para las zonas con propiedades
   en la central al momento de generar (las demás: WhatsApp): **volver a correrlo si cambian las zonas de la cartera o los textos.**
   Fotos livianas en `assets/img/guia/` (900 px). Reglas del contenido: solo geografía pública y políticas ya decididas
   (nada de comisiones ni datos internos); distancias de `phpunta-backend/docs/ia/zonas_punta.json`.
+- **Regla (17-nov): el menú del teléfono va POR DEBAJO de la barra de navegación** (`.mobile-menu` z-index 88 < `.nav` 90): si lo
+  tapa, el botón para cerrarlo queda debajo y no se puede volver a cerrar (pasaba en las 18 páginas legales). Ficha de Google
+  (reseñas) = `https://share.google/TRY5l4VCJIuu7JF4X`, en la barra superior, el pie, Contacto y el `sameAs` de la portada.
