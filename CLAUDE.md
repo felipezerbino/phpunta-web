@@ -79,4 +79,4 @@ Reemplaza al sitio de reservas de Avantio (reservas.phpunta.uy). Oculta: `noinde
   (nada de comisiones ni datos internos); distancias de `phpunta-backend/docs/ia/zonas_punta.json`.
 - **Regla (17-nov): el menú del teléfono va POR DEBAJO de la barra de navegación** (`.mobile-menu` z-index 88 < `.nav` 90): si lo
   tapa, el botón para cerrarlo queda debajo y no se puede volver a cerrar (pasaba en las 18 páginas legales). Ficha de Google
-  (reseñas) = `https://share.google/TRY5l4VCJIuu7JF4X`, en la barra superior, el pie, Contacto y el `sameAs` de la portada.
+  (reseñas) = `https://maps.app.goo.gl/PHPB9T7P7JGDvrNQ9`, en la barra superior, el pie, Contacto y el `sameAs` de la portada.
