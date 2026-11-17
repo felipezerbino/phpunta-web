@@ -1,0 +1,35 @@
+# Premium Host Punta (PHPunta)
+
+> Administración premium de alquileres temporarios en Punta del Este, Uruguay (Península, Playa Mansa, Playa Brava, San Rafael, La Barra, Manantiales, José Ignacio, Punta Ballena, Laguna del Sauce) y Montevideo. Reservas directas online, atención en español, portugués e inglés. Premium vacation rental management in Punta del Este, Uruguay.
+
+Contacto: WhatsApp +598 99 716 681 · info@phpunta.uy · Premium Host Punta SAS, registro MINTUR N°2011.
+
+## Reservar
+- [Central de reservas](https://phpunta.uy/reservas/): disponibilidad y precio total al momento (incluye la limpieza final), reserva inmediata o por solicitud.
+- [Bases y condiciones de la reserva](https://phpunta.uy/condiciones-reserva.html)
+- [Reglas de la casa](https://phpunta.uy/reglas-de-la-casa.html)
+
+## Guía de Punta del Este
+- [Guía de Punta del Este](https://phpunta.uy/guia-punta-del-este.html): resumen y respuestas rápidas.
+- [Dónde alojarse: zonas y barrios](https://phpunta.uy/guia-zonas-punta-del-este.html)
+- [Cuándo ir: temporada alta y baja](https://phpunta.uy/guia-temporada-punta-del-este.html)
+- [Preguntas frecuentes de huéspedes](https://phpunta.uy/preguntas-frecuentes.html)
+
+## Propietarios
+- [Administración para propietarios](https://phpunta.uy/propietarios.html)
+- [Cómo trabajamos](https://phpunta.uy/como-trabajamos.html)
+- [Conocenos](https://phpunta.uy/conocenos.html)
+
+## English
+- [Punta del Este Guide](https://phpunta.uy/en/punta-del-este-guide.html)
+- [Where to stay in Punta del Este](https://phpunta.uy/en/where-to-stay-punta-del-este.html)
+- [When to visit Punta del Este](https://phpunta.uy/en/when-to-visit-punta-del-este.html)
+- [FAQ](https://phpunta.uy/en/faq.html)
+- [Book online](https://phpunta.uy/en/reservas/)
+
+## Português
+- [Guia de Punta del Este](https://phpunta.uy/pt/guia-punta-del-este.html)
+- [Onde ficar em Punta del Este](https://phpunta.uy/pt/guia-bairros-punta-del-este.html)
+- [Quando ir a Punta del Este](https://phpunta.uy/pt/guia-temporada-punta-del-este.html)
+- [Perguntas frequentes](https://phpunta.uy/pt/perguntas-frequentes.html)
+- [Reservar online](https://phpunta.uy/pt/reservas/)

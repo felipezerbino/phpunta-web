@@ -183,4 +183,199 @@
   <url><loc>https://phpunta.uy/en/privacy-policy.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
   <url><loc>https://phpunta.uy/en/cookie-policy.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
 
+
+  <!-- GUÍA DE PUNTA DEL ESTE (tools/generar-guia.py) -->
+  <url>
+    <loc>https://phpunta.uy/guia-punta-del-este.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/punta-del-este-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/punta-del-este-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/home-atmosphere-aerea.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/pt/guia-punta-del-este.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/punta-del-este-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/punta-del-este-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/home-atmosphere-aerea.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/en/punta-del-este-guide.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/punta-del-este-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/punta-del-este-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/home-atmosphere-aerea.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/guia-zonas-punta-del-este.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-bairros-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-bairros-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/where-to-stay-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/where-to-stay-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-01-peninsula-aerea.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/pt/guia-bairros-punta-del-este.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-bairros-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-bairros-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/where-to-stay-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/where-to-stay-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-01-peninsula-aerea.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/en/where-to-stay-punta-del-este.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-bairros-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-bairros-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/where-to-stay-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/where-to-stay-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-zonas-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-01-peninsula-aerea.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/guia-temporada-punta-del-este.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/when-to-visit-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/when-to-visit-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-04-playa-brava.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/pt/guia-temporada-punta-del-este.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/when-to-visit-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/when-to-visit-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-04-playa-brava.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/en/when-to-visit-punta-del-este.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/guia-temporada-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/when-to-visit-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/when-to-visit-punta-del-este.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/guia-temporada-punta-del-este.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-04-playa-brava.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/preguntas-frecuentes.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/perguntas-frequentes.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/perguntas-frequentes.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-14-mansa-atardecer.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/pt/perguntas-frequentes.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/perguntas-frequentes.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/perguntas-frequentes.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-14-mansa-atardecer.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://phpunta.uy/en/faq.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <xhtml:link rel="alternate" hreflang="es-uy" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://phpunta.uy/pt/perguntas-frequentes.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://phpunta.uy/pt/perguntas-frequentes.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phpunta.uy/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://phpunta.uy/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phpunta.uy/preguntas-frecuentes.html"/>
+    <image:image>
+      <image:loc>https://phpunta.uy/assets/img/gal-14-mansa-atardecer.jpg</image:loc>
+    </image:image>
+  </url>
+
 </urlset>

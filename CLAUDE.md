@@ -67,3 +67,13 @@ Reemplaza al sitio de reservas de Avantio (reservas.phpunta.uy). Oculta: `noinde
 - **Regla (14-nov):** en el teléfono nada puede quedar más ancho que la pantalla: iOS Safari agranda la página entera para que entre (se ve achicada, corrida a la izquierda, con una franja vacía a la derecha) y el `overflow-x:hidden` del body no lo impide. La barra de filtros hace salto de línea en todo ancho ≤999 y `html` lleva `overflow-x: clip`. Chromium no reproduce este efecto: medir que ningún elemento pase el ancho de la pantalla.
 - El calendario del buscador va por encima de la barra de filtros (`body.pop-on .hero`): el `.hero` tiene `isolation`.
 - Logo del menú: `assets/img/logo.webp` (11-nov, copiado de reservas.phpunta.uy). Los links del menú "Reservas" ya van a /reservas (11-nov).
+
+## Guía de Punta del Este (17-nov-2026)
+- Páginas de respuestas para buscadores e IA (ES/PT/EN): `guia-punta-del-este.html` (portada), `guia-zonas-punta-del-este.html`,
+  `guia-temporada-punta-del-este.html`, `preguntas-frecuentes.html` y sus versiones en `pt/` y `en/`. Enlazadas desde el PIE
+  de todas las páginas (no del menú, decisión de Felipe) y en `sitemap.xml`; `llms.txt` en la raíz las lista para las IA.
+- Las arma `python3 tools/generar-guia.py` (molde: la página legal de cada idioma; textos en `tools/guia_contenido.py`, todo
+  texto en los TRES idiomas). Se commitean. Los botones "Ver propiedades en <zona>" salen solo para las zonas con propiedades
+  en la central al momento de generar (las demás: WhatsApp): **volver a correrlo si cambian las zonas de la cartera o los textos.**
+  Fotos livianas en `assets/img/guia/` (900 px). Reglas del contenido: solo geografía pública y políticas ya decididas
+  (nada de comisiones ni datos internos); distancias de `phpunta-backend/docs/ia/zonas_punta.json`.

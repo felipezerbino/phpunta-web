@@ -96,6 +96,14 @@ ES: <a href="/reservasnueva/">Reservas</a>¦
 PT: <a href="__BASE_PT__">Reservar</a>¦
 EN: <a href="__BASE_EN__">Book</a>¦
 
+ES: <a href="/guia-punta-del-este.html">Guía de Punta del Este</a>¦
+PT: <a href="/pt/guia-punta-del-este.html">Guia de Punta del Este</a>¦
+EN: <a href="/en/punta-del-este-guide.html">Punta del Este Guide</a>¦
+
+ES: <a href="/preguntas-frecuentes.html">Preguntas frecuentes</a>¦
+PT: <a href="/pt/perguntas-frequentes.html">Perguntas frequentes</a>¦
+EN: <a href="/en/faq.html">FAQ</a>¦
+
 ES: <a href="/como-trabajamos.html">Cómo&nbsp;trabajamos</a>¦
 PT: <a href="/pt/como-trabalhamos.html">Como&nbsp;trabalhamos</a>¦
 EN: <a href="/en/how-we-work.html">How&nbsp;we&nbsp;work</a>¦
