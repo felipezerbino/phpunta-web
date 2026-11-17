@@ -80,6 +80,16 @@ def fechas_clave(lang, hoy):
 
 CSS = r'''
 /* ===== GUÍA DE PUNTA DEL ESTE ===== */
+/* Modo oscuro del teléfono: las reglas "anti-dark" del molde fuerzan títulos y textos oscuros con !important (body h1,
+   body p): en las secciones oscuras de la guía se vuelven a poner claros, con más especificidad. */
+.gp .gp-hero h1, .gp .gp-cta h2, .gp .gp-mvd h3, .gp .gp-tempo.dark h3, .gp .gp-zcard-t b { color: #faf7f0 !important; }
+.gp .gp-hero h1 em, .gp .gp-cta h2 em { color: #c9a84c !important; }
+.gp .gp-hero .gp-sub { color: rgba(240,236,224,.92) !important; }
+.gp .gp-cta p, .gp .gp-mvd p, .gp .gp-tempo.dark p { color: rgba(240,236,224,.85) !important; }
+.gp .gp-resp-box p { color: #0d1b2a !important; }
+.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h2, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
+.gp-hero h1, .gp-hero .gp-sub, .gp-hero .gp-crumbs, .gp-hero .gp-meta { text-shadow: 0 2px 18px rgba(7,19,31,.55); }
+.gp a[x-apple-data-detectors], .gp [x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
 .gp-zcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 @media (min-width: 700px) { .gp-zcards { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media (min-width: 1100px) { .gp-zcards { grid-template-columns: repeat(5, 1fr); } }
@@ -98,7 +108,7 @@ CSS = r'''
 .gp img { max-width: 100%; display: block; }
 .gp-hero { position: relative; min-height: 560px; display: flex; align-items: flex-end; color: var(--cream); overflow: hidden; background: var(--navy); }
 .gp-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.35) 0%, rgba(7,19,31,.45) 45%, rgba(7,19,31,.88) 100%); }
+.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.55) 0%, rgba(7,19,31,.62) 45%, rgba(7,19,31,.92) 100%); }
 .gp-hero .container { position: relative; z-index: 1; width: 100%; padding-top: 120px; padding-bottom: 56px; }
 .gp-crumbs { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,236,224,.75); margin-bottom: 22px; }
 .gp-crumbs a { color: rgba(240,236,224,.85); }
@@ -246,7 +256,7 @@ def langs(lang, pag):
 
 def hero(lang, pag):
   d = T[lang]['paginas'][pag]; u = T[lang]['ui']
-  return ('<section class="gp-hero"><img src="/assets/img/' + IMG[pag] + '" alt="" fetchpriority="high" decoding="async" />'
+  return ('<section class="gp-hero" data-bg="dark"><img src="/assets/img/' + IMG[pag] + '" alt="" fetchpriority="high" decoding="async" />'
           '<div class="container">' + crumbs(lang, pag) + '<span class="gp-eyebrow">' + u['eyebrow'] + '</span>'
           '<h1>' + d['h1'] + '</h1><p class="gp-sub">' + ESC(d['sub']) + '</p>'
           '<div class="gp-meta"><span>' + u['actualizado'] + ' ' + fecha_txt(lang, ACTUALIZADO) + '</span></div>'
@@ -275,7 +285,7 @@ def faq_sec(lang, items, alt=True):
 
 def cta(lang):
   u = T[lang]['ui']
-  return ('<section class="gp-cta"><div class="container"><h2>' + u['cta_t'] + '</h2><p>' + ESC(u['cta_p']) + '</p><div class="gp-btns">'
+  return ('<section class="gp-cta" data-bg="dark"><div class="container"><h2>' + u['cta_t'] + '</h2><p>' + ESC(u['cta_p']) + '</p><div class="gp-btns">'
           '<a class="gp-btn gp-btn-gold" href="' + T[lang]['reservas'] + '">' + u['cta_res'] + ' →</a>'
           '<a class="gp-btn gp-btn-light" href="' + WA + '" target="_blank" rel="noopener">' + u['cta_wa'] + '</a></div></div></section>')
 
@@ -435,6 +445,7 @@ def armar(lang, pag, con_props):
     s = '\n'.join(lineas)
   s = re.sub(r'<script type="application/ld\+json">.*?</script>', '@@JSONLD@@', s, flags=re.S)
   s = s.replace('@@JSONLD@@', jsonld(lang, pag), 1).replace('@@JSONLD@@', '')
+  s = s.replace('<meta name="viewport"', '<meta name="format-detection" content="telephone=no, address=no, email=no" />\n<meta name="viewport"', 1)
   i = s.index('</style>')
   s = s[:i] + CSS + s[i:]
   # selector de idioma de la barra superior: las tres versiones de ESTA página

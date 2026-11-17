@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
@@ -1947,6 +1948,16 @@ body.legal-modal-open { overflow: hidden; }
 @media (max-width: 600px) { .btn { white-space: normal; text-align: center; justify-content: center; max-width: 100%; } .owners-grid > *, .sistema-cta { min-width: 0; } }
 
 /* ===== GUÍA DE PUNTA DEL ESTE ===== */
+/* Modo oscuro del teléfono: las reglas "anti-dark" del molde fuerzan títulos y textos oscuros con !important (body h1,
+   body p): en las secciones oscuras de la guía se vuelven a poner claros, con más especificidad. */
+.gp .gp-hero h1, .gp .gp-cta h2, .gp .gp-mvd h3, .gp .gp-tempo.dark h3, .gp .gp-zcard-t b { color: #faf7f0 !important; }
+.gp .gp-hero h1 em, .gp .gp-cta h2 em { color: #c9a84c !important; }
+.gp .gp-hero .gp-sub { color: rgba(240,236,224,.92) !important; }
+.gp .gp-cta p, .gp .gp-mvd p, .gp .gp-tempo.dark p { color: rgba(240,236,224,.85) !important; }
+.gp .gp-resp-box p { color: #0d1b2a !important; }
+.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h2, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
+.gp-hero h1, .gp-hero .gp-sub, .gp-hero .gp-crumbs, .gp-hero .gp-meta { text-shadow: 0 2px 18px rgba(7,19,31,.55); }
+.gp a[x-apple-data-detectors], .gp [x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
 .gp-zcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 @media (min-width: 700px) { .gp-zcards { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media (min-width: 1100px) { .gp-zcards { grid-template-columns: repeat(5, 1fr); } }
@@ -1965,7 +1976,7 @@ body.legal-modal-open { overflow: hidden; }
 .gp img { max-width: 100%; display: block; }
 .gp-hero { position: relative; min-height: 560px; display: flex; align-items: flex-end; color: var(--cream); overflow: hidden; background: var(--navy); }
 .gp-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.35) 0%, rgba(7,19,31,.45) 45%, rgba(7,19,31,.88) 100%); }
+.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.55) 0%, rgba(7,19,31,.62) 45%, rgba(7,19,31,.92) 100%); }
 .gp-hero .container { position: relative; z-index: 1; width: 100%; padding-top: 120px; padding-bottom: 56px; }
 .gp-crumbs { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,236,224,.75); margin-bottom: 22px; }
 .gp-crumbs a { color: rgba(240,236,224,.85); }
@@ -2149,7 +2160,7 @@ body.legal-modal-open { overflow: hidden; }
 </div>
 
 <main class="gp">
-<section class="gp-hero"><img src="/assets/img/home-atmosphere-aerea.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/en/">Home</a><span>/</span>Punta del Este Guide</nav><span class="gp-eyebrow">Punta del Este Guide</span><h1>Punta del Este, <em>told by the people who live it.</em></h1><p class="gp-sub">Everything worth knowing before you come: which area to stay in, when the season is, how to get here and how a stay with us works.</p><div class="gp-meta"><span>Updated on November 17, 2026</span></div></div></section>
+<section class="gp-hero" data-bg="dark"><img src="/assets/img/home-atmosphere-aerea.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/en/">Home</a><span>/</span>Punta del Este Guide</nav><span class="gp-eyebrow">Punta del Este Guide</span><h1>Punta del Este, <em>told by the people who live it.</em></h1><p class="gp-sub">Everything worth knowing before you come: which area to stay in, when the season is, how to get here and how a stay with us works.</p><div class="gp-meta"><span>Updated on November 17, 2026</span></div></div></section>
 <section class="gp-resp"><div class="container"><div class="gp-resp-box"><span class="gp-eyebrow">In short</span><p>Punta del Este is Uruguay’s best-known seaside resort, in the department of Maldonado, about 135 km (84 miles) from Montevideo. It is built around the Peninsula, with two very different beaches on each side (Mansa, with calm water, and Brava, with waves), and stretches east through La Barra, Manantiales and José Ignacio, and west through Pinares and Punta Ballena. High season runs from December 15 to the end of February.</p></div></div></section>
 <section class="gp-sec"><div class="container"><span class="gp-eyebrow">The guides</span><h2 class="gp-h2">The guides</h2><div class="gp-cards"><a class="gp-card" href="/en/where-to-stay-punta-del-este.html"><img src="/assets/img/guia/gal-07-aerea-barra-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>Where to stay</h3><p>The areas and neighborhoods of Punta del Este, one by one: the vibe, who each one suits and how far it is.</p><span class="gp-more">Read the guide →</span></div></a><a class="gp-card" href="/en/when-to-visit-punta-del-este.html"><img src="/assets/img/guia/gal-04-playa-brava-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>When to go</h3><p>High and low season, long weekends and what changes in prices, availability and terms.</p><span class="gp-more">Read the guide →</span></div></a><a class="gp-card" href="/en/faq.html"><img src="/assets/img/guia/gal-11-puerto-puntaeste-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>FAQ</h3><p>Bookings, payments, cancellation, check-in times, security deposit and house rules.</p><span class="gp-more">Read the guide →</span></div></a></div></div></section>
 <section class="gp-sec alt"><div class="container"><span class="gp-eyebrow">Choose your area</span><h2 class="gp-h2">Choose your area</h2><div class="gp-zcards">
@@ -2165,7 +2176,7 @@ body.legal-modal-open { overflow: hidden; }
 <a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-laguna_sauce"><img src="/assets/img/guia/chacra-montecito-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Laguna del Sauce</b><small>20 km · 25 min by car from the Peninsula</small></span></a>
 </div></div></section>
 <section class="gp-sec"><div class="container gp-wrap"><span class="gp-eyebrow">Frequently asked questions</span><h2 class="gp-h2">Frequently asked questions</h2><div class="gp-faq"><details open><summary>What is the best area to stay in Punta del Este?</summary><p>It depends on the trip. To walk everywhere and be close to restaurants, the Peninsula. With kids and to swim without waves, Playa Mansa. For open ocean and full-service buildings, Playa Brava. For dining and nightlife, La Barra. For calm and privacy, José Ignacio, Punta Ballena or the country estates of Laguna del Sauce.</p></details><details><summary>When is high season in Punta del Este?</summary><p>From December 15 to the end of February, peaking between Christmas and mid-January. Carnival and Tourism Week (Holy Week) are also in high demand.</p></details><details><summary>How far is the Punta del Este airport?</summary><p>Punta del Este airport is in Laguna del Sauce, about 20 km (12 miles) from the Peninsula: around 25 minutes by car.</p></details><details><summary>How long does it take from Montevideo to Punta del Este?</summary><p>About 135 km (84 miles) by road: around 2 hours by car to the Peninsula.</p></details><details><summary>How far is José Ignacio from Punta del Este?</summary><p>About 38 km (24 miles) from the Peninsula, around 40 minutes by car, through La Barra and Manantiales.</p></details><details><summary>How do I book with Premium Host Punta?</summary><p>On the phpunta.uy booking site you see availability and the total price instantly. Some homes can be booked instantly by paying the deposit online; others by request: our team confirms and sends you a payment link. You can also message us on WhatsApp.</p></details></div></div></section>
-<section class="gp-cta"><div class="container"><h2>Want help <em>choosing?</em></h2><p>Tell us your dates, how many you are and what you are looking for. We answer personally, in English, Spanish or Portuguese.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/en/reservas/">Open the booking site →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></section>
+<section class="gp-cta" data-bg="dark"><div class="container"><h2>Want help <em>choosing?</em></h2><p>Tell us your dates, how many you are and what you are looking for. We answer personally, in English, Spanish or Portuguese.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/en/reservas/">Open the booking site →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></section>
 </main>
 
 <footer data-bg="dark">

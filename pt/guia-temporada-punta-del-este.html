@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
@@ -1937,6 +1938,16 @@ body.legal-modal-open { overflow: hidden; }
 @media (max-width: 600px) { .btn { white-space: normal; text-align: center; justify-content: center; max-width: 100%; } .owners-grid > *, .sistema-cta { min-width: 0; } }
 
 /* ===== GUÍA DE PUNTA DEL ESTE ===== */
+/* Modo oscuro del teléfono: las reglas "anti-dark" del molde fuerzan títulos y textos oscuros con !important (body h1,
+   body p): en las secciones oscuras de la guía se vuelven a poner claros, con más especificidad. */
+.gp .gp-hero h1, .gp .gp-cta h2, .gp .gp-mvd h3, .gp .gp-tempo.dark h3, .gp .gp-zcard-t b { color: #faf7f0 !important; }
+.gp .gp-hero h1 em, .gp .gp-cta h2 em { color: #c9a84c !important; }
+.gp .gp-hero .gp-sub { color: rgba(240,236,224,.92) !important; }
+.gp .gp-cta p, .gp .gp-mvd p, .gp .gp-tempo.dark p { color: rgba(240,236,224,.85) !important; }
+.gp .gp-resp-box p { color: #0d1b2a !important; }
+.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h2, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
+.gp-hero h1, .gp-hero .gp-sub, .gp-hero .gp-crumbs, .gp-hero .gp-meta { text-shadow: 0 2px 18px rgba(7,19,31,.55); }
+.gp a[x-apple-data-detectors], .gp [x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
 .gp-zcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 @media (min-width: 700px) { .gp-zcards { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media (min-width: 1100px) { .gp-zcards { grid-template-columns: repeat(5, 1fr); } }
@@ -1955,7 +1966,7 @@ body.legal-modal-open { overflow: hidden; }
 .gp img { max-width: 100%; display: block; }
 .gp-hero { position: relative; min-height: 560px; display: flex; align-items: flex-end; color: var(--cream); overflow: hidden; background: var(--navy); }
 .gp-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.35) 0%, rgba(7,19,31,.45) 45%, rgba(7,19,31,.88) 100%); }
+.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.55) 0%, rgba(7,19,31,.62) 45%, rgba(7,19,31,.92) 100%); }
 .gp-hero .container { position: relative; z-index: 1; width: 100%; padding-top: 120px; padding-bottom: 56px; }
 .gp-crumbs { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,236,224,.75); margin-bottom: 22px; }
 .gp-crumbs a { color: rgba(240,236,224,.85); }
@@ -2139,7 +2150,7 @@ body.legal-modal-open { overflow: hidden; }
 </div>
 
 <main class="gp">
-<section class="gp-hero"><img src="/assets/img/gal-04-playa-brava.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/pt/">Início</a><span>/</span><a href="/pt/guia-punta-del-este.html">Guia de Punta del Este</a><span>/</span>Quando ir</nav><span class="gp-eyebrow">Guia de Punta del Este</span><h1>Quando ir <em>a Punta del Este.</em></h1><p class="gp-sub">O mesmo lugar, dois ritmos bem diferentes. O que vale saber de cada temporada antes de reservar.</p><div class="gp-meta"><span>Atualizado em 17 de novembro de 2026</span></div></div></section>
+<section class="gp-hero" data-bg="dark"><img src="/assets/img/gal-04-playa-brava.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/pt/">Início</a><span>/</span><a href="/pt/guia-punta-del-este.html">Guia de Punta del Este</a><span>/</span>Quando ir</nav><span class="gp-eyebrow">Guia de Punta del Este</span><h1>Quando ir <em>a Punta del Este.</em></h1><p class="gp-sub">O mesmo lugar, dois ritmos bem diferentes. O que vale saber de cada temporada antes de reservar.</p><div class="gp-meta"><span>Atualizado em 17 de novembro de 2026</span></div></div></section>
 <section class="gp-resp"><div class="container"><div class="gp-resp-box"><span class="gp-eyebrow">Em poucas palavras</span><p>A alta temporada vai de 15 de dezembro ao último dia de fevereiro, com o pico entre o Natal e a primeira quinzena de janeiro. O Carnaval e a Semana de Turismo (Semana Santa) são feriados prolongados com muita procura. O resto do ano é baixa temporada: mais calma, preços melhores e mais disponibilidade, ideal para escapadas e estadias longas.</p></div></div></section>
 <section class="gp-sec"><div class="container"><div class="gp-tempos">
 <div class="gp-tempo dark"><span class="gp-dist">De 15 de dezembro ao fim de fevereiro</span><h3>Alta temporada</h3><p>É quando Punta del Este está no auge: praias cheias, restaurantes, eventos e vida noturna. A procura é alta, os imóveis costumam pedir mais noites mínimas e vale reservar com antecedência, principalmente para o Réveillon e janeiro.</p></div>
@@ -2159,7 +2170,7 @@ body.legal-modal-open { overflow: hidden; }
 <section class="gp-sec"><div class="container gp-wrap"><h2 class="gp-h2">Estadias de um mês ou mais</h2><p class="gp-p">Para estadias longas montamos uma proposta sob medida conforme o imóvel e as datas. Fale conosco pelo WhatsApp contando quando vem e o que procura.</p><div class="gp-btns" style="margin-top:18px"><a class="gp-btn gp-btn-gold" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Fale pelo WhatsApp</a></div></div></section>
 <section class="gp-sec alt"><div class="container gp-wrap"><span class="gp-eyebrow">Perguntas frequentes</span><h2 class="gp-h2">Perguntas frequentes</h2><div class="gp-faq"><details open><summary>Qual é a melhor época para ir a Punta del Este?</summary><p>Para praia, movimento e vida noturna, de meados de dezembro ao fim de fevereiro. Para calma, preços melhores e mais disponibilidade, março e a primavera, de outubro a meados de dezembro.</p></details><details><summary>Com quanta antecedência reservar para janeiro?</summary><p>Para o Réveillon e a primeira quinzena de janeiro, quanto antes melhor: os imóveis mais procurados são reservados com meses de antecedência.</p></details><details><summary>Quantas noites mínimas na alta temporada?</summary><p>Depende de cada imóvel e da data de chegada. Na central de reservas cada imóvel mostra o mínimo para as suas datas e sugere as datas livres mais próximas se você não chegar a ele.</p></details><details><summary>Dá para alugar por mês em Punta del Este?</summary><p>Sim. Para estadias de um mês ou mais montamos uma proposta sob medida. Fale conosco pelo WhatsApp.</p></details></div></div></section>
 <section class="gp-sec"><div class="container"><span class="gp-eyebrow">Continue lendo</span><h2 class="gp-h2">Guia de Punta del Este</h2><div class="gp-cards"><a class="gp-card" href="/pt/guia-bairros-punta-del-este.html"><img src="/assets/img/guia/gal-07-aerea-barra-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>Onde ficar</h3><p>As regiões e bairros de Punta del Este, um a um: clima, para quem é cada um e a que distância fica.</p><span class="gp-more">Ler o guia →</span></div></a><a class="gp-card" href="/pt/perguntas-frequentes.html"><img src="/assets/img/guia/gal-11-puerto-puntaeste-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>Perguntas frequentes</h3><p>Reservas, pagamentos, cancelamento, horários, depósito caução e regras da casa.</p><span class="gp-more">Ler o guia →</span></div></a></div></div></section>
-<section class="gp-cta"><div class="container"><h2>Quer ajuda <em>para escolher?</em></h2><p>Conte as datas, quantas pessoas são e o que procuram. Respondemos pessoalmente, em português, espanhol ou inglês.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/pt/reservas/">Ver a central de reservas →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Fale pelo WhatsApp</a></div></div></section>
+<section class="gp-cta" data-bg="dark"><div class="container"><h2>Quer ajuda <em>para escolher?</em></h2><p>Conte as datas, quantas pessoas são e o que procuram. Respondemos pessoalmente, em português, espanhol ou inglês.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/pt/reservas/">Ver a central de reservas →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Fale pelo WhatsApp</a></div></div></section>
 </main>
 
 <footer data-bg="dark">

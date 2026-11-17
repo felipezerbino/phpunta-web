@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
@@ -2025,6 +2026,16 @@ body.legal-modal-open { overflow: hidden; }
 @media (max-width: 600px) { .btn { white-space: normal; text-align: center; justify-content: center; max-width: 100%; } .owners-grid > *, .sistema-cta { min-width: 0; } }
 
 /* ===== GUÍA DE PUNTA DEL ESTE ===== */
+/* Modo oscuro del teléfono: las reglas "anti-dark" del molde fuerzan títulos y textos oscuros con !important (body h1,
+   body p): en las secciones oscuras de la guía se vuelven a poner claros, con más especificidad. */
+.gp .gp-hero h1, .gp .gp-cta h2, .gp .gp-mvd h3, .gp .gp-tempo.dark h3, .gp .gp-zcard-t b { color: #faf7f0 !important; }
+.gp .gp-hero h1 em, .gp .gp-cta h2 em { color: #c9a84c !important; }
+.gp .gp-hero .gp-sub { color: rgba(240,236,224,.92) !important; }
+.gp .gp-cta p, .gp .gp-mvd p, .gp .gp-tempo.dark p { color: rgba(240,236,224,.85) !important; }
+.gp .gp-resp-box p { color: #0d1b2a !important; }
+.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h2, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
+.gp-hero h1, .gp-hero .gp-sub, .gp-hero .gp-crumbs, .gp-hero .gp-meta { text-shadow: 0 2px 18px rgba(7,19,31,.55); }
+.gp a[x-apple-data-detectors], .gp [x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
 .gp-zcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 @media (min-width: 700px) { .gp-zcards { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media (min-width: 1100px) { .gp-zcards { grid-template-columns: repeat(5, 1fr); } }
@@ -2043,7 +2054,7 @@ body.legal-modal-open { overflow: hidden; }
 .gp img { max-width: 100%; display: block; }
 .gp-hero { position: relative; min-height: 560px; display: flex; align-items: flex-end; color: var(--cream); overflow: hidden; background: var(--navy); }
 .gp-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.35) 0%, rgba(7,19,31,.45) 45%, rgba(7,19,31,.88) 100%); }
+.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.55) 0%, rgba(7,19,31,.62) 45%, rgba(7,19,31,.92) 100%); }
 .gp-hero .container { position: relative; z-index: 1; width: 100%; padding-top: 120px; padding-bottom: 56px; }
 .gp-crumbs { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,236,224,.75); margin-bottom: 22px; }
 .gp-crumbs a { color: rgba(240,236,224,.85); }
@@ -2227,7 +2238,7 @@ body.legal-modal-open { overflow: hidden; }
 </div>
 
 <main class="gp">
-<section class="gp-hero"><img src="/assets/img/gal-14-mansa-atardecer.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/punta-del-este-guide.html">Punta del Este Guide</a><span>/</span>FAQ</nav><span class="gp-eyebrow">Punta del Este Guide</span><h1>Frequently asked <em>questions.</em></h1><p class="gp-sub">What guests ask us most before booking and during their stay.</p><div class="gp-meta"><span>Updated on November 17, 2026</span></div></div></section>
+<section class="gp-hero" data-bg="dark"><img src="/assets/img/gal-14-mansa-atardecer.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/punta-del-este-guide.html">Punta del Este Guide</a><span>/</span>FAQ</nav><span class="gp-eyebrow">Punta del Este Guide</span><h1>Frequently asked <em>questions.</em></h1><p class="gp-sub">What guests ask us most before booking and during their stay.</p><div class="gp-meta"><span>Updated on November 17, 2026</span></div></div></section>
 <section class="gp-resp"><div class="container"><div class="gp-resp-box"><span class="gp-eyebrow">In short</span><p>You book online on our booking site or via WhatsApp. You book with a 50% deposit and pay the balance before arrival. Prices are in US dollars and include final cleaning. Check-in is from 4 pm to 11 pm and check-out at 10 am. There is a refundable security deposit and the main guest must be 25 or older.</p></div></div></section>
 <section class="gp-sec"><div class="container gp-wrap">
 <h2 class="gp-faq-g">Booking and payment</h2><div class="gp-faq"><details open><summary>How do I book?</summary><p>On the phpunta.uy booking site you choose dates and guests and see the total price instantly. Homes with instant booking are confirmed by paying the deposit online; the others are booked by request: our team confirms and sends you a payment link. You can also book by messaging us on WhatsApp.</p></details><details><summary>How much do I pay to book?</summary><p>You book with a 50% deposit. The balance is paid 7 days before arrival in high season and 3 days before in low season. If you book later than that, you pay the full amount.</p></details><details><summary>Which payment methods do you accept?</summary><p>Online payment by card or other local methods depending on your country, through a secure payment link. Also bank transfer, cash or Mercado Pago. Prices are in US dollars.</p></details><details><summary>What does the price include?</summary><p>The total price includes the rental and final cleaning. Electricity and water are included up to the limit stated for each home; any excess is paid by the guest.</p></details><details><summary>Why book directly with us?</summary><p>Booking directly you avoid booking-platform fees and talk to the same team that manages the home, before and during your stay.</p></details><details><summary>What is the cancellation policy?</summary><p>In high season the deposit is non-refundable, with 48 hours to change your mind if arrival is 30 or more days away. In low season the deposit is refundable if you cancel up to 30 days before arrival. In both cases the balance is non-refundable.</p></details></div>
@@ -2235,7 +2246,7 @@ body.legal-modal-open { overflow: hidden; }
 <h2 class="gp-faq-g">Getting here</h2><div class="gp-faq"><details open><summary>How do I get from Punta del Este airport?</summary><p>The airport is in Laguna del Sauce, about 20 km (12 miles) from the Peninsula: around 25 minutes by car.</p></details><details><summary>And from Montevideo?</summary><p>About 135 km (84 miles) by road, around 2 hours by car to the Peninsula.</p></details></div>
 </div></section>
 <section class="gp-sec"><div class="container"><span class="gp-eyebrow">Keep reading</span><h2 class="gp-h2">Punta del Este Guide</h2><div class="gp-cards"><a class="gp-card" href="/en/where-to-stay-punta-del-este.html"><img src="/assets/img/guia/gal-07-aerea-barra-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>Where to stay</h3><p>The areas and neighborhoods of Punta del Este, one by one: the vibe, who each one suits and how far it is.</p><span class="gp-more">Read the guide →</span></div></a><a class="gp-card" href="/en/when-to-visit-punta-del-este.html"><img src="/assets/img/guia/gal-04-playa-brava-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>When to go</h3><p>High and low season, long weekends and what changes in prices, availability and terms.</p><span class="gp-more">Read the guide →</span></div></a></div></div></section>
-<section class="gp-cta"><div class="container"><h2>Want help <em>choosing?</em></h2><p>Tell us your dates, how many you are and what you are looking for. We answer personally, in English, Spanish or Portuguese.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/en/reservas/">Open the booking site →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></section>
+<section class="gp-cta" data-bg="dark"><div class="container"><h2>Want help <em>choosing?</em></h2><p>Tell us your dates, how many you are and what you are looking for. We answer personally, in English, Spanish or Portuguese.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/en/reservas/">Open the booking site →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></section>
 </main>
 
 <footer data-bg="dark">

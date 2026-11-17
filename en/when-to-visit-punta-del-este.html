@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
@@ -1937,6 +1938,16 @@ body.legal-modal-open { overflow: hidden; }
 @media (max-width: 600px) { .btn { white-space: normal; text-align: center; justify-content: center; max-width: 100%; } .owners-grid > *, .sistema-cta { min-width: 0; } }
 
 /* ===== GUÍA DE PUNTA DEL ESTE ===== */
+/* Modo oscuro del teléfono: las reglas "anti-dark" del molde fuerzan títulos y textos oscuros con !important (body h1,
+   body p): en las secciones oscuras de la guía se vuelven a poner claros, con más especificidad. */
+.gp .gp-hero h1, .gp .gp-cta h2, .gp .gp-mvd h3, .gp .gp-tempo.dark h3, .gp .gp-zcard-t b { color: #faf7f0 !important; }
+.gp .gp-hero h1 em, .gp .gp-cta h2 em { color: #c9a84c !important; }
+.gp .gp-hero .gp-sub { color: rgba(240,236,224,.92) !important; }
+.gp .gp-cta p, .gp .gp-mvd p, .gp .gp-tempo.dark p { color: rgba(240,236,224,.85) !important; }
+.gp .gp-resp-box p { color: #0d1b2a !important; }
+.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h2, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
+.gp-hero h1, .gp-hero .gp-sub, .gp-hero .gp-crumbs, .gp-hero .gp-meta { text-shadow: 0 2px 18px rgba(7,19,31,.55); }
+.gp a[x-apple-data-detectors], .gp [x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
 .gp-zcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 @media (min-width: 700px) { .gp-zcards { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media (min-width: 1100px) { .gp-zcards { grid-template-columns: repeat(5, 1fr); } }
@@ -1955,7 +1966,7 @@ body.legal-modal-open { overflow: hidden; }
 .gp img { max-width: 100%; display: block; }
 .gp-hero { position: relative; min-height: 560px; display: flex; align-items: flex-end; color: var(--cream); overflow: hidden; background: var(--navy); }
 .gp-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.35) 0%, rgba(7,19,31,.45) 45%, rgba(7,19,31,.88) 100%); }
+.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.55) 0%, rgba(7,19,31,.62) 45%, rgba(7,19,31,.92) 100%); }
 .gp-hero .container { position: relative; z-index: 1; width: 100%; padding-top: 120px; padding-bottom: 56px; }
 .gp-crumbs { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,236,224,.75); margin-bottom: 22px; }
 .gp-crumbs a { color: rgba(240,236,224,.85); }
@@ -2139,7 +2150,7 @@ body.legal-modal-open { overflow: hidden; }
 </div>
 
 <main class="gp">
-<section class="gp-hero"><img src="/assets/img/gal-04-playa-brava.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/punta-del-este-guide.html">Punta del Este Guide</a><span>/</span>When to go</nav><span class="gp-eyebrow">Punta del Este Guide</span><h1>When to visit <em>Punta del Este.</em></h1><p class="gp-sub">The same place, two very different rhythms. What to know about each season before you book.</p><div class="gp-meta"><span>Updated on November 17, 2026</span></div></div></section>
+<section class="gp-hero" data-bg="dark"><img src="/assets/img/gal-04-playa-brava.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/en/">Home</a><span>/</span><a href="/en/punta-del-este-guide.html">Punta del Este Guide</a><span>/</span>When to go</nav><span class="gp-eyebrow">Punta del Este Guide</span><h1>When to visit <em>Punta del Este.</em></h1><p class="gp-sub">The same place, two very different rhythms. What to know about each season before you book.</p><div class="gp-meta"><span>Updated on November 17, 2026</span></div></div></section>
 <section class="gp-resp"><div class="container"><div class="gp-resp-box"><span class="gp-eyebrow">In short</span><p>High season runs from December 15 to the last day of February, peaking between Christmas and mid-January. Carnival and Tourism Week (Holy Week) are long weekends in high demand. The rest of the year is low season: calmer, better prices and more availability, ideal for getaways and long stays.</p></div></div></section>
 <section class="gp-sec"><div class="container"><div class="gp-tempos">
 <div class="gp-tempo dark"><span class="gp-dist">December 15 to the end of February</span><h3>High season</h3><p>Punta del Este at its peak: busy beaches, restaurants, events and nightlife. Demand is high, homes usually require more minimum nights and it pays to book early, especially for New Year and January.</p></div>
@@ -2159,7 +2170,7 @@ body.legal-modal-open { overflow: hidden; }
 <section class="gp-sec"><div class="container gp-wrap"><h2 class="gp-h2">Stays of a month or longer</h2><p class="gp-p">For long stays we put together a tailored proposal based on the home and the dates. Message us on WhatsApp with your dates and what you are looking for.</p><div class="gp-btns" style="margin-top:18px"><a class="gp-btn gp-btn-gold" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></section>
 <section class="gp-sec alt"><div class="container gp-wrap"><span class="gp-eyebrow">Frequently asked questions</span><h2 class="gp-h2">Frequently asked questions</h2><div class="gp-faq"><details open><summary>What is the best time to visit Punta del Este?</summary><p>For beach life, buzz and nightlife, mid-December to the end of February. For calm, better prices and more availability, March and spring, from October to mid-December.</p></details><details><summary>How far in advance should I book for January?</summary><p>For New Year and the first half of January, the earlier the better: the most popular homes are booked months in advance.</p></details><details><summary>What is the minimum stay in high season?</summary><p>It depends on each home and the arrival date. On the booking site each home shows the minimum for your dates and suggests the closest available dates if yours fall short.</p></details><details><summary>Can I rent by the month in Punta del Este?</summary><p>Yes. For stays of a month or longer we put together a tailored proposal. Message us on WhatsApp.</p></details></div></div></section>
 <section class="gp-sec"><div class="container"><span class="gp-eyebrow">Keep reading</span><h2 class="gp-h2">Punta del Este Guide</h2><div class="gp-cards"><a class="gp-card" href="/en/where-to-stay-punta-del-este.html"><img src="/assets/img/guia/gal-07-aerea-barra-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>Where to stay</h3><p>The areas and neighborhoods of Punta del Este, one by one: the vibe, who each one suits and how far it is.</p><span class="gp-more">Read the guide →</span></div></a><a class="gp-card" href="/en/faq.html"><img src="/assets/img/guia/gal-11-puerto-puntaeste-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>FAQ</h3><p>Bookings, payments, cancellation, check-in times, security deposit and house rules.</p><span class="gp-more">Read the guide →</span></div></a></div></div></section>
-<section class="gp-cta"><div class="container"><h2>Want help <em>choosing?</em></h2><p>Tell us your dates, how many you are and what you are looking for. We answer personally, in English, Spanish or Portuguese.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/en/reservas/">Open the booking site →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></section>
+<section class="gp-cta" data-bg="dark"><div class="container"><h2>Want help <em>choosing?</em></h2><p>Tell us your dates, how many you are and what you are looking for. We answer personally, in English, Spanish or Portuguese.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/en/reservas/">Open the booking site →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></section>
 </main>
 
 <footer data-bg="dark">
