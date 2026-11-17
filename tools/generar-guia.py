@@ -15,9 +15,9 @@ BACKEND = sys.argv[1] if len(sys.argv) > 1 else 'https://phpunta-backend-product
 PLANTILLA = {'es': 'como-trabajamos.html', 'pt': 'pt/como-trabalhamos.html', 'en': 'en/how-we-work.html'}   # topbar con redes e idiomas, menú y pie de las páginas principales
 HREFLANG = {'es': ['es', 'es-uy'], 'pt': ['pt', 'pt-br'], 'en': ['en', 'en-us']}
 PAGINAS = ['hub', 'zonas', 'temporada', 'faq']
-IMG = {'hub': 'home-atmosphere-aerea.jpg', 'zonas': 'gal-01-peninsula-aerea.jpg', 'temporada': 'gal-04-playa-brava.jpg',
-       'faq': 'gal-14-mansa-atardecer.jpg'}
-CARD_IMG = {'zonas': 'gal-07-aerea-barra.jpg', 'temporada': 'gal-04-playa-brava.jpg', 'faq': 'gal-11-puerto-puntaeste.jpg'}
+IMG = {'hub': 'home-atmosphere-aerea.jpg', 'zonas': 'gal-01-peninsula-aerea.jpg', 'temporada': 'gal-20-dedos-puntaeste.jpg',
+       'faq': 'gal-08-llave-check-in.jpg'}
+CARD_IMG = {'zonas': 'gal-09-look-brava.jpg', 'temporada': 'gal-20-dedos-puntaeste.jpg', 'faq': 'gal-08-llave-check-in.jpg'}
 ESC = html.escape
 
 
@@ -80,6 +80,46 @@ def fechas_clave(lang, hoy):
 
 CSS = r'''
 /* ===== GUÍA DE PUNTA DEL ESTE ===== */
+.gp a.gp-btn-gold { color: #0d1b2a !important; }
+.gp a.gp-btn-gold:hover { color: #faf7f0 !important; }
+.gp-cta a.gp-btn-gold:hover { background: #faf7f0; color: #0d1b2a !important; }
+.gp a.gp-btn-light { color: #faf7f0 !important; }
+.gp-sec .gp-eyebrow, .gp-resp-box .gp-eyebrow { color: var(--gold-deep); }
+.gp-hero-btns { margin-top: 28px; }
+.gp-cards.dos { max-width: 920px; }
+@media (min-width: 800px) { .gp-cards.dos { grid-template-columns: repeat(2, 1fr); } }
+.gp-tile { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px;
+  background: radial-gradient(circle at 30% 20%, #1d3550 0%, #0d1b2a 60%, #07131f 100%); }
+.gp-tile::before { content: ''; position: absolute; inset: 14px; border: 1px solid rgba(201,168,76,.35); }
+.gp-tile b { position: relative; font-family: var(--serif); font-weight: 300; font-style: italic; font-size: 1.9rem; color: #c9a84c; line-height: 1.1; }
+.gp-zcard .gp-tile b { display: none; }
+.gp-zona-img { position: relative; }
+.gp-tile.grande { position: relative; display: flex; aspect-ratio: 4 / 3; }
+.gp-tile.grande b { font-size: clamp(2.4rem, 4vw, 3.4rem); }
+.gp-fechas { display: grid; grid-template-columns: 1fr; gap: 20px; background: none; border: none; }
+@media (min-width: 800px) { .gp-fechas { grid-template-columns: 1fr 1fr; } }
+.gp-fgrupo { background: #fff; border: 1px solid var(--border-light); padding: 26px 28px; }
+.gp-fgrupo h3 { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; color: #0d1b2a; margin-bottom: 4px; }
+.gp-fdato { display: block; font-size: .95rem; color: var(--gold-deep); font-weight: 500; margin-bottom: 14px; }
+.gp-fgrupo .gp-fecha { display: block; padding: 12px 0 0; border-bottom: none; border-top: 1px solid var(--border-light); margin-top: 12px; }
+.gp-fgrupo .gp-fecha b { display: block; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #0d1b2a; margin-bottom: 4px; }
+.gp-fgrupo .gp-fecha span { font-size: .97rem; }
+.gp-polis { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 800px) { .gp-polis { grid-template-columns: 1fr 1fr; } }
+.gp-poli { background: #fff; border: 1px solid var(--border-light); border-top: 3px solid var(--gold); padding: 28px 30px; }
+.gp-poli h3 { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; color: #0d1b2a; margin-bottom: 8px; }
+.gp-poli-nota { font-size: .88rem; color: var(--gold-deep); line-height: 1.6; margin-bottom: 12px; }
+.gp-poli p { font-size: 1rem; line-height: 1.75; color: var(--text-soft); }
+.gp-indice { margin-bottom: 44px; }
+.gp .gp-faq-g { font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: 0; text-transform: none; color: #0d1b2a; margin: 56px 0 14px; scroll-margin-top: 90px; }
+.gp .gp-indice + .gp-faq-g { margin-top: 0; }
+.gp-legales { margin-top: 40px; font-size: .98rem; line-height: 1.7; color: var(--text-soft); }
+.gp-legales a { color: var(--gold-deep); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 699px) {
+  .gp-tabla td[data-l]::before { content: attr(data-l) ': '; font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); }
+  .gp-tabla td[data-l] { font-size: .92rem; }
+  .gp-hero-btns .gp-btn { width: 100%; }
+}
 /* Modo oscuro del teléfono: las reglas "anti-dark" del molde fuerzan títulos y textos oscuros con !important (body h1,
    body p): en las secciones oscuras de la guía se vuelven a poner claros, con más especificidad. */
 .gp .gp-hero h1, .gp .gp-cta h2, .gp .gp-mvd h3, .gp .gp-tempo.dark h3, .gp .gp-zcard-t b { color: #faf7f0 !important; }
@@ -87,7 +127,7 @@ CSS = r'''
 .gp .gp-hero .gp-sub { color: rgba(240,236,224,.92) !important; }
 .gp .gp-cta p, .gp .gp-mvd p, .gp .gp-tempo.dark p { color: rgba(240,236,224,.85) !important; }
 .gp .gp-resp-box p { color: #0d1b2a !important; }
-.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h2, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
+.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h3, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
 .gp-hero h1, .gp-hero .gp-sub, .gp-hero .gp-crumbs, .gp-hero .gp-meta { text-shadow: 0 2px 18px rgba(7,19,31,.55); }
 .gp a[x-apple-data-detectors], .gp [x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
 .gp-zcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -95,28 +135,28 @@ CSS = r'''
 @media (min-width: 1100px) { .gp-zcards { grid-template-columns: repeat(5, 1fr); } }
 .gp-zcard { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; background: var(--navy); color: var(--cream); }
 .gp-zcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
-.gp-zcard::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,0) 40%, rgba(7,19,31,.85) 100%); }
+.gp-zcard::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.05) 25%, rgba(7,19,31,.92) 100%); }
 .gp-zcard:hover img { transform: scale(1.05); }
 .gp-zcard-t { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 4px; }
 .gp-zcard-t b { font-family: var(--serif); font-weight: 400; font-size: 1.35rem; line-height: 1.15; color: var(--cream); }
-.gp-zcard-t small { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); line-height: 1.4; }
+.gp-zcard-t small { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); line-height: 1.4; }
 .gp-sec.alt .gp-ideal span { background: #fff; }
 .gp-tabla td:first-child { white-space: nowrap; }
 @media (max-width: 699px) { .gp-tabla td:first-child { white-space: normal; } }
 .gp { --navy-deep: #07131f; --cream-paper: #ede7d6; }
-.gp a { border-bottom: none; }
+.gp a:not(.gp-btn) { border-bottom: none; }
 .gp img { max-width: 100%; display: block; }
 .gp-hero { position: relative; min-height: 560px; display: flex; align-items: flex-end; color: var(--cream); overflow: hidden; background: var(--navy); }
 .gp-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.55) 0%, rgba(7,19,31,.62) 45%, rgba(7,19,31,.92) 100%); }
+.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.72) 0%, rgba(7,19,31,.66) 40%, rgba(7,19,31,.93) 100%); }
 .gp-hero .container { position: relative; z-index: 1; width: 100%; padding-top: 120px; padding-bottom: 56px; }
-.gp-crumbs { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,236,224,.75); margin-bottom: 22px; }
-.gp-crumbs a { color: rgba(240,236,224,.85); }
+.gp-crumbs { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(240,236,224,.95); margin-bottom: 18px; line-height: 1.7; }
+.gp-crumbs a { color: #faf7f0; }
 .gp-crumbs a:hover { color: var(--gold); }
 .gp-crumbs span { margin: 0 8px; color: var(--gold); }
 .gp-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 14px; }
 .gp-eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; opacity: .7; }
-.gp-hero h1 { font-family: var(--serif); font-weight: 300; font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: 1.04; letter-spacing: -.01em; margin: 18px 0 20px; max-width: 16ch; color: var(--cream); }
+.gp-hero h1 { font-family: var(--serif); font-weight: 300; font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: 1.04; letter-spacing: -.01em; margin: 18px 0 20px; max-width: 22ch; color: var(--cream); }
 .gp-hero h1 em { color: var(--gold); font-style: italic; font-weight: 300; }
 .gp-hero .gp-sub { font-size: 1.12rem; line-height: 1.7; max-width: 56ch; color: rgba(240,236,224,.88); }
 .gp-meta { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; margin-top: 30px; font-size: 12px; letter-spacing: .08em; color: rgba(240,236,224,.7); }
@@ -132,7 +172,7 @@ CSS = r'''
 .gp-resp { margin-top: -44px; position: relative; z-index: 2; }
 .gp-resp-box { background: #fff; border: 1px solid var(--border-light); border-left: 3px solid var(--gold); padding: 30px 34px; box-shadow: 0 30px 60px -36px rgba(13,27,42,.35); max-width: 900px; }
 .gp-resp-box .gp-eyebrow { color: var(--gold-deep); margin-bottom: 12px; }
-.gp-resp-box p { font-family: var(--serif); font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.5; color: var(--navy); font-weight: 400; }
+.gp-resp-box p { font-family: var(--serif); font-size: clamp(1.15rem, 1.7vw, 1.36rem); line-height: 1.5; color: var(--navy); font-weight: 400; }
 .gp-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .gp-chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--border-light); border-radius: 40px; font-size: 13px; color: var(--navy); background: #fff; transition: all .25s var(--ease); }
 .gp-chip:hover { border-color: var(--gold); color: var(--gold-deep); }
@@ -160,9 +200,9 @@ CSS = r'''
   .gp-zona.inv .gp-zona-img { order: 2; }
 }
 .gp-zona-img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-.gp-zona h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3.4vw, 2.8rem); color: var(--navy); line-height: 1.08; margin: 12px 0 10px; }
+.gp-zona h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3.4vw, 2.8rem); color: var(--navy); line-height: 1.08; margin: 12px 0 10px; }
 .gp-tag { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--gold-deep); line-height: 1.4; margin-bottom: 18px; }
-.gp-dist { font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); }
+.gp-dist { font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text-soft); }
 .gp-ideal { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0 22px; }
 .gp-ideal b { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); margin-right: 4px; }
 .gp-ideal span { font-size: 12.5px; padding: 6px 12px; background: var(--cream-warm); border-radius: 30px; color: var(--navy); }
@@ -244,21 +284,33 @@ def titulo_corto(lang, pag):
   return ''
 
 
-def langs(lang, pag):
+def h1_html(s):
+  # la parte en dorado (<em>) arranca en su propia línea: no queda una palabra suelta al final del renglón
+  return s.replace(' <em>', '<br><em>', 1) if '<br>' not in s else s
+
+
+def hero_btns(lang, pag):
+  u = T[lang]['ui']; R = T[lang]['reservas']
+  if pag == 'hub':
+    b = [('gp-btn-gold', R, u['cta_res'] + ' →'), ('gp-btn-light', '#elegi', u['elegi'])]
+  elif pag == 'zonas':
+    b = [('gp-btn-gold', R, u['ver_todas'] + ' →')]
+  elif pag == 'temporada':
+    b = [('gp-btn-gold', R, u['ver_fechas'] + ' →')]
+  else:
+    b = [('gp-btn-gold', R, u['cta_res'] + ' →'), ('gp-btn-light', WA, u['cta_wa'])]
   out = []
-  for lg in ('es', 'pt', 'en'):
-    if lg == lang:
-      out.append('<b>' + lg.upper() + '</b>')
-    else:
-      out.append('<a href="' + href(lg, pag) + '" hreflang="' + lg + '">' + lg.upper() + '</a>')
-  return '<span class="gp-langs">' + ' · '.join(out) + '</span>'
+  for cls, hr, tx in b:
+    ext = ' target="_blank" rel="noopener"' if hr.startswith('http') else ''
+    out.append('<a class="gp-btn ' + cls + '" href="' + hr + '"' + ext + '>' + ESC(tx) + '</a>')
+  return '<div class="gp-btns gp-hero-btns">' + ''.join(out) + '</div>'
 
 
 def hero(lang, pag):
   d = T[lang]['paginas'][pag]; u = T[lang]['ui']
   return ('<section class="gp-hero" data-bg="dark"><img src="/assets/img/' + IMG[pag] + '" alt="" fetchpriority="high" decoding="async" />'
-          '<div class="container">' + crumbs(lang, pag) + '<span class="gp-eyebrow">' + u['eyebrow'] + '</span>'
-          '<h1>' + d['h1'] + '</h1><p class="gp-sub">' + ESC(d['sub']) + '</p>'
+          '<div class="container">' + crumbs(lang, pag) +
+          '<h1>' + h1_html(d['h1']) + '</h1><p class="gp-sub">' + ESC(d['sub']) + '</p>' + hero_btns(lang, pag) +
           '<div class="gp-meta"><span>' + u['actualizado'] + ' ' + fecha_txt(lang, ACTUALIZADO) + '</span></div>'
           '</div></section>')
 
@@ -279,7 +331,7 @@ def faq_html(items):
 
 def faq_sec(lang, items, alt=True):
   u = T[lang]['ui']
-  return ('<section class="gp-sec' + (' alt' if alt else '') + '"><div class="container gp-wrap"><span class="gp-eyebrow">' + u['faq_t'] + '</span>'
+  return ('<section class="gp-sec' + (' alt' if alt else '') + '"><div class="container gp-wrap">'
           '<h2 class="gp-h2">' + u['faq_t'] + '</h2>' + faq_html(items) + '</div></section>')
 
 
@@ -291,11 +343,10 @@ def cta(lang):
 
 
 def cards(lang, excluir=None):
-  h = ['<div class="gp-cards">']
-  for k, t, p in T[lang]['paginas']['hub']['cards']:
-    if k == excluir:
-      continue
-    h.append('<a class="gp-card" href="' + href(lang, k) + '"><img src="/assets/img/guia/' + CARD_IMG[k].replace('.jpg', '-900.jpg') + '" alt="" loading="lazy" decoding="async" />'
+  items = [c for c in T[lang]['paginas']['hub']['cards'] if c[0] != excluir]
+  h = ['<div class="gp-cards' + (' dos' if len(items) == 2 else '') + '">']
+  for k, t, p in items:
+    h.append('<a class="gp-card" href="' + href(lang, k) + '"><img src="/assets/img/guia/' + CARD_IMG[k].replace('.jpg', '-900.jpg') + '" alt="' + ESC(t) + '" loading="lazy" decoding="async" />'
              '<div class="gp-card-b"><h3>' + ESC(t) + '</h3><p>' + ESC(p) + '</p><span class="gp-more">' + T[lang]['ui']['leer'] + ' →</span></div></a>')
   h.append('</div>')
   return ''.join(h)
@@ -303,84 +354,124 @@ def cards(lang, excluir=None):
 
 def seguir(lang, pag):
   u = T[lang]['ui']
-  return ('<section class="gp-sec"><div class="container"><span class="gp-eyebrow">' + u['seguir'] + '</span><h2 class="gp-h2">' +
-          u['guia'] + '</h2>' + cards(lang, pag) + '</div></section>')
+  return ('<section class="gp-sec"><div class="container"><h2 class="gp-h2">' + u['otras'] + '</h2>' + cards(lang, pag) + '</div></section>')
+
+
+def nombre_en(lang, n):
+  return n.replace('The ', 'the ').replace('A Península', 'Península').replace('La Península', 'la Península')
 
 
 def boton_zona(lang, k, con_props):
   u = T[lang]['ui']; z = T[lang]['zonas'][k]
   if k in con_props:
-    return '<a class="gp-btn gp-btn-gold" href="' + T[lang]['reservas'] + '?zona=' + k + '">' + u['ver_en'] + ' ' + ESC(z['n'].replace('The ', 'the ').replace('A Península', 'Península').replace('La Península', 'la Península')) + ' →</a>'
+    return '<a class="gp-btn gp-btn-gold" href="' + T[lang]['reservas'] + '?zona=' + k + '">' + u['ver_en'] + ' ' + ESC(nombre_en(lang, z['n'])) + ' →</a>'
   msg = urllib.parse.quote(u['consultar_msg'] + z['n'])
-  return '<a class="gp-btn gp-btn-line" href="' + WA + '&text=' + msg + '" target="_blank" rel="noopener">' + u['consultar'] + '</a>'
+  return '<a class="gp-btn gp-btn-line" href="' + WA + '&text=' + msg + '" target="_blank" rel="noopener">' + ESC(u['consultar'] + nombre_en(lang, z['n'])) + '</a>'
 
 
-def dist_txt(lang, z):
+def dist_txt(lang, z, corto=False):
   u = T[lang]['ui']
   if z['km'] is None:
-    return u['pegada']
+    return u[z['ubic']]
+  if corto:
+    return '%d km · %d min' % (z['km'], z['min'])
   return '%d km · %d min %s %s' % (z['km'], z['min'], u['en_auto'], u['desde_pen'])
+
+
+def ideal_txt(items):
+  # en la tabla: "Parejas, estadías sin auto, gastronomía" (mayúscula solo al principio)
+  return ', '.join([items[0]] + [x[:1].lower() + x[1:] for x in items[1:]])
+
+
+def img_zona(z, alt, cls='', lazy=True):
+  if not z['img']:
+    return '<span class="gp-tile' + cls + '" role="img" aria-label="' + ESC(alt) + '"><b>' + ESC(alt) + '</b></span>'
+  return ('<img src="/assets/img/guia/' + z['img'].replace('.jpg', '-900.jpg') + '" alt="' + ESC(alt) + '"' +
+          (' loading="lazy"' if lazy else '') + ' decoding="async" />')
+
+
+def poli_card(txt):
+  # "Temporada alta (nota): resto" → título, nota y texto
+  cab, _, cuerpo_ = txt.partition(': ')
+  nota = ''
+  if '(' in cab and cab.endswith(')'):
+    cab, _, nota = cab.partition(' (')
+    nota = nota[:-1]
+  return ('<div class="gp-poli"><h3>' + ESC(cab) + '</h3>' + ('<p class="gp-poli-nota">' + ESC(nota[:1].upper() + nota[1:]) + '.</p>' if nota else '') +
+          '<p>' + ESC(cuerpo_[:1].upper() + cuerpo_[1:]) + '</p></div>')
 
 
 def cuerpo(lang, pag, con_props):
   d = T[lang]['paginas'][pag]; u = T[lang]['ui']
   h = ['<main class="gp">', hero(lang, pag), respuesta(lang, pag)]
   if pag == 'hub':
-    h.append('<section class="gp-sec"><div class="container"><span class="gp-eyebrow">' + ESC(d['guias_t']) + '</span><h2 class="gp-h2">' +
-             ESC(d['guias_t']) + '</h2>' + cards(lang) + '</div></section>')
-    h.append('<section class="gp-sec alt"><div class="container"><span class="gp-eyebrow">' + ESC(d['zonas_t']) + '</span><h2 class="gp-h2">' +
-             ESC(d['zonas_t']) + '</h2><div class="gp-zcards">')
+    h.append('<section class="gp-sec"><div class="container"><h2 class="gp-h2">' + ESC(d['guias_t']) + '</h2>' + cards(lang) + '</div></section>')
+    h.append('<section class="gp-sec alt" id="elegi"><div class="container"><h2 class="gp-h2">' + ESC(d['zonas_t']) + '</h2><div class="gp-zcards">')
     for z in ZONAS:
       t = T[lang]['zonas'][z['k']]
-      h.append('<a class="gp-zcard" href="' + href(lang, 'zonas') + '#zona-' + z['k'] + '"><img src="/assets/img/guia/' + z['img'].replace('.jpg', '-900.jpg') + '" alt="" loading="lazy" decoding="async" />'
-               '<span class="gp-zcard-t"><b>' + ESC(t['n']) + '</b><small>' + ESC(dist_txt(lang, z)) + '</small></span></a>')
+      h.append('<a class="gp-zcard" href="' + href(lang, 'zonas') + '#zona-' + z['k'] + '">' + img_zona(z, t['n']) +
+               '<span class="gp-zcard-t"><b>' + ESC(t['n']) + '</b><small>' + ESC(dist_txt(lang, z, True)) + '</small></span></a>')
     h.append('</div></div></section>')
     h.append(faq_sec(lang, d['faq'], alt=False))
   elif pag == 'zonas':
-    h.append('<section class="gp-sec"><div class="container"><span class="gp-eyebrow">' + ESC(d['tabla_t']) + '</span><h2 class="gp-h2">' + ESC(d['tabla_t']) +
+    h.append('<section class="gp-sec"><div class="container"><h2 class="gp-h2">' + ESC(d['tabla_t']) +
              '</h2><table class="gp-tabla"><thead><tr><th>' + u['tabla_z'] + '</th><th>' + u['tabla_a'] + '</th><th>' + u['ideal'] + '</th><th>' + u['tabla_d'] +
              '</th></tr></thead><tbody>')
     for z in ZONAS:
       t = T[lang]['zonas'][z['k']]
-      h.append('<tr><td><a href="#zona-' + z['k'] + '">' + ESC(t['n']) + '</a></td><td>' + ESC(t['amb']) + '</td><td>' + ESC(', '.join(t['ideal'])) +
-               '</td><td>' + ESC(dist_txt(lang, z)) + '</td></tr>')
+      h.append('<tr><td><a href="#zona-' + z['k'] + '">' + ESC(t['n']) + '</a></td><td data-l="' + ESC(u['tabla_a']) + '">' + ESC(t['amb']) +
+               '</td><td data-l="' + ESC(u['ideal']) + '">' + ESC(ideal_txt(t['ideal'])) + '</td><td data-l="' + ESC(u['tabla_d']) + '">' +
+               ESC(dist_txt(lang, z)) + '</td></tr>')
     h.append('</tbody></table></div></section>')
-    h.append('<section class="gp-sec alt" style="padding-top:56px"><div class="container"><span class="gp-eyebrow">' + ESC(d['det_t']) + '</span>')
+    h.append('<section class="gp-sec alt"><div class="container"><h2 class="gp-h2">' + ESC(d['det_t']) + '</h2>')
     for i, z in enumerate(ZONAS):
       t = T[lang]['zonas'][z['k']]
-      h.append('<article class="gp-zona' + (' inv' if i % 2 else '') + '" id="zona-' + z['k'] + '"><div class="gp-zona-img"><img src="/assets/img/guia/' + z['img'].replace('.jpg', '-900.jpg') +
-               '" alt="' + ESC(t['n']) + '" loading="lazy" decoding="async" /></div><div>'
-               '<span class="gp-dist">' + ESC(dist_txt(lang, z)) + '</span><h2>' + ESC(t['n']) + '</h2><p class="gp-tag">' + ESC(t['tag']) + '</p>' +
+      h.append('<article class="gp-zona' + (' inv' if i % 2 else '') + '" id="zona-' + z['k'] + '"><div class="gp-zona-img">' + img_zona(z, t['n'], ' grande') + '</div><div>'
+               '<span class="gp-dist">' + ESC(dist_txt(lang, z)) + '</span><h3>' + ESC(t['n']) + '</h3><p class="gp-tag">' + ESC(t['tag']) + '</p>' +
                ''.join('<p class="gp-p">' + ESC(p) + '</p>' for p in t['p']) +
                '<div class="gp-ideal"><b>' + u['ideal'] + '</b>' + ''.join('<span>' + ESC(x) + '</span>' for x in t['ideal']) + '</div>'
                '<div class="gp-btns">' + boton_zona(lang, z['k'], con_props) + '</div></div></article>')
     mvd_btn = ('<a class="gp-btn gp-btn-gold" href="' + T[lang]['reservas'] + '?zona=montevideo">' + u['ver_en'] + ' Montevideo →</a>') if 'montevideo' in con_props else \
               ('<a class="gp-btn gp-btn-light" href="' + WA + '" target="_blank" rel="noopener">' + u['cta_wa'] + '</a>')
-    h.append('<div class="gp-mvd"><h3>' + ESC(d['mvd_t']) + '</h3><p>' + ESC(d['mvd_p']) + '</p><div class="gp-btns">' + mvd_btn + '</div></div>')
+    h.append('<div class="gp-mvd" data-bg="dark"><h3>' + ESC(d['mvd_t']) + '</h3><p>' + ESC(d['mvd_p']) + '</p><div class="gp-btns">' + mvd_btn + '</div></div>')
     h.append('</div></section>')
     h.append(faq_sec(lang, d['faq'], alt=False))
     h.append(seguir(lang, pag))
   elif pag == 'temporada':
     h.append('<section class="gp-sec"><div class="container"><div class="gp-tempos">')
     for i, (t, cuando, p) in enumerate(d['tempos']):
-      h.append('<div class="gp-tempo' + (' dark' if i == 0 else '') + '"><span class="gp-dist">' + ESC(cuando) + '</span><h3>' + ESC(t) + '</h3><p>' + ESC(p) + '</p></div>')
+      h.append('<div class="gp-tempo' + (' dark' if i == 0 else '') + '"' + (' data-bg="dark"' if i == 0 else '') + '><span class="gp-dist">' + ESC(cuando) + '</span><h3>' + ESC(t) + '</h3><p>' + ESC(p) + '</p></div>')
     h.append('</div></div></section>')
-    h.append('<section class="gp-sec alt"><div class="container gp-wrap"><span class="gp-eyebrow">' + u['fechas_t'] + '</span><h2 class="gp-h2">' + u['fechas_t'] +
-             '</h2><div class="gp-fechas">')
-    for n, f in fechas_clave(lang, datetime.date.today()):
-      h.append('<div class="gp-fecha"><b>' + ESC(n) + '</b><span>' + ESC(f) + '</span></div>')
+    h.append('<section class="gp-sec alt"><div class="container"><h2 class="gp-h2">' + u['fechas_t'] + '</h2><div class="gp-fechas">')
+    fk = fechas_clave(lang, datetime.date.today())
+    for j in range(0, len(fk), 3):
+      tit = fk[j][0]
+      h.append('<div class="gp-fgrupo"><h3>' + ESC(tit) + '</h3><span class="gp-fdato">' + ESC(fk[j][1]) + '</span>')
+      for n, f in fk[j + 1:j + 3]:
+        h.append('<div class="gp-fecha"><b>' + ESC(n) + '</b><span>' + ESC(f) + '</span></div>')
+      h.append('</div>')
     h.append('</div></div></section>')
     for i, (t, ps) in enumerate(d['secs']):
-      h.append('<section class="gp-sec' + (' alt' if i % 2 else '') + '"><div class="container gp-wrap"><h2 class="gp-h2">' + ESC(t) + '</h2>' +
-               ('<ul class="gp-list">' + ''.join('<li>' + ESC(p) + '</li>' for p in ps) + '</ul>' if len(ps) > 1 else '<p class="gp-p">' + ESC(ps[0]) + '</p>') +
+      es_poli = i == 1
+      if es_poli:
+        body = '<div class="gp-polis">' + ''.join(poli_card(p) for p in ps) + '</div>'
+      elif len(ps) > 1:
+        body = '<ul class="gp-list">' + ''.join('<li>' + ESC(p) + '</li>' for p in ps) + '</ul>'
+      else:
+        body = '<p class="gp-p">' + ESC(ps[0]) + '</p>'
+      h.append('<section class="gp-sec' + (' alt' if i % 2 else '') + '"><div class="container' + ('' if es_poli else ' gp-wrap') + '"><h2 class="gp-h2">' + ESC(t) + '</h2>' + body +
                ('<div class="gp-btns" style="margin-top:18px"><a class="gp-btn gp-btn-gold" href="' + WA + '" target="_blank" rel="noopener">' + u['cta_wa'] + '</a></div>' if i == len(d['secs']) - 1 else '') +
                '</div></section>')
     h.append(faq_sec(lang, d['faq'], alt=len(d['secs']) % 2 == 1))
     h.append(seguir(lang, pag))
   elif pag == 'faq':
-    h.append('<section class="gp-sec"><div class="container gp-wrap">')
-    for g, items in d['grupos']:
-      h.append('<h2 class="gp-faq-g">' + ESC(g) + '</h2>' + faq_html(items))
+    h.append('<section class="gp-sec"><div class="container gp-wrap"><nav class="gp-chips gp-indice">')
+    for k, (g, _) in enumerate(d['grupos']):
+      h.append('<a class="gp-chip" href="#g' + str(k + 1) + '">' + ESC(g) + '</a>')
+    h.append('</nav>')
+    for k, (g, items) in enumerate(d['grupos']):
+      h.append('<h2 class="gp-faq-g" id="g' + str(k + 1) + '">' + ESC(g) + '</h2>' + faq_html(items))
+    h.append('<p class="gp-legales">' + u['legales'] + '</p>')
     h.append('</div></section>')
     h.append(seguir(lang, pag))
   h.append(cta(lang))

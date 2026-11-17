@@ -94,7 +94,7 @@
   },
   {
    "@type": "Article",
-   "headline": "Punta del Este, told by the people who live it.",
+   "headline": "Punta del Este, as told by the people who live here.",
    "description": "The Premium Host Punta guide to Punta del Este, Uruguay: areas and neighborhoods, seasons, distances and answers to the most common questions, from the people who live and work here.",
    "inLanguage": "en-US",
    "image": "https://phpunta.uy/assets/img/home-atmosphere-aerea.jpg",
@@ -172,7 +172,7 @@
      "name": "How do I book with Premium Host Punta?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "On the phpunta.uy booking site you see availability and the total price instantly. Some homes can be booked instantly by paying the deposit online; others by request: our team confirms and sends you a payment link. You can also message us on WhatsApp."
+      "text": "On the phpunta.uy booking site you see availability and the total price instantly. Some homes can be booked instantly by paying the down payment online; others by request: our team confirms and sends you a payment link. You can also message us on WhatsApp."
      }
     }
    ]
@@ -1948,6 +1948,46 @@ body.legal-modal-open { overflow: hidden; }
 @media (max-width: 600px) { .btn { white-space: normal; text-align: center; justify-content: center; max-width: 100%; } .owners-grid > *, .sistema-cta { min-width: 0; } }
 
 /* ===== GUÍA DE PUNTA DEL ESTE ===== */
+.gp a.gp-btn-gold { color: #0d1b2a !important; }
+.gp a.gp-btn-gold:hover { color: #faf7f0 !important; }
+.gp-cta a.gp-btn-gold:hover { background: #faf7f0; color: #0d1b2a !important; }
+.gp a.gp-btn-light { color: #faf7f0 !important; }
+.gp-sec .gp-eyebrow, .gp-resp-box .gp-eyebrow { color: var(--gold-deep); }
+.gp-hero-btns { margin-top: 28px; }
+.gp-cards.dos { max-width: 920px; }
+@media (min-width: 800px) { .gp-cards.dos { grid-template-columns: repeat(2, 1fr); } }
+.gp-tile { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px;
+  background: radial-gradient(circle at 30% 20%, #1d3550 0%, #0d1b2a 60%, #07131f 100%); }
+.gp-tile::before { content: ''; position: absolute; inset: 14px; border: 1px solid rgba(201,168,76,.35); }
+.gp-tile b { position: relative; font-family: var(--serif); font-weight: 300; font-style: italic; font-size: 1.9rem; color: #c9a84c; line-height: 1.1; }
+.gp-zcard .gp-tile b { display: none; }
+.gp-zona-img { position: relative; }
+.gp-tile.grande { position: relative; display: flex; aspect-ratio: 4 / 3; }
+.gp-tile.grande b { font-size: clamp(2.4rem, 4vw, 3.4rem); }
+.gp-fechas { display: grid; grid-template-columns: 1fr; gap: 20px; background: none; border: none; }
+@media (min-width: 800px) { .gp-fechas { grid-template-columns: 1fr 1fr; } }
+.gp-fgrupo { background: #fff; border: 1px solid var(--border-light); padding: 26px 28px; }
+.gp-fgrupo h3 { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; color: #0d1b2a; margin-bottom: 4px; }
+.gp-fdato { display: block; font-size: .95rem; color: var(--gold-deep); font-weight: 500; margin-bottom: 14px; }
+.gp-fgrupo .gp-fecha { display: block; padding: 12px 0 0; border-bottom: none; border-top: 1px solid var(--border-light); margin-top: 12px; }
+.gp-fgrupo .gp-fecha b { display: block; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #0d1b2a; margin-bottom: 4px; }
+.gp-fgrupo .gp-fecha span { font-size: .97rem; }
+.gp-polis { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 800px) { .gp-polis { grid-template-columns: 1fr 1fr; } }
+.gp-poli { background: #fff; border: 1px solid var(--border-light); border-top: 3px solid var(--gold); padding: 28px 30px; }
+.gp-poli h3 { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; color: #0d1b2a; margin-bottom: 8px; }
+.gp-poli-nota { font-size: .88rem; color: var(--gold-deep); line-height: 1.6; margin-bottom: 12px; }
+.gp-poli p { font-size: 1rem; line-height: 1.75; color: var(--text-soft); }
+.gp-indice { margin-bottom: 44px; }
+.gp .gp-faq-g { font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: 0; text-transform: none; color: #0d1b2a; margin: 56px 0 14px; scroll-margin-top: 90px; }
+.gp .gp-indice + .gp-faq-g { margin-top: 0; }
+.gp-legales { margin-top: 40px; font-size: .98rem; line-height: 1.7; color: var(--text-soft); }
+.gp-legales a { color: var(--gold-deep); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 699px) {
+  .gp-tabla td[data-l]::before { content: attr(data-l) ': '; font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); }
+  .gp-tabla td[data-l] { font-size: .92rem; }
+  .gp-hero-btns .gp-btn { width: 100%; }
+}
 /* Modo oscuro del teléfono: las reglas "anti-dark" del molde fuerzan títulos y textos oscuros con !important (body h1,
    body p): en las secciones oscuras de la guía se vuelven a poner claros, con más especificidad. */
 .gp .gp-hero h1, .gp .gp-cta h2, .gp .gp-mvd h3, .gp .gp-tempo.dark h3, .gp .gp-zcard-t b { color: #faf7f0 !important; }
@@ -1955,7 +1995,7 @@ body.legal-modal-open { overflow: hidden; }
 .gp .gp-hero .gp-sub { color: rgba(240,236,224,.92) !important; }
 .gp .gp-cta p, .gp .gp-mvd p, .gp .gp-tempo.dark p { color: rgba(240,236,224,.85) !important; }
 .gp .gp-resp-box p { color: #0d1b2a !important; }
-.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h2, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
+.gp .gp-tabla td:first-child a, .gp .gp-card h3, .gp .gp-zona h3, .gp .gp-tempo h3, .gp .gp-faq summary { color: #0d1b2a; }
 .gp-hero h1, .gp-hero .gp-sub, .gp-hero .gp-crumbs, .gp-hero .gp-meta { text-shadow: 0 2px 18px rgba(7,19,31,.55); }
 .gp a[x-apple-data-detectors], .gp [x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
 .gp-zcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -1963,28 +2003,28 @@ body.legal-modal-open { overflow: hidden; }
 @media (min-width: 1100px) { .gp-zcards { grid-template-columns: repeat(5, 1fr); } }
 .gp-zcard { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; background: var(--navy); color: var(--cream); }
 .gp-zcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
-.gp-zcard::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,0) 40%, rgba(7,19,31,.85) 100%); }
+.gp-zcard::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.05) 25%, rgba(7,19,31,.92) 100%); }
 .gp-zcard:hover img { transform: scale(1.05); }
 .gp-zcard-t { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 4px; }
 .gp-zcard-t b { font-family: var(--serif); font-weight: 400; font-size: 1.35rem; line-height: 1.15; color: var(--cream); }
-.gp-zcard-t small { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); line-height: 1.4; }
+.gp-zcard-t small { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); line-height: 1.4; }
 .gp-sec.alt .gp-ideal span { background: #fff; }
 .gp-tabla td:first-child { white-space: nowrap; }
 @media (max-width: 699px) { .gp-tabla td:first-child { white-space: normal; } }
 .gp { --navy-deep: #07131f; --cream-paper: #ede7d6; }
-.gp a { border-bottom: none; }
+.gp a:not(.gp-btn) { border-bottom: none; }
 .gp img { max-width: 100%; display: block; }
 .gp-hero { position: relative; min-height: 560px; display: flex; align-items: flex-end; color: var(--cream); overflow: hidden; background: var(--navy); }
 .gp-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.55) 0%, rgba(7,19,31,.62) 45%, rgba(7,19,31,.92) 100%); }
+.gp-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,19,31,.72) 0%, rgba(7,19,31,.66) 40%, rgba(7,19,31,.93) 100%); }
 .gp-hero .container { position: relative; z-index: 1; width: 100%; padding-top: 120px; padding-bottom: 56px; }
-.gp-crumbs { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,236,224,.75); margin-bottom: 22px; }
-.gp-crumbs a { color: rgba(240,236,224,.85); }
+.gp-crumbs { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(240,236,224,.95); margin-bottom: 18px; line-height: 1.7; }
+.gp-crumbs a { color: #faf7f0; }
 .gp-crumbs a:hover { color: var(--gold); }
 .gp-crumbs span { margin: 0 8px; color: var(--gold); }
 .gp-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 14px; }
 .gp-eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; opacity: .7; }
-.gp-hero h1 { font-family: var(--serif); font-weight: 300; font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: 1.04; letter-spacing: -.01em; margin: 18px 0 20px; max-width: 16ch; color: var(--cream); }
+.gp-hero h1 { font-family: var(--serif); font-weight: 300; font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: 1.04; letter-spacing: -.01em; margin: 18px 0 20px; max-width: 22ch; color: var(--cream); }
 .gp-hero h1 em { color: var(--gold); font-style: italic; font-weight: 300; }
 .gp-hero .gp-sub { font-size: 1.12rem; line-height: 1.7; max-width: 56ch; color: rgba(240,236,224,.88); }
 .gp-meta { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; margin-top: 30px; font-size: 12px; letter-spacing: .08em; color: rgba(240,236,224,.7); }
@@ -2000,7 +2040,7 @@ body.legal-modal-open { overflow: hidden; }
 .gp-resp { margin-top: -44px; position: relative; z-index: 2; }
 .gp-resp-box { background: #fff; border: 1px solid var(--border-light); border-left: 3px solid var(--gold); padding: 30px 34px; box-shadow: 0 30px 60px -36px rgba(13,27,42,.35); max-width: 900px; }
 .gp-resp-box .gp-eyebrow { color: var(--gold-deep); margin-bottom: 12px; }
-.gp-resp-box p { font-family: var(--serif); font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.5; color: var(--navy); font-weight: 400; }
+.gp-resp-box p { font-family: var(--serif); font-size: clamp(1.15rem, 1.7vw, 1.36rem); line-height: 1.5; color: var(--navy); font-weight: 400; }
 .gp-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .gp-chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--border-light); border-radius: 40px; font-size: 13px; color: var(--navy); background: #fff; transition: all .25s var(--ease); }
 .gp-chip:hover { border-color: var(--gold); color: var(--gold-deep); }
@@ -2028,9 +2068,9 @@ body.legal-modal-open { overflow: hidden; }
   .gp-zona.inv .gp-zona-img { order: 2; }
 }
 .gp-zona-img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-.gp-zona h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3.4vw, 2.8rem); color: var(--navy); line-height: 1.08; margin: 12px 0 10px; }
+.gp-zona h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3.4vw, 2.8rem); color: var(--navy); line-height: 1.08; margin: 12px 0 10px; }
 .gp-tag { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--gold-deep); line-height: 1.4; margin-bottom: 18px; }
-.gp-dist { font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); }
+.gp-dist { font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text-soft); }
 .gp-ideal { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0 22px; }
 .gp-ideal b { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); margin-right: 4px; }
 .gp-ideal span { font-size: 12.5px; padding: 6px 12px; background: var(--cream-warm); border-radius: 30px; color: var(--navy); }
@@ -2160,22 +2200,22 @@ body.legal-modal-open { overflow: hidden; }
 </div>
 
 <main class="gp">
-<section class="gp-hero" data-bg="dark"><img src="/assets/img/home-atmosphere-aerea.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/en/">Home</a><span>/</span>Punta del Este Guide</nav><span class="gp-eyebrow">Punta del Este Guide</span><h1>Punta del Este, <em>told by the people who live it.</em></h1><p class="gp-sub">Everything worth knowing before you come: which area to stay in, when the season is, how to get here and how a stay with us works.</p><div class="gp-meta"><span>Updated on November 17, 2026</span></div></div></section>
+<section class="gp-hero" data-bg="dark"><img src="/assets/img/home-atmosphere-aerea.jpg" alt="" fetchpriority="high" decoding="async" /><div class="container"><nav class="gp-crumbs" aria-label="breadcrumb"><a href="/en/">Home</a><span>/</span>Punta del Este Guide</nav><h1>Punta del Este,<br><em>as told by the people who live here.</em></h1><p class="gp-sub">Everything worth knowing before you come: which area to stay in, when the season is, how to get here and how a stay with us works.</p><div class="gp-btns gp-hero-btns"><a class="gp-btn gp-btn-gold" href="/en/reservas/">Open the booking site →</a><a class="gp-btn gp-btn-light" href="#elegi">Choose your area</a></div><div class="gp-meta"><span>Updated on November 17, 2026</span></div></div></section>
 <section class="gp-resp"><div class="container"><div class="gp-resp-box"><span class="gp-eyebrow">In short</span><p>Punta del Este is Uruguay’s best-known seaside resort, in the department of Maldonado, about 135 km (84 miles) from Montevideo. It is built around the Peninsula, with two very different beaches on each side (Mansa, with calm water, and Brava, with waves), and stretches east through La Barra, Manantiales and José Ignacio, and west through Pinares and Punta Ballena. High season runs from December 15 to the end of February.</p></div></div></section>
-<section class="gp-sec"><div class="container"><span class="gp-eyebrow">The guides</span><h2 class="gp-h2">The guides</h2><div class="gp-cards"><a class="gp-card" href="/en/where-to-stay-punta-del-este.html"><img src="/assets/img/guia/gal-07-aerea-barra-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>Where to stay</h3><p>The areas and neighborhoods of Punta del Este, one by one: the vibe, who each one suits and how far it is.</p><span class="gp-more">Read the guide →</span></div></a><a class="gp-card" href="/en/when-to-visit-punta-del-este.html"><img src="/assets/img/guia/gal-04-playa-brava-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>When to go</h3><p>High and low season, long weekends and what changes in prices, availability and terms.</p><span class="gp-more">Read the guide →</span></div></a><a class="gp-card" href="/en/faq.html"><img src="/assets/img/guia/gal-11-puerto-puntaeste-900.jpg" alt="" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>FAQ</h3><p>Bookings, payments, cancellation, check-in times, security deposit and house rules.</p><span class="gp-more">Read the guide →</span></div></a></div></div></section>
-<section class="gp-sec alt"><div class="container"><span class="gp-eyebrow">Choose your area</span><h2 class="gp-h2">Choose your area</h2><div class="gp-zcards">
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-peninsula"><img src="/assets/img/guia/gal-11-puerto-puntaeste-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>The Peninsula</b><small>Steps from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-mansa"><img src="/assets/img/guia/gal-20-dedos-puntaeste-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Playa Mansa</b><small>Steps from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-brava"><img src="/assets/img/guia/gal-14-mansa-atardecer-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Playa Brava</b><small>Steps from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-roosevelt"><img src="/assets/img/guia/gal-01-peninsula-aerea-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Roosevelt and Aidy Grill</b><small>Steps from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-san_rafael"><img src="/assets/img/guia/gal-09-look-brava-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>San Rafael</b><small>5 km · 10 min by car from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-la_barra"><img src="/assets/img/guia/gal-07-aerea-barra-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>La Barra</b><small>12 km · 18 min by car from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-manantiales"><img src="/assets/img/guia/bahia-manantiales-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Manantiales</b><small>17 km · 22 min by car from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-jose_ignacio"><img src="/assets/img/guia/la-oriental-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>José Ignacio</b><small>38 km · 40 min by car from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-punta_ballena"><img src="/assets/img/guia/gal-16-pinares-barra-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Punta Ballena and Pinares</b><small>15 km · 17 min by car from the Peninsula</small></span></a>
-<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-laguna_sauce"><img src="/assets/img/guia/chacra-montecito-900.jpg" alt="" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Laguna del Sauce</b><small>20 km · 25 min by car from the Peninsula</small></span></a>
+<section class="gp-sec"><div class="container"><h2 class="gp-h2">The guides</h2><div class="gp-cards"><a class="gp-card" href="/en/where-to-stay-punta-del-este.html"><img src="/assets/img/guia/gal-09-look-brava-900.jpg" alt="Where to stay" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>Where to stay</h3><p>The areas and neighborhoods of Punta del Este, one by one: the vibe, who each one suits and how far it is.</p><span class="gp-more">Read the guide →</span></div></a><a class="gp-card" href="/en/when-to-visit-punta-del-este.html"><img src="/assets/img/guia/gal-20-dedos-puntaeste-900.jpg" alt="When to go" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>When to go</h3><p>High and low season, holiday weeks and what changes in prices, availability and terms.</p><span class="gp-more">Read the guide →</span></div></a><a class="gp-card" href="/en/faq.html"><img src="/assets/img/guia/gal-08-llave-check-in-900.jpg" alt="FAQ" loading="lazy" decoding="async" /><div class="gp-card-b"><h3>FAQ</h3><p>Bookings, payments, cancellation, check-in times, security deposit and house rules.</p><span class="gp-more">Read the guide →</span></div></a></div></div></section>
+<section class="gp-sec alt" id="elegi"><div class="container"><h2 class="gp-h2">Choose your area</h2><div class="gp-zcards">
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-peninsula"><img src="/assets/img/guia/gal-11-puerto-puntaeste-900.jpg" alt="The Peninsula" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>The Peninsula</b><small>The historic center</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-mansa"><img src="/assets/img/guia/gal-04-playa-brava-900.jpg" alt="Playa Mansa" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Playa Mansa</b><small>West of the Peninsula</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-brava"><img src="/assets/img/guia/gal-14-mansa-atardecer-900.jpg" alt="Playa Brava" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Playa Brava</b><small>East of the Peninsula</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-roosevelt"><img src="/assets/img/guia/gal-01-peninsula-aerea-900.jpg" alt="Roosevelt and Aidy Grill" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Roosevelt and Aidy Grill</b><small>Between Mansa and Brava</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-san_rafael"><img src="/assets/img/guia/gal-13-piscina-villa-900.jpg" alt="San Rafael" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>San Rafael</b><small>5 km · 10 min</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-la_barra"><img src="/assets/img/guia/gal-07-aerea-barra-900.jpg" alt="La Barra" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>La Barra</b><small>12 km · 18 min</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-manantiales"><img src="/assets/img/guia/home-hero-loop-900.jpg" alt="Manantiales" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Manantiales</b><small>17 km · 22 min</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-jose_ignacio"><span class="gp-tile" role="img" aria-label="José Ignacio"><b>José Ignacio</b></span><span class="gp-zcard-t"><b>José Ignacio</b><small>38 km · 40 min</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-punta_ballena"><img src="/assets/img/guia/casa-brindis-900.jpg" alt="Punta Ballena and Pinares" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Punta Ballena and Pinares</b><small>15 km · 17 min</small></span></a>
+<a class="gp-zcard" href="/en/where-to-stay-punta-del-este.html#zona-laguna_sauce"><img src="/assets/img/guia/propietarios-hero-900.jpg" alt="Laguna del Sauce" loading="lazy" decoding="async" /><span class="gp-zcard-t"><b>Laguna del Sauce</b><small>20 km · 25 min</small></span></a>
 </div></div></section>
-<section class="gp-sec"><div class="container gp-wrap"><span class="gp-eyebrow">Frequently asked questions</span><h2 class="gp-h2">Frequently asked questions</h2><div class="gp-faq"><details open><summary>What is the best area to stay in Punta del Este?</summary><p>It depends on the trip. To walk everywhere and be close to restaurants, the Peninsula. With kids and to swim without waves, Playa Mansa. For open ocean and full-service buildings, Playa Brava. For dining and nightlife, La Barra. For calm and privacy, José Ignacio, Punta Ballena or the country estates of Laguna del Sauce.</p></details><details><summary>When is high season in Punta del Este?</summary><p>From December 15 to the end of February, peaking between Christmas and mid-January. Carnival and Tourism Week (Holy Week) are also in high demand.</p></details><details><summary>How far is the Punta del Este airport?</summary><p>Punta del Este airport is in Laguna del Sauce, about 20 km (12 miles) from the Peninsula: around 25 minutes by car.</p></details><details><summary>How long does it take from Montevideo to Punta del Este?</summary><p>About 135 km (84 miles) by road: around 2 hours by car to the Peninsula.</p></details><details><summary>How far is José Ignacio from Punta del Este?</summary><p>About 38 km (24 miles) from the Peninsula, around 40 minutes by car, through La Barra and Manantiales.</p></details><details><summary>How do I book with Premium Host Punta?</summary><p>On the phpunta.uy booking site you see availability and the total price instantly. Some homes can be booked instantly by paying the deposit online; others by request: our team confirms and sends you a payment link. You can also message us on WhatsApp.</p></details></div></div></section>
+<section class="gp-sec"><div class="container gp-wrap"><h2 class="gp-h2">Frequently asked questions</h2><div class="gp-faq"><details open><summary>What is the best area to stay in Punta del Este?</summary><p>It depends on the trip. To walk everywhere and be close to restaurants, the Peninsula. With kids and to swim without waves, Playa Mansa. For open ocean and full-service buildings, Playa Brava. For dining and nightlife, La Barra. For calm and privacy, José Ignacio, Punta Ballena or the country estates of Laguna del Sauce.</p></details><details><summary>When is high season in Punta del Este?</summary><p>From December 15 to the end of February, peaking between Christmas and mid-January. Carnival and Tourism Week (Holy Week) are also in high demand.</p></details><details><summary>How far is the Punta del Este airport?</summary><p>Punta del Este airport is in Laguna del Sauce, about 20 km (12 miles) from the Peninsula: around 25 minutes by car.</p></details><details><summary>How long does it take from Montevideo to Punta del Este?</summary><p>About 135 km (84 miles) by road: around 2 hours by car to the Peninsula.</p></details><details><summary>How far is José Ignacio from Punta del Este?</summary><p>About 38 km (24 miles) from the Peninsula, around 40 minutes by car, through La Barra and Manantiales.</p></details><details><summary>How do I book with Premium Host Punta?</summary><p>On the phpunta.uy booking site you see availability and the total price instantly. Some homes can be booked instantly by paying the down payment online; others by request: our team confirms and sends you a payment link. You can also message us on WhatsApp.</p></details></div></div></section>
 <section class="gp-cta" data-bg="dark"><div class="container"><h2>Want help <em>choosing?</em></h2><p>Tell us your dates, how many you are and what you are looking for. We answer personally, in English, Spanish or Portuguese.</p><div class="gp-btns"><a class="gp-btn gp-btn-gold" href="/en/reservas/">Open the booking site →</a><a class="gp-btn gp-btn-light" href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></section>
 </main>
 
