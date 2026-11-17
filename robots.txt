@@ -25,9 +25,8 @@ Disallow: /enviar.php
 Disallow: /*.php$
 Allow: /
 
-# Entrenamiento de modelos de IA: cerrado por ahora (decisión pendiente de Felipe).
-# Los buscadores de esas mismas empresas (OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User,
-# PerplexityBot) siguen el grupo de arriba: pueden leer la web pública para recomendarnos.
+# Entrenamiento de modelos de IA (decisión de Felipe, 17-nov-2026): la web pública SÍ, para que las IA conozcan
+# Premium Host Punta. Las plataformas internas no (mismas reglas que el grupo de arriba).
 User-agent: GPTBot
 User-agent: ClaudeBot
 User-agent: anthropic-ai
@@ -35,6 +34,25 @@ User-agent: Claude-Web
 User-agent: CCBot
 User-agent: Applebot-Extended
 User-agent: Meta-ExternalAgent
+Disallow: /comunicacion/
+Disallow: /mensajes/
+Disallow: /limpiezas/
+Disallow: /operaciones/
+Disallow: /operaciones_test/
+Disallow: /pagos/
+Disallow: /portalpropietarios/
+Disallow: /portalinmobiliarias/
+Disallow: /optimizer/
+Disallow: /monitor/
+Disallow: /deployer/
+Disallow: /wp/
+Disallow: /wpr/
+Disallow: /gracias.html
+Disallow: /enviar.php
+Disallow: /*.php$
+Allow: /
+
+# Scraping sin beneficio para nosotros
 User-agent: Bytespider
 Disallow: /
 
