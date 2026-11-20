@@ -153,7 +153,8 @@ T['es'] = {
           'Disponibilidad: para fin de año y la primera quincena de enero lo mejor se reserva con meses de anticipación.']),
         ('Política de cancelación', [
           'Temporada alta (si alguna noche de la estadía cae entre el 15 de diciembre y fin de febrero, se aplica a toda la reserva): se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para la llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable.',
-          'Temporada baja: se reserva con el 50%, reembolsable si cancelás hasta 30 días antes de la llegada. El saldo se paga 3 días antes de la llegada y no es reembolsable.']),
+          'Temporada baja: se reserva con el 50%, reembolsable si cancelás hasta 30 días antes de la llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable.',
+          'Pago del 100% (en las dos temporadas): si preferís, podés pagar el total al reservar; es obligatorio si faltan menos de 7 días para la llegada o si el total es menor a USD 500. No cambia nada: la mitad que sería la seña sigue las reglas de la seña y el resto te lo devolvemos si cancelás hasta 7 días antes de la llegada.']),
         ('Estadías de un mes o más', [
           'Para estadías largas armamos una propuesta a medida según la propiedad y las fechas. Escribinos por WhatsApp contando cuándo venís y qué buscás.']),
       ],
@@ -173,7 +174,7 @@ T['es'] = {
       'grupos': [
         ('Reservar y pagar', [
           ('¿Cómo reservo?', 'En la central de reservas de phpunta.uy elegís fechas y huéspedes y ves el precio total al momento. Las propiedades con reserva inmediata se confirman pagando la seña online; las demás se reservan por solicitud: nuestro equipo la confirma y te manda el link de pago. También podés reservar escribiéndonos por WhatsApp.'),
-          ('¿Cuánto se paga para reservar?', 'Se reserva con el 50% de seña. El saldo se paga 7 días antes de la llegada en temporada alta y 3 días antes en temporada baja. Si reservás con menos anticipación que eso, se paga el total.'),
+          ('¿Cuánto se paga para reservar?', 'Se reserva con el 50% de seña y el saldo se paga 7 días antes de la llegada. Si preferís, podés pagar el 100% al reservar; es obligatorio si faltan menos de 7 días para la llegada o si el total es menor a USD 500.'),
           ('¿Qué medios de pago aceptan?', 'Pago online con tarjeta u otros medios según tu país, a través de un link de pago seguro. También transferencia bancaria, efectivo o Mercado Pago. Los precios son en dólares estadounidenses.'),
           ('¿Qué incluye el precio?', 'El precio total incluye el alquiler y la limpieza final. La luz y el agua están incluidas hasta el límite que indica cada propiedad; el excedente queda a cargo del huésped.'),
           ('¿Por qué reservar directo con nosotros?', 'Reservando directo evitás las comisiones de las plataformas de reservas y hablás con el mismo equipo que gestiona la propiedad, antes y durante tu estadía.'),
@@ -325,7 +326,8 @@ T['pt'] = {
           'Disponibilidade: para o Réveillon e a primeira quinzena de janeiro, o melhor é reservado com meses de antecedência.']),
         ('Política de cancelamento', [
           'Alta temporada (se alguma noite da estadia cair entre 15 de dezembro e o fim de fevereiro, vale para toda a reserva): a reserva é feita com 50%, que não é reembolsável. Você tem 48 horas para desistir, desde que faltem 30 dias ou mais para a chegada. O saldo é pago 7 dias antes da chegada e não é reembolsável.',
-          'Baixa temporada: a reserva é feita com 50%, reembolsável se você cancelar até 30 dias antes da chegada. O saldo é pago 3 dias antes da chegada e não é reembolsável.']),
+          'Baixa temporada: a reserva é feita com 50%, reembolsável se você cancelar até 30 dias antes da chegada. O saldo é pago 7 dias antes da chegada e não é reembolsável.',
+          'Pagamento de 100% (nas duas temporadas): se preferir, você pode pagar o total ao reservar; é obrigatório se faltarem menos de 7 dias para a chegada ou se o total for menor que USD 500. Nada muda: a metade que seria o sinal segue as regras do sinal e devolvemos o restante se você cancelar até 7 dias antes da chegada.']),
         ('Estadias de um mês ou mais', [
           'Para estadias longas montamos uma proposta sob medida conforme o imóvel e as datas. Fale conosco pelo WhatsApp contando quando vem e o que procura.']),
       ],
@@ -345,7 +347,7 @@ T['pt'] = {
       'grupos': [
         ('Reservar e pagar', [
           ('Como faço a reserva?', 'Na central de reservas de phpunta.uy você escolhe as datas e os hóspedes e vê o preço total na hora. Os imóveis com reserva imediata são confirmados pagando o sinal online; os demais são reservados por solicitação: nossa equipe confirma e envia o link de pagamento. Você também pode reservar pelo WhatsApp.'),
-          ('Quanto se paga para reservar?', 'A reserva é feita com 50% de sinal. O saldo é pago 7 dias antes da chegada na alta temporada e 3 dias antes na baixa. Se você reservar com menos antecedência, paga o total.'),
+          ('Quanto se paga para reservar?', 'A reserva é feita com 50% de sinal e o saldo é pago 7 dias antes da chegada. Se preferir, você pode pagar 100% ao reservar; é obrigatório se faltarem menos de 7 dias para a chegada ou se o total for menor que USD 500.'),
           ('Quais formas de pagamento vocês aceitam?', 'Pagamento online com cartão ou outros meios conforme o seu país (inclusive Pix no Brasil), por um link de pagamento seguro. Também transferência bancária, dinheiro ou Mercado Pago. Os preços são em dólares americanos.'),
           ('O que está incluído no preço?', 'O preço total inclui o aluguel e a limpeza final. Luz e água estão incluídas até o limite indicado em cada imóvel; o excedente fica por conta do hóspede.'),
           ('Por que reservar direto conosco?', 'Reservando direto você evita as taxas das plataformas de reserva e fala com a mesma equipe que administra o imóvel, antes e durante a sua estadia.'),
@@ -497,7 +499,8 @@ T['en'] = {
           'Availability: for New Year and the first half of January, the best homes are booked months in advance.']),
         ('Cancellation policy', [
           'High season (if any night of the stay falls between December 15 and the end of February, it applies to the whole booking): you book with 50%, which is non-refundable. You have 48 hours to change your mind, as long as arrival is 30 or more days away. The balance is paid 7 days before arrival and is non-refundable.',
-          'Low season: you book with 50%, refundable if you cancel up to 30 days before arrival. The balance is paid 3 days before arrival and is non-refundable.']),
+          'Low season: you book with 50%, refundable if you cancel up to 30 days before arrival. The balance is paid 7 days before arrival and is non-refundable.',
+          'Paying 100% (in both seasons): if you prefer, you can pay the full amount when booking; it is required if your arrival is less than 7 days away or if the total is under USD 500. Nothing changes: the half that would be the down payment follows its rules, and we refund the rest if you cancel up to 7 days before arrival.']),
         ('Stays of a month or longer', [
           'For long stays we put together a tailored proposal based on the home and the dates. Message us on WhatsApp with your dates and what you are looking for.']),
       ],
@@ -517,7 +520,7 @@ T['en'] = {
       'grupos': [
         ('Booking and payment', [
           ('How do I book?', 'On the phpunta.uy booking site you choose dates and guests and see the total price instantly. Homes with instant booking are confirmed by paying the down payment online; the others are booked by request: our team confirms and sends you a payment link. You can also book by messaging us on WhatsApp.'),
-          ('How much do I pay to book?', 'You book with a 50% down payment. The balance is paid 7 days before arrival in high season and 3 days before in low season. If you book later than that, you pay the full amount.'),
+          ('How much do I pay to book?', 'You book with a 50% down payment and the balance is paid 7 days before arrival. If you prefer, you can pay 100% when booking; it is required if your arrival is less than 7 days away or if the total is under USD 500.'),
           ('Which payment methods do you accept?', 'Online payment by card or other local methods depending on your country, through a secure payment link. Also bank transfer, cash or Mercado Pago. Prices are in US dollars.'),
           ('What does the price include?', 'The total price includes the rental and final cleaning. Electricity and water are included up to the limit stated for each home; any excess is paid by the guest.'),
           ('Why book directly with us?', 'Booking directly you avoid booking-platform fees and talk to the same team that manages the home, before and during your stay.'),

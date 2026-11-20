@@ -1355,9 +1355,9 @@ ES: Se reserva con el ¦
 PT: Reserva-se com ¦
 EN: You book with a ¦
 
-ES: % y el saldo se paga antes de la llegada (7 días antes en temporada alta, 3 días antes en temporada baja). La garantía se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>¦
-PT: % de sinal e o saldo é pago antes da chegada (7 dias antes na alta temporada, 3 dias antes na baixa temporada). A caução é devolvida depois da saída, depois de revisada a propriedade. A estadia mínima pode mudar conforme a data.</p></div>¦
-EN: % deposit and the balance is paid before arrival (7 days before in high season, 3 days before in low season). The security deposit is refunded after check-out, once the property has been checked. The minimum stay may change depending on the date.</p></div>¦
+ES: % y el saldo se paga 7 días antes de la llegada; si preferís, podés pagar el 100% al reservar. La garantía se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>¦
+PT: % de sinal e o saldo é pago 7 dias antes da chegada; se preferir, você pode pagar 100% ao reservar. A caução é devolvida depois da saída, depois de revisada a propriedade. A estadia mínima pode mudar conforme a data.</p></div>¦
+EN: % deposit and the balance is paid 7 days before arrival; if you prefer, you can pay 100% when booking. The security deposit is refunded after check-out, once the property has been checked. The minimum stay may change depending on the date.</p></div>¦
 
 ES: <h2>Política de cancelación</h2>¦
 PT: <h2>Política de cancelamento</h2>¦
@@ -1367,9 +1367,9 @@ ES: <b>Temporada alta · estadías con alguna noche del 15 de diciembre a fin de
 PT: <b>Alta temporada · estadias com alguma noite entre 15 de dezembro e o fim de fevereiro</b>Reserva-se com 50%, que não é reembolsável. Você tem 48 horas para desistir, desde que faltem 30 dias ou mais para a sua chegada. O saldo é pago 7 dias antes da chegada e não é reembolsável. Se uma única noite da sua estadia cair na alta temporada, esta política vale para toda a reserva.¦
 EN: <b>High season · stays with any night from December 15 to the end of February</b>You book with 50%, which is non-refundable. You have 48 hours to change your mind, as long as your arrival is 30 days or more away. The balance is paid 7 days before arrival and is non-refundable. If even one night of your stay falls in high season, this policy applies to the whole booking.¦
 
-ES: <b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 3 días antes de la llegada y no es reembolsable.¦
-PT: <b>Baixa temporada · estadias que não tocam essas datas</b>Reserva-se com 50%, que devolvemos se você cancelar até 30 dias antes da chegada. O saldo é pago 3 dias antes da chegada e não é reembolsável.¦
-EN: <b>Low season · stays that do not touch those dates</b>You book with 50%, which we refund if you cancel up to 30 days before arrival. The balance is paid 3 days before arrival and is non-refundable.¦
+ES: <b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable.¦
+PT: <b>Baixa temporada · estadias que não tocam essas datas</b>Reserva-se com 50%, que devolvemos se você cancelar até 30 dias antes da chegada. O saldo é pago 7 dias antes da chegada e não é reembolsável.¦
+EN: <b>Low season · stays that do not touch those dates</b>You book with 50%, which we refund if you cancel up to 30 days before arrival. The balance is paid 7 days before arrival and is non-refundable.¦
 
 ES: Al elegir tus fechas te mostramos los plazos exactos de tu estadía antes de pagar.¦
 PT: Ao escolher as datas, mostramos os prazos exatos da sua estadia antes de pagar.¦
@@ -1537,9 +1537,9 @@ ES: ' y '¦
 PT: ' e '¦
 EN: ' and '¦
 
-ES: ' (incluye la limpieza) · '¦
-PT: ' (limpeza incluída) · '¦
-EN: ' (cleaning included) · '¦
+ES: ' (incluye la limpieza) · <span id="rResP">'¦
+PT: ' (limpeza incluída) · <span id="rResP">'¦
+EN: ' (cleaning included) · <span id="rResP">'¦
 
 ES: url: '/condiciones-reserva.html', tit: 'Bases y condiciones de la reserva'¦
 PT: url: '/pt/condicoes-reserva.html', tit: 'Bases e condições da reserva'¦
@@ -1764,6 +1764,48 @@ EN: We could not load the property¦
 ES: Probá recargar en un momento, o escribinos por <a¦
 PT: Tente recarregar em instantes ou fale com a gente pelo <a¦
 EN: Try reloading in a moment, or message us on <a¦
+
+ES: <b>Pago del 100% al reservar · en las dos temporadas</b>Si preferís, podés pagar el total al reservar (es obligatorio si faltan menos de 7 días para la llegada o si el total es menor a USD 500). No cambia nada: la mitad que sería la seña sigue las reglas de la seña y el resto te lo devolvemos si cancelás hasta 7 días antes de la llegada.¦
+PT: <b>Pagamento de 100% ao reservar · nas duas temporadas</b>Se preferir, você pode pagar o total ao reservar (é obrigatório se faltarem menos de 7 dias para a chegada ou se o total for menor que USD 500). Nada muda: a metade que seria o sinal segue as regras do sinal e devolvemos o restante se você cancelar até 7 dias antes da chegada.¦
+EN: <b>Paying 100% when booking · in both seasons</b>If you prefer, you can pay the full amount when booking (it is required if your arrival is less than 7 days away or if the total is under USD 500). Nothing changes: the half that would be the deposit follows the deposit rules, and we refund the rest if you cancel up to 7 days before arrival.¦
+
+ES: <span>O pagá el 100% al reservar</span>¦
+PT: <span>Ou pague 100% ao reservar</span>¦
+EN: <span>Or pay 100% when booking</span>¦
+
+ES: '¿Cómo querés pagar?'¦
+PT: 'Como você quer pagar?'¦
+EN: 'How do you want to pay?'¦
+
+ES: 'Si el equipo la aprueba, ¿cómo querés pagar?'¦
+PT: 'Se a equipe aprovar, como você quer pagar?'¦
+EN: 'If the team approves it, how do you want to pay?'¦
+
+ES: <span>Reservar con el '¦
+PT: <span>Reservar com '¦
+EN: <span>Book with '¦
+
+ES: '%: ' + usd(c.sena) + ' al reservar y '¦
+PT: '%: ' + usd(c.sena) + ' ao reservar e '¦
+EN: '%: ' + usd(c.sena) + ' when booking and '¦
+
+ES: (pol.saldo_fecha ? ' hasta el ' + fechaCorta¦
+PT: (pol.saldo_fecha ? ' até ' + fechaCorta¦
+EN: (pol.saldo_fecha ? ' by ' + fechaCorta¦
+
+ES: <span>Pagar el 100% al reservar: '¦
+PT: <span>Pagar 100% ao reservar: '¦
+EN: <span>Pay 100% when booking: '¦
+
+
+ES: Reserva inmediata: pagás la seña (o el total, si preferís) online con tarjeta u otros medios.¦
+PT: Reserva imediata: você paga o sinal (ou o total, se preferir) online com cartão ou outros meios.¦
+EN: Instant booking: you pay the deposit (or the full amount, if you prefer) online by card or other methods.¦
+
+ES: Reserva inmediata: pagás el total online con tarjeta u otros medios.¦
+PT: Reserva imediata: você paga o total online com cartão ou outros meios.¦
+EN: Instant booking: you pay the full amount online by card or other methods.¦
+
 '''
 
 
