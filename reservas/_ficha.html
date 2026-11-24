@@ -266,7 +266,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .btn-res { width: 100%; margin-top: 16px; background: var(--gold); color: var(--navy); border: 0; padding: 16px; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; border-radius: 2px; transition: background .2s; }
 .btn-res:hover { background: var(--gold-soft); }
 .btn-res:disabled { background: var(--cream-paper); color: var(--text-muted); cursor: default; }
-.box.box-alta { overflow-y: auto; overscroll-behavior: contain; padding-bottom: 0; }
+.box.box-alta { overflow-y: auto; scrollbar-gutter: stable; overscroll-behavior: contain; padding-bottom: 0; }
 .box.box-alta #btnRes { position: sticky; bottom: 0; box-shadow: 0 -14px 14px -2px #fff; }
 .box.box-alta .btn-sec { padding-bottom: 20px; }
 .btn-sec { display: block; text-align: center; margin-top: 10px; font-size: 13px; color: var(--text-soft); text-decoration: underline; }
@@ -1036,11 +1036,16 @@ function ajustarCaja() {
   const b = $('#box'); if (!b) return;
   // Si no entra en la pantalla debajo del menú, queda fija debajo del menú con desplazamiento propio y el botón al pie
   // (antes se pegaba por abajo y la parte de arriba —fechas y huéspedes— quedaba tapada por el menú).
-  const disp = window.innerHeight - 124;
-  if (window.innerWidth >= 980 && b.scrollHeight > disp + 2) {
-    b.classList.add('box-alta'); b.style.top = '108px'; b.style.maxHeight = disp + 'px';
+  // Felipe (24-nov): la caja "tintineaba". Entrar y salir del modo alto cambia sus márgenes y, con eso, su alto: justo en el
+  // límite se prendía y apagaba sin parar (el ResizeObserver la volvía a medir cada vez). Ahora hay un margen para salir
+  // (histéresis) y solo se escribe lo que cambia.
+  const disp = window.innerHeight - 124, alta = b.classList.contains('box-alta');
+  const quiereAlta = window.innerWidth >= 980 && (alta ? b.scrollHeight > disp - 40 : b.scrollHeight > disp + 2);
+  const set = function (k, v) { if (b.style[k] !== v) b.style[k] = v; };
+  if (quiereAlta) {
+    if (!alta) b.classList.add('box-alta'); set('top', '108px'); set('maxHeight', disp + 'px');
   } else {
-    b.classList.remove('box-alta'); b.style.maxHeight = ''; b.style.top = Math.min(108, window.innerHeight - b.offsetHeight - 16) + 'px';
+    if (alta) b.classList.remove('box-alta'); set('maxHeight', ''); set('top', Math.min(108, window.innerHeight - b.offsetHeight - 16) + 'px');
   }
 }
 // Si la caja quedó pegada por abajo y su parte de arriba está bajo el menú, sube la página lo justo para verla entera arriba.
