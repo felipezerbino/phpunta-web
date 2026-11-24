@@ -78,9 +78,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .gal-grid.pocas img { aspect-ratio: 16 / 9; grid-row: auto; display: none; }
 .gal-grid.pocas img:first-child { display: block; }
 .gal-movil { display: none; aspect-ratio: 4 / 3; overflow: hidden; position: relative; border-radius: 3px; background: var(--cream-paper); }
-.gal-movil .tr { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.gal-movil .tr { display: flex; height: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x pan-y; }
 .gal-movil .tr::-webkit-scrollbar { display: none; }
-.gal-movil img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+.gal-movil img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; scroll-snap-stop: always; -webkit-user-drag: none; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; }
 .gal-n { position: absolute; bottom: 12px; right: 12px; background: rgba(13,27,42,.82); color: var(--cream); font-size: 12px; padding: 5px 10px; border-radius: 2px; }
 .gal-todas { position: absolute; bottom: 16px; right: 16px; background: #fff; border: 1px solid var(--navy); color: var(--navy); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; padding: 9px 14px; border-radius: 2px; }
 @media (max-width: 760px) { .gal-grid, .gal-todas { display: none; } .gal-movil { display: block; } }
@@ -732,7 +732,7 @@ function pintar() {
   if (fotos.length) {
     gal = '<div class="gal"><div class="gal-grid' + (fotos.length < 5 ? ' pocas' : '') + '">' + fotos.slice(0, 5).map(function (u, i) { return '<img src="' + esc(u) + '" alt="' + esc(p.titulo) + ' — foto ' + (i + 1) + '"' + (i ? ' loading="lazy"' : '') + ' data-i="' + i + '" />'; }).join('') + '</div>' +
       (fotos.length > 1 ? '<button type="button" class="gal-todas" id="galTodas">Ver las ' + fotos.length + ' fotos</button>' : '') +
-      '<div class="gal-movil"><div class="tr" id="galTr">' + fotos.map(function (u, i) { return '<img src="' + esc(u) + '" alt="" loading="lazy" data-i="' + i + '" />'; }).join('') + '</div><span class="gal-n" id="galN">1 / ' + fotos.length + '</span></div></div>';
+      '<div class="gal-movil"><div class="tr" id="galTr">' + fotos.map(function (u, i) { return '<img ' + (i < 3 ? 'src' : 'data-src') + '="' + esc(u) + '" alt="" draggable="false" data-i="' + i + '" />'; }).join('') + '</div><span class="gal-n" id="galN">1 / ' + fotos.length + '</span></div></div>';
   }
   const ICO_COMP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 8l5-5 5 5"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>';
   const ICO_CAMA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8"/><path d="M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/></svg>';
@@ -805,7 +805,14 @@ function pintar() {
   };
   document.querySelectorAll('.gal-grid img').forEach(function (im) { im.addEventListener('click', function () { abrirLb(Number(im.dataset.i)); }); });
   if ($('#galTodas')) $('#galTodas').addEventListener('click', function () { abrirLb(0); });
-  if ($('#galTr')) { const tr = $('#galTr'); tr.addEventListener('scroll', function () { $('#galN').textContent = (Math.round(tr.scrollLeft / tr.clientWidth) + 1) + ' / ' + fotos.length; }, { passive: true }); tr.addEventListener('click', function (e) { const im = e.target.closest('img'); if (im) abrirLb(Number(im.dataset.i)); }); }
+  if ($('#galTr')) {
+    // Felipe (24-nov): en el iPhone el carrete se trababa después de la 2ª foto. Safari iOS no se lleva bien con loading="lazy"
+    // dentro de un carrete horizontal con scroll-snap (al terminar de cargar una foto vuelve a la anterior) ni con el arrastre de
+    // imágenes. Las fotos se cargan acá, de a tandas, delante de la que se está mirando.
+    const tr = $('#galTr'), ims = tr.querySelectorAll('img');
+    const cargar = function (k) { for (let j = Math.max(0, k - 1); j <= Math.min(ims.length - 1, k + 3); j++) { const im = ims[j]; if (im.dataset.src) { im.src = im.dataset.src; im.removeAttribute('data-src'); } } };
+    tr.addEventListener('scroll', function () { const k = Math.round(tr.scrollLeft / tr.clientWidth); $('#galN').textContent = (k + 1) + ' / ' + fotos.length; cargar(k); }, { passive: true });
+    tr.addEventListener('touchstart', function () { cargar(Math.round(tr.scrollLeft / tr.clientWidth) + 1); }, { passive: true }); tr.addEventListener('click', function (e) { const im = e.target.closest('img'); if (im) abrirLb(Number(im.dataset.i)); }); }
   $('#lbX').onclick = function () { lb.classList.remove('open'); document.body.style.overflow = ''; };
   if ($('#descMas')) $('#descMas').onclick = function () { const o = $('#descMasBox').classList.toggle('open'); this.textContent = o ? 'Mostrar menos' : 'Mostrar más'; };
   if ($('#amenMas')) $('#amenMas').onclick = function () { const o = $('#amen').classList.toggle('todas'); this.textContent = o ? 'Mostrar menos' : 'Mostrar las ' + amen.length + ' comodidades'; };
