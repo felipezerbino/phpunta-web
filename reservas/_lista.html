@@ -258,9 +258,10 @@ body.mapa-movil .map-auto { bottom: 86px; left: 16px; }
 body.mapa-movil .zona-act.on { position: fixed; left: 16px; right: 16px; bottom: 140px; z-index: 865; margin: 0; box-shadow: 0 8px 24px rgba(13,27,42,.2); }
 
 .card { display: block; color: inherit; min-width: 0; }
-.ph { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--cream-paper); }
+.ph { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--cream-paper); touch-action: pan-y; }
 .ph-track { display: flex; height: 100%; transition: transform .45s var(--ease); }
-.ph-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; }
+.ph-track.arr { transition: none; }
+.ph-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; pointer-events: none; }
 .ph-arr { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(250,247,240,.92); color: var(--navy); font-size: 15px; display: grid; place-items: center; opacity: 0; transition: opacity .2s; }
 .card:hover .ph-arr { opacity: 1; }
 .ph-arr.l { left: 10px; } .ph-arr.r { right: 10px; }
@@ -1097,13 +1098,38 @@ function tarjeta(p) {
   if (fotos.length > 1) {
     let i = 0;
     const track = a.querySelector('.ph-track'), dots = a.querySelectorAll('.ph-dots i');
-    const ir = function (n) { i = (n + fotos.length) % fotos.length; track.style.transform = 'translateX(' + (-100 * i) + '%)'; dots.forEach(function (x, k) { x.classList.toggle('on', k === i); }); };
+    const ir = function (n) { i = (n + fotos.length) % fotos.length; track.style.transform = 'translate3d(calc(' + (-100 * i) + '% + 0px),0,0)'; dots.forEach(function (x, k) { x.classList.toggle('on', k === i); }); };
     a.querySelector('.ph-arr.l').addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); ir(i - 1); });
     a.querySelector('.ph-arr.r').addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); ir(i + 1); });
-    let x0 = null, mov = false;
-    track.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; mov = false; }, { passive: true });
-    track.addEventListener('touchmove', function (e) { if (x0 != null && Math.abs(e.touches[0].clientX - x0) > 12) mov = true; }, { passive: true });
-    track.addEventListener('touchend', function (e) { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) ir(i + (dx < 0 ? 1 : -1)); x0 = null; });
+    // Teléfono (24-nov): la foto sigue al dedo. Gesto horizontal = cambiar de foto (no se mueve la página); vertical = scroll
+    // normal. Antes el touchmove era pasivo y en el iPhone el navegador se quedaba con el gesto: casi nunca cambiaba la foto.
+    let x0 = null, y0 = 0, t0 = 0, dx = 0, lock = null, mov = false;
+    const pos = function (px) { track.style.transform = 'translate3d(calc(' + (-100 * i) + '% + ' + px + 'px),0,0)'; };
+    const ph = a.querySelector('.ph');
+    ph.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1 || e.target.closest('button')) { x0 = null; return; }
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); dx = 0; lock = null; mov = false;
+    }, { passive: true });
+    ph.addEventListener('touchmove', function (e) {
+      if (x0 == null || e.touches.length !== 1) return;
+      const mx = e.touches[0].clientX - x0, my = e.touches[0].clientY - y0;
+      if (!lock) { if (Math.abs(mx) < 6 && Math.abs(my) < 6) return; lock = Math.abs(mx) > Math.abs(my) ? 'h' : 'v'; if (lock === 'h') { mov = true; track.classList.add('arr'); } }
+      if (lock !== 'h') return;
+      if (e.cancelable) e.preventDefault();
+      dx = mx; if ((i === 0 && dx > 0) || (i === fotos.length - 1 && dx < 0)) dx = dx / 3;
+      pos(dx);
+    }, { passive: false });
+    const soltar = function () {
+      if (x0 == null) return; x0 = null; track.classList.remove('arr');
+      if (lock === 'h') {
+        const w = ph.clientWidth || 1, v = Math.abs(dx) / Math.max(1, Date.now() - t0);
+        let k = i; if (Math.abs(dx) > w * 0.18 || (v > 0.3 && Math.abs(dx) > 25)) k = i + (dx < 0 ? 1 : -1);
+        ir(Math.max(0, Math.min(fotos.length - 1, k)));
+      }
+      lock = null; dx = 0;
+    };
+    ph.addEventListener('touchend', soltar);
+    ph.addEventListener('touchcancel', soltar);
     a.addEventListener('click', function (e) { if (mov) { e.preventDefault(); mov = false; } });
   }
   a.querySelector('.sel-ck').addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); selToggle(p.slug, this); });
