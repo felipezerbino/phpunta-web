@@ -254,11 +254,18 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; lett
 .cot .tot { border-top: 1px solid var(--border-light); margin-top: 6px; padding-top: 12px; color: var(--navy); font-weight: 600; font-size: 16px; }
 .cot .pago { background: var(--cream-warm); border-radius: 3px; padding: 12px 14px; margin-top: 12px; }
 .cot .pago .fila { color: var(--text); padding: 3px 0; }
+.cot .pago .op100 { border-top: 1px solid var(--border-light); margin-top: 6px; padding-top: 8px; color: var(--navy); }
+.rmod .pagoop { border: 1px solid var(--border-light); border-radius: 3px; padding: 4px 14px 14px; margin: 16px 0 4px; }
+.rmod .pagoop legend { padding: 0 6px; font-size: 13px; font-weight: 600; color: var(--navy); }
+.rmod .pagoop .ck { margin-top: 10px; }
 .cot .aviso { font-size: 13px; color: var(--text-soft); margin-top: 10px; line-height: 1.5; }
 .cot .err { color: #a25b4a; padding: 6px 0; }
 .btn-res { width: 100%; margin-top: 16px; background: var(--gold); color: var(--navy); border: 0; padding: 16px; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; border-radius: 2px; transition: background .2s; }
 .btn-res:hover { background: var(--gold-soft); }
 .btn-res:disabled { background: var(--cream-paper); color: var(--text-muted); cursor: default; }
+.box.box-alta { overflow-y: auto; overscroll-behavior: contain; padding-bottom: 0; }
+.box.box-alta #btnRes { position: sticky; bottom: 0; box-shadow: 0 -14px 14px -2px #fff; }
+.box.box-alta .btn-sec { padding-bottom: 20px; }
 .btn-sec { display: block; text-align: center; margin-top: 10px; font-size: 13px; color: var(--text-soft); text-decoration: underline; }
 .mbar { display: none; }
 @media (max-width: 979px) {
@@ -307,7 +314,11 @@ footer a:hover { color: var(--gold); }
 .rmod ul.rres { margin: 0 0 12px; padding-left: 20px; font-size: 14.5px; line-height: 1.7; color: var(--navy); }
 .rmod .rres-c { font-size: 13.5px; line-height: 1.5; color: var(--navy); font-weight: 600; margin-bottom: 8px; }
 .doc-bg { z-index: 5100; }
-.rmod.doc { max-width: 640px; }
+.rmod.doc { max-width: 640px; position: relative; }
+.doc-x { position: sticky; top: 0; float: right; margin: -6px -6px 0 8px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-light); background: #fff; color: var(--navy); font-size: 22px; line-height: 1; z-index: 2; }
+details.pol summary { cursor: pointer; list-style: revert; }
+details.pol summary b { display: inline !important; margin: 0; }
+details.pol[open] summary { margin-bottom: 4px; }
 .doc-tx { font-size: 14px; line-height: 1.65; color: var(--text-soft); }
 .doc-tx h2 { font-family: var(--sans); font-size: 14.5px; font-weight: 600; color: var(--navy); margin: 14px 0 4px; }
 .doc-tx ol { padding-left: 20px; } .doc-tx li { margin: 3px 0; }
@@ -464,6 +475,9 @@ body.mapa-movil .topbar { display: none; }
       <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="LinkedIn de Felipe Zerbino">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
       </a>
+      <a href="https://maps.app.goo.gl/PHPB9T7P7JGDvrNQ9" target="_blank" rel="noopener" aria-label="Reseñas en Google">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+      </a>
     </div>
     <div class="topbar-langs">
       <span class="active">ES</span>
@@ -520,6 +534,9 @@ body.mapa-movil .topbar { display: none; }
           <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="LinkedIn de Felipe Zerbino">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
           </a>
+          <a href="https://maps.app.goo.gl/PHPB9T7P7JGDvrNQ9" target="_blank" rel="noopener" aria-label="Reseñas en Google">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          </a>
           <a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener" aria-label="WhatsApp">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.5.8 3.4.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
           </a>
@@ -531,6 +548,8 @@ body.mapa-movil .topbar { display: none; }
         <ul>
           <li><a href="/index.html">Inicio</a></li>
           <li><a href="/reservasnueva/">Reservas</a></li>
+          <li><a href="/guia-punta-del-este.html">Guía de Punta del Este</a></li>
+          <li><a href="/preguntas-frecuentes.html">Preguntas frecuentes</a></li>
           <li><a href="/como-trabajamos.html">Cómo trabajamos</a></li>
           <li><a href="/conocenos.html">Conócenos</a></li>
           <li><a href="/propietarios.html">Propietarios</a></li>
@@ -759,7 +778,7 @@ function pintar() {
     (res5.length > 1 ? '<button type="button" class="res-nav prev" aria-label="Anterior">‹</button>' : '') +
     '<div class="res-tr" id="resTr">' + res5.map(function (r) { const d = parseIso((r.fecha || '') + '-01'); return '<div class="resena"><b>' + esc(r.nombre) + '</b><small>★★★★★' + (d ? ' · ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() : '') + '</small><div class="rt">' + esc(r.texto) + '</div></div>'; }).join('') + '</div>' +
     (res5.length > 1 ? '<button type="button" class="res-nav next" aria-label="Siguiente">›</button>' : '') + '</div></div>' : '';
-  const pregHtml = '<div class="sec"><h2>Hacé preguntas sobre este alojamiento</h2><div class="preg"><form id="pregF"><input id="pregI" maxlength="300" placeholder="Haz cualquier pregunta sobre esta propiedad" autocomplete="off" /><button type="submit" id="pregB">Preguntar</button></form>' +
+  const pregHtml = '<div class="sec"><h2>Hacé preguntas sobre este alojamiento</h2><div class="preg"><form id="pregF"><input id="pregI" maxlength="300" placeholder="Hacé cualquier pregunta sobre esta propiedad" autocomplete="off" /><button type="submit" id="pregB">Preguntar</button></form>' +
     '<div class="sug" id="pregSug">' + ['¿Hay estacionamiento?', '¿Qué tan cerca está la playa?', '¿Se aceptan mascotas?', '¿Tiene aire acondicionado?'].map(function (q) { return '<button type="button">' + q + '</button>'; }).join('') + '</div>' +
     '<div class="qa" id="pregQa"></div><p class="nota">Responde un asistente con IA según la información de esta página. Para confirmar algo puntual, escribinos por WhatsApp.</p></div></div>';
   const masc = p.mascotas == null ? '' : '<div class="regla"><span>Mascotas</span><b>' + (p.mascotas ? 'Se aceptan' : 'No se aceptan') + '</b></div>';
@@ -777,10 +796,11 @@ function pintar() {
         '<div class="regla"><span>Salida</span><b>Hasta las ' + esc(p.checkout) + '</b></div>' +
         (p.minimo_noches ? '<div class="regla"><span>Estadía mínima</span><b>' + p.minimo_noches + ' noches</b></div>' : '') + masc +
         '<div class="regla"><span>Pago</span><b>' + CFG.sena_pct + '% al reservar</b></div>' +
-      '</div><p class="desc" style="margin-top:14px;font-size:14px">Se reserva con el ' + CFG.sena_pct + '% y el saldo se paga antes de la llegada (7 días antes en temporada alta, 3 días antes en temporada baja). La garantía se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>' +
+      '</div><p class="desc" style="margin-top:14px;font-size:14px">Se reserva con el ' + CFG.sena_pct + '% y el saldo se paga 7 días antes de la llegada; si preferís, podés pagar el 100% al reservar. La garantía se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>' +
       '<div class="sec" id="secPol"><h2>Política de cancelación</h2><div class="polgen">' +
         '<div><b>Temporada alta · estadías con alguna noche del 15 de diciembre a fin de febrero</b>Se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para tu llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable. Si una sola noche de tu estadía cae en temporada alta, esta política se aplica a toda la reserva.</div>' +
-        '<div><b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 3 días antes de la llegada y no es reembolsable.</div>' +
+        '<div><b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable.</div>' +
+        '<div><b>Pago del 100% al reservar · en las dos temporadas</b>Si preferís, podés pagar el total al reservar (es obligatorio si faltan menos de 7 días para la llegada o si el total es menor a USD 500). No cambia nada: la mitad que sería la seña sigue las reglas de la seña y el resto te lo devolvemos si cancelás hasta 7 días antes de la llegada.</div>' +
       '</div><p class="desc" style="margin-top:12px;font-size:14px">Al elegir tus fechas te mostramos los plazos exactos de tu estadía antes de pagar.</p></div>' +
       (p.coord ? '<div class="sec" id="secLug"><h2>Dónde vas a estar</h2><div class="lug-chips" id="lugChips"></div><p class="lug-hint">Hacé clic en una categoría para ver nuestras recomendaciones.</p><div id="mini"></div><p class="nota-mapa">' + (p.tipo === 'casa' ? 'Ubicación aproximada. La dirección exacta se envía al confirmar la reserva.' : 'La dirección exacta se envía al confirmar la reserva.') + ' Las distancias son en línea recta.</p><div class="lug-lista" id="lugLista"></div></div>' : '') +
     '</div>' +
@@ -822,7 +842,7 @@ function pintar() {
   // Mapa con los lugares que recomendamos (la guía del huésped)
   if (p.coord && typeof L !== 'undefined') iniciarLugares(p);
   pintarBox();
-  $('#mbarB').onclick = function () { if (P.vitrina) return window.open(waLink(false), '_blank', 'noopener'); if (COT && COT.estado === 'ok') return reservar(); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  $('#mbarB').onclick = function () { if (P.vitrina) return window.open(waLink(false), '_blank', 'noopener'); if (COT && COT.estado === 'ok') return reservar(); if (COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0) return window.open(waLink(true), '_blank', 'noopener'); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
 }
 
 // ── Compartir ────────────────────────────────────────────────────────────────────────────────────────
@@ -908,7 +928,7 @@ function iniciarLugares(p) {
     $('#lugLista').querySelectorAll('.lug img').forEach(function (im) { im.addEventListener('error', function () { const x = lista[Number(im.closest('.lug').dataset.i)]; const sp = document.createElement('span'); sp.className = 'ph2'; sp.textContent = (x && (x.emoji || LUG_EMOJI[x.cat])) || '📍'; im.replaceWith(sp); }, { once: true }); });
     $('#lugLista').querySelectorAll('.lug').forEach(function (b) { b.onclick = function () { const x = lista[Number(b.dataset.i)]; m.setView([x.lat, x.lng], 15); x._mk.openPopup(); $('#mini').scrollIntoView({ behavior: 'smooth', block: 'center' }); }; });
   };
-  $('#lugChips').addEventListener('click', function (e) { const b = e.target.closest('[data-cat]'); if (b) { cat = b.dataset.cat; pintarLug(); } });
+  $('#lugChips').addEventListener('click', function (e) { const b = e.target.closest('[data-cat]'); if (b) { cat = b.dataset.cat; const hh = document.querySelector('.lug-hint'); if (hh) hh.style.display = 'none'; pintarLug(); } });
   api('/web/lugares').then(function (j) {
     LUG = j.lugares || [];
     CATS = (j.categorias || []).filter(function (c) { return LUG.some(function (x) { return x.cat === c.id; }); });
@@ -936,6 +956,7 @@ function pintarBox() {
     return;
   }
   const max = p.huespedes || 20;
+  const huesAbierto = !!($('#huesPop') && $('#huesPop').classList.contains('open'));
   $('#box').innerHTML =
     '<div class="px">' + (COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b> total' : 'Elegí tus fechas para ver el precio') + '</div>' +
     '<div class="bsel"><button type="button" id="bIn"><span>Llegada</span><div>' + (S.llegada ? fechaCorta(S.llegada) : 'Agregar') + '</div></button>' +
@@ -951,20 +972,42 @@ function pintarBox() {
     '<div class="cot" id="cot">' + cotHtml() + '</div>' +
     botonHtml();
   $('#bIn').onclick = $('#bOut').onclick = function () { $('#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
-  $('#bHues').onclick = function () { $('#huesPop').classList.toggle('open'); };
+  if (huesAbierto) $('#huesPop').classList.add('open');
+  $('#bHues').onclick = function () { const ab = $('#huesPop').classList.toggle('open'); if (ab) cajaArriba(); };
   $('#huesPop').addEventListener('click', function (e) { const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return; S[b.dataset.k] += Number(b.dataset.d); urlEstado(); pintarBox(); $('#huesPop').classList.add('open'); clearTimeout(window._tq); window._tq = setTimeout(cotizar, 300); });
   const br = $('#btnRes'); if (br) br.onclick = reservar;
   // Barra del teléfono
-  $('#mbarT').innerHTML = COT && COT.estado === 'ok' ? '<b>' + usd(COT.total) + '</b><br>' + COT.noches + ' noches · ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) : 'Elegí tus fechas<br><small>para ver el precio</small>';
-  $('#mbarB').textContent = COT && COT.estado === 'ok' ? (COT.modo === 'inmediata' ? 'Reservar' : 'Solicitar') : 'Ver fechas';
+  const est = (S.llegada && S.salida) ? (COT ? COT.estado : 'calc') : 'sin';
+  let mT, mB;
+  if (est === 'ok') { mT = '<b>' + usd(COT.total) + '</b><br>' + COT.noches + ' noches · ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida); mB = COT.modo === 'inmediata' ? 'Reservar' : 'Solicitar'; }
+  else if (est === 'calc') { mT = 'Calculando el precio…'; mB = 'Ver fechas'; }
+  else if (est === 'minimo') { mT = 'Estadía mínima: ' + COT.minimo + ' noches' + '<br><small>para esa llegada</small>'; mB = 'Cambiar fechas'; }
+  else if (est === 'ocupado') { mT = 'Fechas no disponibles' + '<br><small>probá con otras</small>'; mB = 'Cambiar fechas'; }
+  else if (est === 'capacidad') { mT = 'Recibe hasta ' + COT.maximo + ' huéspedes'; mB = 'Cambiar fechas'; }
+  else if (est === 'sin') { mT = 'Elegí tus fechas<br><small>para ver el precio</small>'; mB = 'Ver fechas'; }
+  else { mT = 'Precio a confirmar' + '<br><small>te respondemos por WhatsApp</small>'; mB = 'Consultar'; }
+  $('#mbarT').innerHTML = mT; $('#mbarB').textContent = mB;
   ajustarCaja();
 }
 // El cuadro de reserva acompaña al bajar. Si es más alto que la pantalla, se pega por ABAJO (queda a la vista el botón de
 // Reservar) en vez de por arriba (antes el botón aparecía recién al llegar al final de la ficha).
 function ajustarCaja() {
   const b = $('#box'); if (!b) return;
-  const top = Math.min(108, window.innerHeight - b.offsetHeight - 16);
-  b.style.top = top + 'px';
+  // Si no entra en la pantalla debajo del menú, queda fija debajo del menú con desplazamiento propio y el botón al pie
+  // (antes se pegaba por abajo y la parte de arriba —fechas y huéspedes— quedaba tapada por el menú).
+  const disp = window.innerHeight - 124;
+  if (window.innerWidth >= 980 && b.scrollHeight > disp + 2) {
+    b.classList.add('box-alta'); b.style.top = '108px'; b.style.maxHeight = disp + 'px';
+  } else {
+    b.classList.remove('box-alta'); b.style.maxHeight = ''; b.style.top = Math.min(108, window.innerHeight - b.offsetHeight - 16) + 'px';
+  }
+}
+// Si la caja quedó pegada por abajo y su parte de arriba está bajo el menú, sube la página lo justo para verla entera arriba.
+function cajaArriba() {
+  const b = $('#box'); if (!b) return;
+  if (b.classList.contains('box-alta')) { const pop = $('#huesPop'); if (pop) setTimeout(function () { pop.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }, 30); return; }
+  if (window.innerWidth < 980) return;
+  const r = b.getBoundingClientRect(); if (r.top < 100) window.scrollBy({ top: r.top - 108, behavior: 'smooth' });
 }
 window.addEventListener('resize', function () { ajustarCaja(); });
 if (window.ResizeObserver) { const roC = new ResizeObserver(function () { ajustarCaja(); }); setTimeout(function obs() { const b = $('#box'); if (b) roC.observe(b); else setTimeout(obs, 500); }, 500); }
@@ -980,31 +1023,34 @@ function cotHtml() {
       pagoHtml(c) + polHtml(c.politica);
   }
   if (c.estado === 'ocupado') return '<div class="err">Esas fechas no están disponibles.</div>' + (c.libres_cerca && c.libres_cerca.length ? '<div class="aviso">Libres cerca: ' + c.libres_cerca.map(function (w) { return '<button type="button" class="lnk" data-w="' + w.desde + '|' + w.hasta + '">' + fechaCorta(w.desde) + ' – ' + fechaCorta(w.hasta) + '</button>'; }).join(' · ') + '</div>' : '');
-  if (c.estado === 'minimo') return '<div class="err">Para esa llegada la estadía mínima es de ' + c.minimo + ' noches.</div>';
+  if (c.estado === 'minimo') return '<div class="err">Para esa llegada la estadía mínima es de ' + c.minimo + ' noches.</div>' + (c.libres_cerca && c.libres_cerca.length ? '<div class="aviso">Libres cerca: ' + c.libres_cerca.map(function (w) { return '<button type="button" class="lnk" data-w="' + w.desde + '|' + w.hasta + '">' + fechaCorta(w.desde) + ' – ' + fechaCorta(w.hasta) + '</button>'; }).join(' · ') + '</div>' : '');
   if (c.estado === 'capacidad') return '<div class="err">Esta propiedad recibe hasta ' + c.maximo + ' huéspedes.</div>';
   if (c.estado === 'mensual') return '<div class="aviso">Para estadías largas armamos una propuesta a medida. Escribinos y te la pasamos.</div>';
   if (c.estado === 'error') return '<div class="err">' + esc(c.msg || 'No pudimos calcular el precio.') + '</div>';
   return '<div class="aviso">Para esas fechas confirmamos el precio por WhatsApp en minutos.</div>';
 }
+// v2.779: el huésped puede elegir pagar el 100% (si el servidor lo ofrece). Con un backend anterior no hay opción.
+function pagoDoble(c) { return !!(c && Array.isArray(c.pago_opciones) && c.pago_opciones.length > 1 && c.politica_total); }
 function pagoHtml(c) {
   const pol = c.politica || {};
   return '<div class="pago">' + (pol.pago_total
     ? '<div class="fila"><span>Al reservar pagás el total</span><b>' + usd(c.sena) + '</b></div>'
-    : '<div class="fila"><span>Al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo' + (pol.saldo_fecha ? ', hasta el ' + fechaCorta(pol.saldo_fecha) : '') + '</span><span>' + usd(c.saldo) + '</span></div>') +
+    : '<div class="fila"><span>Al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo' + (pol.saldo_fecha ? ', hasta el ' + fechaCorta(pol.saldo_fecha) : '') + '</span><span>' + usd(c.saldo) + '</span></div>' +
+      (pagoDoble(c) ? '<div class="fila op100"><span>O pagá el 100% al reservar</span><span>' + usd(c.total) + '</span></div>' : '')) +
     '<div class="fila"><span>Garantía (se devuelve)</span><span>' + usd(c.garantia) + '</span></div></div>';
 }
-function polHtml(pol) {
+function polHtml(pol, abierto) {
   if (!pol || !pol.puntos) return '';
-  return '<div class="pol"><b>Política de cancelación</b><ul>' + pol.puntos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+  return '<details class="pol"' + (abierto || window.innerHeight >= 950 ? ' open' : '') + '><summary><b>Política de cancelación</b></summary><ul>' + pol.puntos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></details>';
 }
 function botonHtml() {
   if (P && P.vitrina) return '<a class="btn-res" style="display:block;text-align:center;text-decoration:none" href="' + waLink(false) + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>';
   const ok = COT && COT.estado === 'ok';
   const inm = ok && COT.modo === 'inmediata';
   const consultar = COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0;
-  const nota = !ok ? '' : (inm ? 'Reserva inmediata: pagás la seña online con tarjeta u otros medios.'
+  const nota = !ok ? '' : (inm ? (pagoDoble(COT) ? 'Reserva inmediata: pagás la seña (o el total, si preferís) online con tarjeta u otros medios.' : COT.politica && COT.politica.pago_total ? 'Reserva inmediata: pagás el total online con tarjeta u otros medios.' : 'Reserva inmediata: pagás la seña online con tarjeta u otros medios.')
     : (P.inmediata ? 'Por la cercanía de la fecha, esta reserva se hace por solicitud. ' : '') + 'No se te cobra nada todavía: el equipo confirma la disponibilidad y te manda el link de pago.');
-  return '<button type="button" class="btn-res" id="btnRes"' + (ok || consultar ? '' : ' disabled') + '>' + (ok ? (inm ? 'Reservar' : 'Solicitar reserva') : (consultar ? 'Consultar por WhatsApp' : 'Elegí tus fechas')) + '</button>' +
+  return '<button type="button" class="btn-res" id="btnRes"' + (ok || consultar ? '' : ' disabled') + '>' + (ok ? (inm ? 'Reservar' : 'Solicitar reserva') : (consultar ? 'Consultar por WhatsApp' : (S.llegada && S.salida ? (COT ? 'Cambiá las fechas' : 'Calculando el precio…') : 'Elegí tus fechas'))) + '</button>' +
     (nota ? '<p class="modo-nota">' + esc(nota) + '</p>' : '') +
     '<a class="btn-sec" href="' + waLink(false) + '" target="_blank" rel="noopener">¿Dudas? Escribinos por WhatsApp</a>';
 }
@@ -1049,10 +1095,10 @@ async function verDoc(k) {
   const d = DOCS[k];
   let v = $('#docBg');
   if (!v) { v = document.createElement('div'); v.className = 'rmod-bg doc-bg'; v.id = 'docBg'; document.body.appendChild(v); v.addEventListener('click', function (e) { if (e.target === v) v.classList.remove('open'); }); }
-  v.innerHTML = '<div class="rmod doc" role="dialog" aria-modal="true"><h3>' + esc(d.tit) + '</h3><div class="doc-tx" id="docTx">Cargando…</div><div class="acc"><button type="button" class="btn-res" id="docX">Cerrar</button></div>' +
+  v.innerHTML = '<div class="rmod doc" role="dialog" aria-modal="true"><button type="button" class="doc-x" id="docXa" aria-label="Cerrar">×</button><h3>' + esc(d.tit) + '</h3><div class="doc-tx" id="docTx">Cargando…</div><div class="acc"><button type="button" class="btn-res" id="docX">Cerrar</button></div>' +
     '<p class="seg"><a href="' + d.url + '" target="_blank" rel="noopener">Abrir en una página aparte</a></p></div>';
   v.classList.add('open');
-  $('#docX').onclick = function () { v.classList.remove('open'); };
+  $('#docX').onclick = $('#docXa').onclick = function () { v.classList.remove('open'); };
   try {
     if (!verDoc._c) verDoc._c = {};
     if (!verDoc._c[k]) { const r = await fetch(d.url, { cache: 'no-cache' }); if (!r.ok) throw new Error(); const t = await r.text(); const dom = new DOMParser().parseFromString(t, 'text/html'); const a = dom.querySelector('#doc'); if (!a) throw new Error(); a.querySelectorAll('a').forEach(function (x) { x.target = '_blank'; x.rel = 'noopener'; }); verDoc._c[k] = a.innerHTML; }
@@ -1064,24 +1110,39 @@ function abrirFormulario() {
   const c = COT, pol = c.politica || {}, inm = c.modo === 'inmediata';
   const bg = modalBg();
   const g = function (k) { try { return localStorage.getItem('phweb_res_' + k) || ''; } catch (e) { return ''; } };
+  const doble = pagoDoble(c);
+  let pagoSel = 'sena';
+  const esTot = function () { return pagoSel === 'total' || !!pol.pago_total; };
+  const montoP = function () { return esTot() ? c.total : c.sena; };
+  const resP = function () { return inm ? (esTot() ? 'pagás el total ahora' : 'ahora pagás ' + usd(montoP()))
+      : 'no pagás nada ahora. Si el equipo la aprueba, te manda el link para pagar ' + (esTot() ? 'el total' : 'la seña de ' + usd(montoP())) + '.'; };
+  const pagoOp = !doble ? '' : '<fieldset class="pagoop"><legend>' + (inm ? '¿Cómo querés pagar?' : 'Si el equipo la aprueba, ¿cómo querés pagar?') + '</legend>' +
+    '<label class="ck"><input type="radio" name="rP" value="sena" checked /> <span>Reservar con el ' + c.sena_pct + '%: ' + usd(c.sena) + ' al reservar y ' + usd(c.saldo) + (pol.saldo_fecha ? ' hasta el ' + fechaCorta(pol.saldo_fecha) : '') + '</span></label>' +
+    '<label class="ck"><input type="radio" name="rP" value="total" /> <span>Pagar el 100% al reservar: ' + usd(c.total) + '</span></label></fieldset>';
   bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">' + (inm ? 'Tu reserva' : 'Solicitud de reserva') + '</h3>' +
     '<div class="res"><b>' + esc(P.titulo) + '</b><br>' + fechaLarga(S.llegada) + ' al ' + fechaLarga(S.salida) + ' · ' + c.noches + (c.noches === 1 ? ' noche' : ' noches') + ' · ' + huespedes() + (huespedes() === 1 ? ' huésped' : ' huéspedes') +
-    '<br>Total ' + usd(c.total) + ' (incluye la limpieza) · ' + (inm ? (pol.pago_total ? 'pagás el total ahora' : 'ahora pagás ' + usd(c.sena))
-      : 'no pagás nada ahora. Si el equipo la aprueba, te manda el link para pagar ' + (pol.pago_total ? 'el total' : 'la seña de ' + usd(c.sena)) + '.') + '</div>' +
+    '<br>Total ' + usd(c.total) + ' (incluye la limpieza) · <span id="rResP">' + resP() + '</span></div>' +
     '<form id="rmodF" novalidate><label for="rN">Nombre y apellido</label><input type="text" id="rN" autocomplete="name" maxlength="120" value="' + esc(g('n')) + '" />' +
     '<label for="rE">Email</label><input type="email" id="rE" autocomplete="email" maxlength="160" value="' + esc(g('e')) + '" />' +
     '<label for="rT">Teléfono (WhatsApp, con código de país)</label><input type="tel" id="rT" autocomplete="tel" maxlength="24" placeholder="+598 99 123 456" value="' + esc(g('t')) + '" />' +
     (inm ? '' : '<label for="rM">Mensaje para el equipo (opcional)</label><textarea id="rM" maxlength="800" placeholder="Contanos quiénes viajan y cualquier pedido especial."></textarea>') +
-    polHtml(pol) +
+    pagoOp + '<div id="rPolW">' + polHtml(pol, true) + '</div>' +
     '<label class="ck"><input type="checkbox" id="rA" /> <span>Leí y acepto la política de cancelación.</span></label>' +
     '<label class="ck"><input type="checkbox" id="rB" /> <span>Leí y acepto las <button type="button" class="lnk" data-doc="bases">bases y condiciones</button> de la reserva.</span></label>' +
     '<label class="ck"><input type="checkbox" id="rR" /> <span>Leí y acepto las <button type="button" class="lnk" data-doc="reglas">reglas de la casa</button>.</span></label>' +
     '<div class="err" id="rErr" role="alert"></div>' +
-    '<div class="acc"><button type="button" class="cancel" id="rX">Volver</button><button type="submit" class="btn-res" id="rOk">' + (inm ? 'Ir a pagar ' + usd(c.sena) : 'Enviar solicitud') + '</button></div>' +
+    '<div class="acc"><button type="button" class="cancel" id="rX">Volver</button><button type="submit" class="btn-res" id="rOk">' + (inm ? 'Ir a pagar ' + usd(montoP()) : 'Enviar solicitud') + '</button></div>' +
     '<p class="seg">' + (inm ? 'El pago se hace en una página segura de nuestro procesador de pagos (dLocal); tus datos de tarjeta no pasan por nosotros. Después del pago, el equipo de reservas te confirma la reserva por WhatsApp o email. Si por algún motivo no se pudiera confirmar, te devolvemos el 100%.'
       : 'Te respondemos por WhatsApp o email a la brevedad. El precio y la política que ves acá son los de tu solicitud.') + '</p></form></div>';
   bg.classList.add('open'); document.body.style.overflow = 'hidden';
   $('#rX').onclick = cerrarReserva;
+  if (doble) $('#rmodF').addEventListener('change', function (e) {
+    if (!e.target || e.target.name !== 'rP') return;
+    pagoSel = e.target.value === 'total' ? 'total' : 'sena';
+    $('#rResP').textContent = resP();
+    $('#rPolW').innerHTML = polHtml(esTot() && c.politica_total ? c.politica_total : pol, true);
+    if (inm) $('#rOk').textContent = 'Ir a pagar ' + usd(montoP());
+  });
   $('#rmodF').addEventListener('click', function (e) { const b = e.target.closest('[data-doc]'); if (b) { e.preventDefault(); verDoc(b.dataset.doc); } });
   reservar._gen = (reservar._gen || 0) + 1; const genM = reservar._gen;
   setTimeout(function () { const i = $('#rN'); if (i) { if (!i.value) i.focus(); else { const x = [$('#rN'), $('#rE'), $('#rT')].find(function (e) { return !e.value; }) || $('#rA'); x.focus(); } } }, 50);
@@ -1106,7 +1167,7 @@ function abrirFormulario() {
     const msj = $('#rM') ? $('#rM').value.trim() : '';
     try {
       const r = await fetch(API + (inm ? '/web/reservar' : '/web/solicitar'), { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify({ lang: LANG, slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, mensaje: msj, acepta: true, acepta_bases: true, acepta_reglas: true }) });
+        body: JSON.stringify({ lang: LANG, slug: SLUG, desde: S.llegada, hasta: S.salida, huespedes: huespedes(), nombre: nombre, email: email, telefono: tel, mensaje: msj, pago: esTot() ? 'total' : 'sena', acepta: true, acepta_bases: true, acepta_reglas: true }) });
       const j = await r.json().catch(function () { return null; });
       if (!r.ok || !j || !j.ok || (inm && !j.link)) {
         cerrarWin();
@@ -1140,7 +1201,7 @@ document.addEventListener('keydown', function (e) {
   if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
   else if (!e.shiftKey && (document.activeElement === z || !bg.contains(document.activeElement))) { e.preventDefault(); a.focus(); }
 });
-document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; const d = $('#docBg.open'); if (d) { d.classList.remove('open'); return; } cerrarReserva(); });
+document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; const lbA = $('#lb.open'); if (lbA) { lbA.classList.remove('open'); document.body.style.overflow = ''; return; } const d = $('#docBg.open'); if (d) { d.classList.remove('open'); return; } cerrarReserva(); });
 let cotGen = 0;
 async function cotizar() {
   COT = null;

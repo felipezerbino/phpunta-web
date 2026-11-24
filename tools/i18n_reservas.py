@@ -49,6 +49,7 @@ EN: 'A/C'¦
 ES: 'Cochera'¦
 PT: 'Garagem'¦
 EN: 'Parking'¦
+
 ES: <html lang="es">¦
 PT: <html lang="pt-BR">¦
 EN: <html lang="en">¦
@@ -75,6 +76,10 @@ EN: <a href="__BASE_ES__" hreflang="es">ES</a>\n      <span class="sep">·</span
 ES: aria-label="LinkedIn de Felipe Zerbino"¦
 EN: aria-label="Felipe Zerbino on LinkedIn"¦
 
+ES: aria-label="Reseñas en Google"¦
+PT: aria-label="Avaliações no Google"¦
+EN: aria-label="Google reviews"¦
+
 ES: aria-label="Menú"¦
 PT: aria-label="Menu"¦
 EN: aria-label="Menu"¦
@@ -94,6 +99,14 @@ EN: <a href="__BASE_EN__" class="current">Book</a>¦
 ES: <a href="/reservasnueva/">Reservas</a>¦
 PT: <a href="__BASE_PT__">Reservar</a>¦
 EN: <a href="__BASE_EN__">Book</a>¦
+
+ES: <a href="/guia-punta-del-este.html">Guía de Punta del Este</a>¦
+PT: <a href="/pt/guia-punta-del-este.html">Guia de Punta del Este</a>¦
+EN: <a href="/en/punta-del-este-guide.html">Punta del Este Guide</a>¦
+
+ES: <a href="/preguntas-frecuentes.html">Preguntas frecuentes</a>¦
+PT: <a href="/pt/perguntas-frequentes.html">Perguntas frequentes</a>¦
+EN: <a href="/en/faq.html">FAQ</a>¦
 
 ES: <a href="/como-trabajamos.html">Cómo&nbsp;trabajamos</a>¦
 PT: <a href="/pt/como-trabalhamos.html">Como&nbsp;trabalhamos</a>¦
@@ -155,7 +168,7 @@ PT: <a href="/pt/politica-cookies.html">Política de cookies</a>¦
 EN: <a href="/en/cookie-policy.html">Cookie policy</a>¦
 
 ES: <span>RUT 220520320015</span>¦
-PT: <span>CNPJ 220520320015</span>¦
+PT: <span>RUT 220520320015</span>¦
 EN: <span>Tax ID 220520320015</span>¦
 
 ES: <span>Registro MINTUR N°2011</span>¦
@@ -266,15 +279,15 @@ ES: data-v="apartamento">Apartamentos<¦
 EN: data-v="apartamento">Apartments<¦
 
 ES: aria-label="Dormitorios"¦
-PT: aria-label="Dormitórios"¦
+PT: aria-label="Quartos"¦
 EN: aria-label="Bedrooms"¦
 
 ES: <option value="0">Dormitorios</option>¦
-PT: <option value="0">Dormitórios</option>¦
+PT: <option value="0">Quartos</option>¦
 EN: <option value="0">Bedrooms</option>¦
 
 ES: + dormitorios</option>¦
-PT: + dormitórios</option>¦
+PT: + quartos</option>¦
 EN: + bedrooms</option>¦
 
 ES: Reservás y pagás online, sin esperar aprobación¦
@@ -319,7 +332,7 @@ PT: >Preço: maior para menor</option>¦
 EN: >Price: high to low</option>¦
 
 ES: >Más dormitorios</option>¦
-PT: >Mais dormitórios</option>¦
+PT: >Mais quartos</option>¦
 EN: >Most bedrooms</option>¦
 
 ES: id="btnEquipo">Armar selección</button>¦
@@ -442,7 +455,7 @@ PT: <h4>Tipo de propriedade</h4>¦
 EN: <h4>Property type</h4>¦
 
 ES: <h4>Dormitorios</h4>¦
-PT: <h4>Dormitórios</h4>¦
+PT: <h4>Quartos</h4>¦
 EN: <h4>Bedrooms</h4>¦
 
 ES: data-dorm="0">Cualquiera<¦
@@ -483,6 +496,26 @@ EN: Tap the circle on each property to add it¦
 ES: id="selSalir">Salir<¦
 PT: id="selSalir">Sair<¦
 EN: id="selSalir">Exit<¦
+
+ES: return 'Mínimo ' + d.minimo + ' noches para esa llegada';¦
+PT: return 'Mínimo ' + d.minimo + ' noites para essa chegada';¦
+EN: return 'Minimum ' + d.minimo + ' nights for that check-in';¦
+
+ES: Ocupada en esas fechas¦
+PT: Ocupada nessas datas¦
+EN: Booked on those dates¦
+
+ES: no van a mostrar precio con estas fechas.¦
+PT: não vão mostrar preço com estas datas.¦
+EN: will not show a price for these dates.¦
+
+ES: >Sacarlas<¦
+PT: >Remover<¦
+EN: >Remove them<¦
+
+ES: No quedó ninguna propiedad: elegí otras o cambiá las fechas.¦
+PT: Não sobrou nenhuma propriedade: escolha outras ou mude as datas.¦
+EN: No properties left: pick others or change the dates.¦
 
 ES: Crear link de la selección¦
 PT: Criar link da seleção¦
@@ -661,24 +694,37 @@ ES: Consultá precio y disponibilidad¦
 PT: Consulte preço e disponibilidade¦
 EN: Ask for price and availability¦
 
-ES: Ya no está disponible en esas fechas¦
-PT: Não está mais disponível nessas datas¦
-EN: No longer available on those dates¦
+ES: const RANGO_P = ['del ', ' al ', ' de '];¦
+PT: const RANGO_P = ['de ', ' a ', ' de '];¦
+EN: const RANGO_P = ['from ', ' to ', ' '];¦
 
-ES: <span class="no">Mínimo ¦
-EN: <span class="no">Minimum ¦
+ES: 'Mínimo ' + c.minimo + ' noches para esa llegada'¦
+PT: 'Mínimo ' + c.minimo + ' noites para essa chegada'¦
+EN: 'Minimum ' + c.minimo + ' nights for that check-in'¦
 
-ES: ' noches para esa llegada</span>'¦
-PT: ' noites para essa chegada</span>'¦
-EN: ' nights for that check-in</span>'¦
+ES: 'Mínimo ' + d.minimo + ' noches para esa llegada', min¦
+PT: 'Mínimo ' + d.minimo + ' noites para essa chegada', min¦
+EN: 'Minimum ' + d.minimo + ' nights for that check-in', min¦
 
-ES: <span class="no">Recibe hasta ¦
-PT: <span class="no">Recebe até ¦
-EN: <span class="no">Sleeps up to ¦
+ES: placeholder="Buscar por nombre" aria-label="Buscar por nombre"¦
+PT: placeholder="Buscar por nome" aria-label="Buscar por nome"¦
+EN: placeholder="Search by name" aria-label="Search by name"¦
 
-ES: ' huéspedes</span>'¦
-PT: ' hóspedes</span>'¦
-EN: ' guests</span>'¦
+ES: id="inBuscaX" aria-label="Borrar"¦
+PT: id="inBuscaX" aria-label="Apagar"¦
+EN: id="inBuscaX" aria-label="Clear"¦
+
+ES: Probá con otras fechas¦
+PT: Tente outras datas¦
+EN: Try other dates¦
+
+ES: '<span class="alt">Disponible con un mínimo de ' + n + ' noches: '¦
+PT: '<span class="alt">Disponível com um mínimo de ' + n + ' noites: '¦
+EN: '<span class="alt">Available with a minimum of ' + n + ' nights: '¦
+
+ES: '<span class="alt">Disponible ' + r + ' ('¦
+PT: '<span class="alt">Disponível ' + r + ' ('¦
+EN: '<span class="alt">Available ' + r + ' ('¦
 
 ES: Sin fechas online · consultanos¦
 PT: Sem datas online · consulte-nos¦
@@ -719,7 +765,7 @@ PT: ' dormitório'¦
 EN: ' bedroom'¦
 
 ES: ' dormitorios'¦
-PT: ' dormitórios'¦
+PT: ' quartos'¦
 EN: ' bedrooms'¦
 
 ES: 'hasta '¦
@@ -1115,7 +1161,7 @@ PT: 'dormitório'¦
 EN: 'bedroom'¦
 
 ES: 'dormitorios'¦
-PT: 'dormitórios'¦
+PT: 'quartos'¦
 EN: 'bedrooms'¦
 
 ES: 'baño'¦
@@ -1221,7 +1267,7 @@ ES: <h2>Hacé preguntas sobre este alojamiento</h2>¦
 PT: <h2>Faça perguntas sobre esta hospedagem</h2>¦
 EN: <h2>Ask questions about this property</h2>¦
 
-ES: placeholder="Haz cualquier pregunta sobre esta propiedad"¦
+ES: placeholder="Hacé cualquier pregunta sobre esta propiedad"¦
 PT: placeholder="Faça qualquer pergunta sobre esta propriedade"¦
 EN: placeholder="Ask anything about this property"¦
 
@@ -1309,9 +1355,9 @@ ES: Se reserva con el ¦
 PT: Reserva-se com ¦
 EN: You book with a ¦
 
-ES: % y el saldo se paga antes de la llegada (7 días antes en temporada alta, 3 días antes en temporada baja). La garantía se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>¦
-PT: % de sinal e o saldo é pago antes da chegada (7 dias antes na alta temporada, 3 dias antes na baixa temporada). A caução é devolvida depois da saída, depois de revisada a propriedade. A estadia mínima pode mudar conforme a data.</p></div>¦
-EN: % deposit and the balance is paid before arrival (7 days before in high season, 3 days before in low season). The security deposit is refunded after check-out, once the property has been checked. The minimum stay may change depending on the date.</p></div>¦
+ES: % y el saldo se paga 7 días antes de la llegada; si preferís, podés pagar el 100% al reservar. La garantía se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>¦
+PT: % de sinal e o saldo é pago 7 dias antes da chegada; se preferir, você pode pagar 100% ao reservar. A caução é devolvida depois da saída, depois de revisada a propriedade. A estadia mínima pode mudar conforme a data.</p></div>¦
+EN: % deposit and the balance is paid 7 days before arrival; if you prefer, you can pay 100% when booking. The security deposit is refunded after check-out, once the property has been checked. The minimum stay may change depending on the date.</p></div>¦
 
 ES: <h2>Política de cancelación</h2>¦
 PT: <h2>Política de cancelamento</h2>¦
@@ -1321,9 +1367,9 @@ ES: <b>Temporada alta · estadías con alguna noche del 15 de diciembre a fin de
 PT: <b>Alta temporada · estadias com alguma noite entre 15 de dezembro e o fim de fevereiro</b>Reserva-se com 50%, que não é reembolsável. Você tem 48 horas para desistir, desde que faltem 30 dias ou mais para a sua chegada. O saldo é pago 7 dias antes da chegada e não é reembolsável. Se uma única noite da sua estadia cair na alta temporada, esta política vale para toda a reserva.¦
 EN: <b>High season · stays with any night from December 15 to the end of February</b>You book with 50%, which is non-refundable. You have 48 hours to change your mind, as long as your arrival is 30 days or more away. The balance is paid 7 days before arrival and is non-refundable. If even one night of your stay falls in high season, this policy applies to the whole booking.¦
 
-ES: <b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 3 días antes de la llegada y no es reembolsable.¦
-PT: <b>Baixa temporada · estadias que não tocam essas datas</b>Reserva-se com 50%, que devolvemos se você cancelar até 30 dias antes da chegada. O saldo é pago 3 dias antes da chegada e não é reembolsável.¦
-EN: <b>Low season · stays that do not touch those dates</b>You book with 50%, which we refund if you cancel up to 30 days before arrival. The balance is paid 3 days before arrival and is non-refundable.¦
+ES: <b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable.¦
+PT: <b>Baixa temporada · estadias que não tocam essas datas</b>Reserva-se com 50%, que devolvemos se você cancelar até 30 dias antes da chegada. O saldo é pago 7 dias antes da chegada e não é reembolsável.¦
+EN: <b>Low season · stays that do not touch those dates</b>You book with 50%, which we refund if you cancel up to 30 days before arrival. The balance is paid 7 days before arrival and is non-refundable.¦
 
 ES: Al elegir tus fechas te mostramos los plazos exactos de tu estadía antes de pagar.¦
 PT: Ao escolher as datas, mostramos os prazos exatos da sua estadia antes de pagar.¦
@@ -1447,6 +1493,42 @@ ES: 'Ver fechas'¦
 PT: 'Ver datas'¦
 EN: 'See dates'¦
 
+ES: 'Estadía mínima: '¦
+PT: 'Estadia mínima: '¦
+EN: 'Minimum stay: '¦
+
+ES: '<br><small>para esa llegada</small>'¦
+PT: '<br><small>para essa chegada</small>'¦
+EN: '<br><small>for that check-in</small>'¦
+
+ES: 'Cambiar fechas'¦
+PT: 'Mudar datas'¦
+EN: 'Change dates'¦
+
+ES: 'Fechas no disponibles'¦
+PT: 'Datas indisponíveis'¦
+EN: 'Dates not available'¦
+
+ES: '<br><small>probá con otras</small>'¦
+PT: '<br><small>tente outras</small>'¦
+EN: '<br><small>try other dates</small>'¦
+
+ES: 'Recibe hasta '¦
+PT: 'Recebe até '¦
+EN: 'Sleeps up to '¦
+
+ES: 'Precio a confirmar'¦
+PT: 'Preço a confirmar'¦
+EN: 'Price to be confirmed'¦
+
+ES: '<br><small>te respondemos por WhatsApp</small>'¦
+PT: '<br><small>respondemos pelo WhatsApp</small>'¦
+EN: '<br><small>we reply on WhatsApp</small>'¦
+
+ES: 'Cambiá las fechas'¦
+PT: 'Mude as datas'¦
+EN: 'Change your dates'¦
+
 ES: 'Hola! Me interesa '¦
 PT: 'Olá! Tenho interesse em '¦
 EN: 'Hello! I am interested in '¦
@@ -1455,9 +1537,9 @@ ES: ' y '¦
 PT: ' e '¦
 EN: ' and '¦
 
-ES: ' (incluye la limpieza) · '¦
-PT: ' (limpeza incluída) · '¦
-EN: ' (cleaning included) · '¦
+ES: ' (incluye la limpieza) · <span id="rResP">'¦
+PT: ' (limpeza incluída) · <span id="rResP">'¦
+EN: ' (cleaning included) · <span id="rResP">'¦
 
 ES: url: '/condiciones-reserva.html', tit: 'Bases y condiciones de la reserva'¦
 PT: url: '/pt/condicoes-reserva.html', tit: 'Bases e condições da reserva'¦
@@ -1548,11 +1630,11 @@ PT: Li e aceito a política de cancelamento.¦
 EN: I have read and accept the cancellation policy.¦
 
 ES: Leí y acepto las <button type="button" class="lnk" data-doc="bases">¦
-PT: Li e aceito as <button type="button" class="lnk" data-doc="bases">¦
+PT: Li e aceito os <button type="button" class="lnk" data-doc="bases">¦
 EN: I have read and accept the <button type="button" class="lnk" data-doc="bases">¦
 
 ES: bases y condiciones</button> de la reserva.¦
-PT: bases e condições</button> da reserva.¦
+PT: termos e condições</button> da reserva.¦
 EN: booking terms and conditions</button>.¦
 
 ES: Leí y acepto las <button type="button" class="lnk" data-doc="reglas">¦
@@ -1600,7 +1682,7 @@ PT: 'Para continuar, aceite a política de cancelamento.'¦
 EN: 'To continue, accept the cancellation policy.'¦
 
 ES: 'Para seguir, aceptá las bases y condiciones.'¦
-PT: 'Para continuar, aceite as bases e condições.'¦
+PT: 'Para continuar, aceite os termos e condições.'¦
 EN: 'To continue, accept the booking terms and conditions.'¦
 
 ES: 'Para seguir, aceptá las reglas de la casa.'¦
@@ -1682,6 +1764,48 @@ EN: We could not load the property¦
 ES: Probá recargar en un momento, o escribinos por <a¦
 PT: Tente recarregar em instantes ou fale com a gente pelo <a¦
 EN: Try reloading in a moment, or message us on <a¦
+
+ES: <b>Pago del 100% al reservar · en las dos temporadas</b>Si preferís, podés pagar el total al reservar (es obligatorio si faltan menos de 7 días para la llegada o si el total es menor a USD 500). No cambia nada: la mitad que sería la seña sigue las reglas de la seña y el resto te lo devolvemos si cancelás hasta 7 días antes de la llegada.¦
+PT: <b>Pagamento de 100% ao reservar · nas duas temporadas</b>Se preferir, você pode pagar o total ao reservar (é obrigatório se faltarem menos de 7 dias para a chegada ou se o total for menor que USD 500). Nada muda: a metade que seria o sinal segue as regras do sinal e devolvemos o restante se você cancelar até 7 dias antes da chegada.¦
+EN: <b>Paying 100% when booking · in both seasons</b>If you prefer, you can pay the full amount when booking (it is required if your arrival is less than 7 days away or if the total is under USD 500). Nothing changes: the half that would be the deposit follows the deposit rules, and we refund the rest if you cancel up to 7 days before arrival.¦
+
+ES: <span>O pagá el 100% al reservar</span>¦
+PT: <span>Ou pague 100% ao reservar</span>¦
+EN: <span>Or pay 100% when booking</span>¦
+
+ES: '¿Cómo querés pagar?'¦
+PT: 'Como você quer pagar?'¦
+EN: 'How do you want to pay?'¦
+
+ES: 'Si el equipo la aprueba, ¿cómo querés pagar?'¦
+PT: 'Se a equipe aprovar, como você quer pagar?'¦
+EN: 'If the team approves it, how do you want to pay?'¦
+
+ES: <span>Reservar con el '¦
+PT: <span>Reservar com '¦
+EN: <span>Book with '¦
+
+ES: '%: ' + usd(c.sena) + ' al reservar y '¦
+PT: '%: ' + usd(c.sena) + ' ao reservar e '¦
+EN: '%: ' + usd(c.sena) + ' when booking and '¦
+
+ES: (pol.saldo_fecha ? ' hasta el ' + fechaCorta¦
+PT: (pol.saldo_fecha ? ' até ' + fechaCorta¦
+EN: (pol.saldo_fecha ? ' by ' + fechaCorta¦
+
+ES: <span>Pagar el 100% al reservar: '¦
+PT: <span>Pagar 100% ao reservar: '¦
+EN: <span>Pay 100% when booking: '¦
+
+
+ES: Reserva inmediata: pagás la seña (o el total, si preferís) online con tarjeta u otros medios.¦
+PT: Reserva imediata: você paga o sinal (ou o total, se preferir) online com cartão ou outros meios.¦
+EN: Instant booking: you pay the deposit (or the full amount, if you prefer) online by card or other methods.¦
+
+ES: Reserva inmediata: pagás el total online con tarjeta u otros medios.¦
+PT: Reserva imediata: você paga o total online com cartão ou outros meios.¦
+EN: Instant booking: you pay the full amount online by card or other methods.¦
+
 '''
 
 
@@ -1695,6 +1819,8 @@ def _parse(texto):
             m = re.match(r'^(ES|PT|EN): (.*)¦$', linea, re.S)
             if not m:
                 raise ValueError('línea de pares mal formada: %r' % linea[:80])
+            if m.group(1) in v:
+                raise ValueError('bloque con dos %s (falta una línea en blanco): %r' % (m.group(1), bloque[:80]))
             v[m.group(1)] = m.group(2).replace('\\n', '\n')
         if 'ES' not in v:
             raise ValueError('bloque sin ES: %r' % bloque[:80])

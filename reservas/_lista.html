@@ -36,7 +36,7 @@
   --maxw: 1440px; --ease: cubic-bezier(.2, .6, .2, 1);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: var(--cream); }
+html { background: var(--cream); overflow-x: clip; }
 body { font-family: var(--sans); background: var(--cream); color: var(--text); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
@@ -102,6 +102,12 @@ em { font-style: italic; font-weight: 300; }
 .pop { position: absolute; z-index: 950; top: calc(100% + 8px); left: 0; background: #fff; border: 1px solid var(--border-light); border-radius: 3px; box-shadow: 0 30px 70px -20px rgba(13,27,42,.35); padding: 18px; display: none; color: var(--text); }
 .pop.open { display: block; }
 body.pop-on .hero { z-index: 955; }   /* el calendario y los huéspedes van por encima de la barra de filtros y las fotos */
+/* teléfono: el calendario y los huéspedes se abren como hoja desde abajo (debajo del buscador quedaban fuera de la pantalla) */
+.pop-listo { display: none; }
+@media (max-width: 859px) {
+  #popCal, #popHues { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: auto; max-height: 86vh; overflow-y: auto; -webkit-overflow-scrolling: touch; border: 0; border-radius: 18px 18px 0 0; padding: 20px 18px calc(18px + env(safe-area-inset-bottom)); box-shadow: 0 0 0 100vmax rgba(13,27,42,.45), 0 -20px 50px rgba(13,27,42,.3); }
+  .pop-listo { display: block; width: 100%; margin-top: 14px; }
+}
 /* Selecciones (equipo) */
 .sel-ck { display: none; position: absolute; top: 10px; left: 10px; z-index: 5; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; background: rgba(13,27,42,.35); color: #fff; font-size: 16px; line-height: 1; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
 body.modo-equipo .sel-ck { display: flex; }
@@ -126,6 +132,9 @@ body.modo-equipo .fab-map, body.modo-equipo .wa-float { bottom: 84px; }
 .modal .lst { list-style: none; display: grid; gap: 6px; font-size: 14px; }
 .modal .lst li { display: flex; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid var(--border-light); padding: 8px 10px; border-radius: 3px; }
 .modal .lst button { background: none; border: 0; color: #a25b4a; font-size: 13px; }
+.modal .lst .sm { display: block; font-size: 12.5px; color: #a25b4a; margin-top: 2px; }
+.modal .sel-av { background: #fbf1ee; border: 1px solid #ecd2cb; color: #7a3f32; padding: 10px 12px; border-radius: 3px; font-size: 13.5px; margin: 10px 0 4px; }
+.modal .sel-av button { background: none; border: 0; color: #7a3f32; text-decoration: underline; font-size: 13.5px; padding: 0; margin-left: 4px; }
 .modal .link { word-break: break-all; background: #fff; border: 1px solid var(--gold); padding: 12px; border-radius: 3px; font-size: 14px; margin-top: 10px; }
 .modal .err { color: #a25b4a; font-size: 14px; margin-top: 10px; }
 .modal .nota { font-size: 13px; color: var(--text-soft); margin-top: 8px; }
@@ -178,6 +187,13 @@ body.ver-sel .layout { grid-template-columns: 1fr !important; }
 .chip:hover { border-color: var(--navy); }
 .chip.on { background: var(--navy); color: var(--cream); border-color: var(--navy); }
 .chip select { border: 0; background: transparent; font-size: 13px; color: inherit; outline: none; appearance: none; padding-right: 2px; }
+.fbusca { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border-light); background: #fff; border-radius: 40px; padding: 0 10px 0 12px; height: 35px; }
+.fbusca svg { width: 15px; height: 15px; stroke: var(--text-soft); fill: none; stroke-width: 2; flex: 0 0 auto; }
+.fbusca input { border: 0; outline: 0; background: transparent; font: inherit; font-size: 13px; color: var(--text); width: 150px; padding: 0; }
+.fbusca.on { border-color: var(--navy); }
+.fbusca input::-webkit-search-cancel-button, .fbusca input::-webkit-search-decoration { -webkit-appearance: none; display: none; }
+.fbusca button { border: 0; background: none; color: var(--text-soft); font-size: 16px; line-height: 1; padding: 0 2px; cursor: pointer; }
+@media (max-width: 999px) { .fbusca { flex: 1 1 150px; min-width: 0; } .fbusca input { font-size: 16px; width: 100%; min-width: 0; flex: 1 1 auto; } }
 .fbar .sep { width: 1px; height: 22px; background: var(--border-light); flex: 0 0 auto; }
 .fbar .res-n { margin-left: auto; flex: 0 0 auto; font-size: 13px; color: var(--text-soft); white-space: nowrap; padding-left: 10px; }
 .fchips { display: contents; }
@@ -191,7 +207,11 @@ body.ver-sel .layout { grid-template-columns: 1fr !important; }
   body.es-equipo .fbar .res-n { display: none; }
   #btnEquipo { padding: 7px 11px; font-size: 12.5px; white-space: nowrap; }
 }
-@media (max-width: 380px) { .fbar .res-n { font-size: 12px; padding-left: 4px; } .fbtn, .fbar select { font-size: 13px; } }
+@media (max-width: 380px) { .fbar .res-n { font-size: 12px; padding-left: 4px; } .fbtn { font-size: 13px; } }
+/* En el teléfono la barra NUNCA puede ser más ancha que la pantalla: si no, Safari agranda la página entera (se ve achicada y corrida). */
+@media (max-width: 999px) { .fbar-in { flex-wrap: wrap; row-gap: 8px; } }
+/* teléfono: los desplegables a 16px, si no iOS agranda la página al tocarlos */
+@media (max-width: 999px) { .sf select, .chip select, .fsheet select { font-size: 16px; } }
 /* hoja de filtros (celular) */
 .fsheet-bg { position: fixed; inset: 0; background: rgba(13,27,42,.45); z-index: 960; opacity: 0; pointer-events: none; transition: opacity .25s; }
 .fsheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 970; background: var(--cream); border-radius: 18px 18px 0 0; max-height: 86vh; display: flex; flex-direction: column; transform: translateY(105%); transition: transform .35s var(--ease); box-shadow: 0 -20px 50px rgba(13,27,42,.3); }
@@ -210,16 +230,16 @@ body.fsheet-on .fsheet-bg { opacity: 1; pointer-events: auto; }
 .fs-foot .btn-navy { padding: 14px 22px; font-size: 12px; }
 
 /* LISTA + MAPA */
-.layout { display: grid; grid-template-columns: 1fr; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr) 42%; } }
 .list { padding: 22px 0 60px; }
-.grid { display: grid; grid-template-columns: 1fr; gap: 28px 22px; }
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 22px; }
 .mas-box { position: relative; margin-top: 28px; }
 .grid.peek { max-height: 190px; overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(#000 0%, rgba(0,0,0,.35) 55%, transparent 100%); mask-image: linear-gradient(#000 0%, rgba(0,0,0,.35) 55%, transparent 100%); }
 .btn-mas { display: block; margin: -40px auto 0; position: relative; z-index: 2; background: var(--navy); color: #fff; border: 0; border-radius: 999px; padding: 15px 28px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--sans); box-shadow: 0 14px 30px -14px rgba(13,27,42,.6); cursor: pointer; }
 .btn-mas:hover { background: #1b2d44; }
-@media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1600px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+@media (min-width: 640px) { .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (min-width: 1600px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .mapbox { display: none; }
 @media (min-width: 1100px) { .mapbox { display: block; position: sticky; top: 142px; height: calc(100vh - 142px); padding: 16px 0 16px 22px; } }
 #map { width: 100%; height: 100%; border-radius: 3px; background: #e8e4da; }
@@ -235,8 +255,9 @@ body.mapa-movil .map-auto { bottom: 86px; left: 16px; }
 @media (min-width: 1100px) { .fab-map { display: none; } }
 .zona-act { display: none; align-items: center; gap: 8px; background: var(--cream-warm); border: 1px solid var(--border-light); padding: 9px 14px; border-radius: 3px; margin-bottom: 16px; font-size: 13.5px; }
 .zona-act.on { display: flex; }
+body.mapa-movil .zona-act.on { position: fixed; left: 16px; right: 16px; bottom: 140px; z-index: 865; margin: 0; box-shadow: 0 8px 24px rgba(13,27,42,.2); }
 
-.card { display: block; color: inherit; }
+.card { display: block; color: inherit; min-width: 0; }
 .ph { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--cream-paper); }
 .ph-track { display: flex; height: 100%; transition: transform .45s var(--ease); }
 .ph-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; }
@@ -265,7 +286,12 @@ body.mapa-movil .map-auto { bottom: 86px; left: 16px; }
 .cp b { font-weight: 600; font-size: 15.5px; }
 .cp small { color: var(--text-muted); font-size: 12.5px; }
 .cp .no { color: #a25b4a; }
-.card.ocupada .ph img { filter: grayscale(.7); opacity: .7; }
+.card.apagada .ph img { filter: grayscale(1); opacity: .5; }
+.card.apagada .ct, .card.apagada .cz, .card.apagada .cic { opacity: .55; }
+.card .ph-off { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 3; background: rgba(13,27,42,.86); color: #fff; font-size: 12.5px; font-weight: 600; line-height: 1.3; padding: 7px 10px; border-radius: 3px; text-align: center; }
+.cp .alt { display: block; margin-top: 3px; color: var(--navy); font-weight: 600; font-size: 13.5px; }
+.cp .alt i { font-style: normal; color: var(--gold-deep, #a88a3a); }
+.cp .alt2 { display: block; margin-top: 3px; color: var(--text-muted); font-size: 12.5px; }
 .card.hl .ct { text-decoration: underline; text-decoration-color: var(--gold); }
 .vacio { padding: 60px 0; text-align: center; color: var(--text-soft); }
 .vacio h3 { color: var(--navy); font-size: 2rem; margin-bottom: 10px; }
@@ -370,7 +396,7 @@ body.mapa-movil .wa-float { display: none; }
 footer {
   background: var(--navy-deep);
   color: var(--text-on-dark);
-  padding: 80px 0 32px;
+  padding: 80px 0 104px;   /* el botón flotante de WhatsApp no tapa "Acceso equipo" al final de la página */
 }
 .footer-grid {
   display: grid;
@@ -433,6 +459,7 @@ footer {
   display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center;
 }
 .footer-legal .sep { color: rgba(240, 236, 224, .25); }
+@media (max-width: 699px) { .footer-legal-row .sep { display: none; } }
 @media (min-width: 700px) {
   .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; }
   .footer-legal { flex-direction: row; justify-content: space-between; align-items: center; }
@@ -456,6 +483,9 @@ body.mapa-movil .topbar { display: none; }
       </a>
       <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="LinkedIn de Felipe Zerbino">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
+      </a>
+      <a href="https://maps.app.goo.gl/PHPB9T7P7JGDvrNQ9" target="_blank" rel="noopener" aria-label="Reseñas en Google">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
       </a>
     </div>
     <div class="topbar-langs">
@@ -513,6 +543,7 @@ body.mapa-movil .topbar { display: none; }
         <div class="stepper"><div><b>Adultos</b><small>13 años o más</small></div><div class="stp"><button type="button" data-k="ad" data-d="-1">−</button><span id="nAd">2</span><button type="button" data-k="ad" data-d="1">+</button></div></div>
         <div class="stepper"><div><b>Niños</b><small>De 2 a 12 años</small></div><div class="stp"><button type="button" data-k="ni" data-d="-1">−</button><span id="nNi">0</span><button type="button" data-k="ni" data-d="1">+</button></div></div>
         <div class="stepper"><div><b>Bebés</b><small>Menores de 2 (no cuentan)</small></div><div class="stp"><button type="button" data-k="be" data-d="-1">−</button><span id="nBe">0</span><button type="button" data-k="be" data-d="1">+</button></div></div>
+        <button type="button" class="btn-navy pop-listo" data-cerrar="1">Listo</button>
       </div>
     </div>
   </div>
@@ -520,6 +551,7 @@ body.mapa-movil .topbar { display: none; }
 
 <div class="fbar" id="fbar">
   <div class="container fbar-in">
+    <label class="fbusca" id="fBusca"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="inBusca" placeholder="Buscar por nombre" aria-label="Buscar por nombre" autocomplete="off" enterkeyhint="search" /><button type="button" id="inBuscaX" aria-label="Borrar" hidden>×</button></label>
     <button type="button" class="chip fbtn" id="btnFiltros">Filtros <b id="nFil"></b></button>
     <span class="fchips">
     <button type="button" class="chip" data-f="tipo" data-v="casa">Casas</button>
@@ -612,6 +644,9 @@ body.mapa-movil .topbar { display: none; }
           <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="LinkedIn de Felipe Zerbino">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
           </a>
+          <a href="https://maps.app.goo.gl/PHPB9T7P7JGDvrNQ9" target="_blank" rel="noopener" aria-label="Reseñas en Google">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          </a>
           <a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener" aria-label="WhatsApp">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.5.8 3.4.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
           </a>
@@ -623,6 +658,8 @@ body.mapa-movil .topbar { display: none; }
         <ul>
           <li><a href="/index.html">Inicio</a></li>
           <li><a href="/reservasnueva/">Reservas</a></li>
+          <li><a href="/guia-punta-del-este.html">Guía de Punta del Este</a></li>
+          <li><a href="/preguntas-frecuentes.html">Preguntas frecuentes</a></li>
           <li><a href="/como-trabajamos.html">Cómo trabajamos</a></li>
           <li><a href="/conocenos.html">Conócenos</a></li>
           <li><a href="/propietarios.html">Propietarios</a></li>
@@ -715,7 +752,7 @@ const S = {
   ad: Math.max(1, parseInt(Q.get('adultos') || '2', 10) || 2), ni: Math.max(0, parseInt(Q.get('ninos') || '0', 10) || 0), be: Math.max(0, parseInt(Q.get('bebes') || '0', 10) || 0),
   zona: Q.get('zona') || '', tipo: Q.get('tipo') || '', dorm: parseInt(Q.get('dorm') || '0', 10) || 0,
   am: (Q.get('con') || '').split(',').filter(Boolean), orden: Q.get('orden') || 'rec',
-  bounds: null
+  q: (Q.get('q') || '').slice(0, 60), bounds: null
 };
 if (S.llegada && (S.llegada < hoyIso || !parseIso(S.llegada))) { S.llegada = ''; S.salida = ''; }
 if (S.salida && (!parseIso(S.salida) || S.salida <= S.llegada)) S.salida = '';
@@ -724,14 +761,15 @@ function urlEstado() {
   if (S.llegada) p.set('llegada', S.llegada); if (S.salida) p.set('salida', S.salida);
   if (S.ad !== 2) p.set('adultos', S.ad); if (S.ni) p.set('ninos', S.ni); if (S.be) p.set('bebes', S.be);
   if (S.zona) p.set('zona', S.zona); if (S.tipo) p.set('tipo', S.tipo); if (S.dorm) p.set('dorm', S.dorm);
-  if (S.am.length) p.set('con', S.am.join(',')); if (S.orden !== 'rec') p.set('orden', S.orden);
+  if (S.am.length) p.set('con', S.am.join(',')); if (S.orden !== 'rec') p.set('orden', S.orden); if (S.q) p.set('q', S.q);
   if (Q.get('api')) p.set('api', Q.get('api'));
   history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
 }
 function huespedes() { return S.ad + S.ni; }
-function qsFicha() {
+function qsFicha(alt) {
   const p = new URLSearchParams();
-  if (S.llegada && S.salida) { p.set('llegada', S.llegada); p.set('salida', S.salida); }
+  if (alt && alt.desde && alt.hasta) { p.set('llegada', alt.desde); p.set('salida', alt.hasta); }
+  else if (S.llegada && S.salida) { p.set('llegada', S.llegada); p.set('salida', S.salida); }
   p.set('adultos', S.ad); if (S.ni) p.set('ninos', S.ni); if (S.be) p.set('bebes', S.be);
   if (Q.get('api')) p.set('api', Q.get('api'));
   return '?' + p.toString();
@@ -797,6 +835,10 @@ function Calendario(host, opt) {
 // ── Buscador ─────────────────────────────────────────────────────────────────────────────────────────
 const popCal = $('#popCal'), popHues = $('#popHues');
 let cal = null;
+function popEnPantalla(el) {
+  if (window.innerWidth < 860) return;
+  requestAnimationFrame(function () { const r = el.getBoundingClientRect(), falta = r.bottom - window.innerHeight + 16; if (falta > 0) window.scrollBy({ top: Math.min(falta, r.top - 100), behavior: 'smooth' }); });
+}
 function cerrarPops() { popCal.classList.remove('open'); popHues.classList.remove('open'); document.body.classList.remove('pop-on'); }
 function pintarBuscador() {
   $('#vIn').textContent = S.llegada ? fechaCorta(S.llegada) : 'Elegí una fecha'; $('#vIn').classList.toggle('vacia', !S.llegada);
@@ -813,13 +855,14 @@ function abrirCal() {
   cerrarPops();
   if (!cal) cal = Calendario(popCal, { ini: S.llegada, fin: S.salida, cerrar: cerrarPops, cambio: function (a, b) { S.llegada = a; S.salida = b; pintarBuscador(); if (a && b) { cerrarPops(); aplicar(); } else if (!a) aplicar(); } });
   else { cal.ini = S.llegada; cal.fin = S.salida; cal.render(); }
-  popCal.classList.add('open'); document.body.classList.add('pop-on');
+  popCal.classList.add('open'); document.body.classList.add('pop-on'); popEnPantalla(popCal);
 }
 $('#sfIn').addEventListener('click', function (e) { e.stopPropagation(); abrirCal(); });
 $('#sfOut').addEventListener('click', function (e) { e.stopPropagation(); abrirCal(); });
-$('#sfHues').addEventListener('click', function (e) { e.stopPropagation(); const ab = popHues.classList.contains('open'); cerrarPops(); if (!ab) { popHues.classList.add('open'); document.body.classList.add('pop-on'); } });
+$('#sfHues').addEventListener('click', function (e) { e.stopPropagation(); const ab = popHues.classList.contains('open'); cerrarPops(); if (!ab) { popHues.classList.add('open'); document.body.classList.add('pop-on'); popEnPantalla(popHues); } });
 popHues.addEventListener('click', function (e) {
   e.stopPropagation();
+  if (e.target.closest('[data-cerrar]')) return cerrarPops();
   const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return;
   S[b.dataset.k] += Number(b.dataset.d); pintarBuscador(); aplicarDiferido();
 });
@@ -846,6 +889,33 @@ $('#fsheetBg').addEventListener('click', function () { abrirFiltros(false); });
 $('#fsVer').addEventListener('click', function () { abrirFiltros(false); document.getElementById('fbar').scrollIntoView({ behavior: 'smooth' }); });
 $('#fsLimpiar').addEventListener('click', function () { S.tipo = ''; S.dorm = 0; S.am = []; aplicar(); });
 $('#selOrden').addEventListener('change', function () { S.orden = this.value; aplicar(); });
+// Buscador por nombre (pedido de Andrea): busca en el título y, con sesión del equipo, también en el nombre interno
+// ("Walmer L104"). Sin tildes ni espacios: "cap ferrat" encuentra "CapFerrat"; cada palabra tiene que aparecer.
+const normB = function (x) { return String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ''); };
+let NOMBRES = {};
+function coincideNombre(p) {
+  if (!S.q) return true;
+  const h = normB(p.titulo) + '|' + normB(p.slug) + '|' + normB(NOMBRES[p.slug]);
+  return S.q.split(/\s+/).map(normB).filter(Boolean).every(function (w) { return h.indexOf(w) >= 0; });
+}
+async function cargarNombres() {
+  const tok = teamToken(); if (!tok) return;
+  try {
+    const r = await fetch(API + '/web/nombres', { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + tok } });
+    const j = await r.json().catch(function () { return null; });
+    if (!r.ok || !j || !Array.isArray(j.nombres)) return;
+    const m = {}; j.nombres.forEach(function (x) { if (x && x.slug) m[x.slug] = String(x.nombre || ''); });
+    NOMBRES = m; if (S.q && CAT.length) aplicar();
+  } catch (e) {}
+}
+(function () {
+  const inp = $('#inBusca'), x = $('#inBuscaX'), box = $('#fBusca'); let t = null;
+  const pintar = function () { x.hidden = !inp.value; box.classList.toggle('on', !!inp.value); };
+  inp.value = S.q; pintar();
+  inp.addEventListener('input', function () { pintar(); clearTimeout(t); t = setTimeout(function () { S.q = inp.value.trim().slice(0, 60); aplicar(); }, 220); });
+  inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(t); S.q = inp.value.trim().slice(0, 60); aplicar(); inp.blur(); } });
+  x.addEventListener('click', function () { inp.value = ''; pintar(); S.q = ''; aplicar(); });
+})();
 function pintarChips() {
   document.querySelectorAll('.chip[data-f]').forEach(function (b) {
     const f = b.dataset.f;
@@ -870,10 +940,11 @@ async function cargarDispo() {
   catch (e) { if (dispoKey === k) DISPO = {}; }
 }
 function filtrar() {
-  if (VER_SEL) return CAT.slice();
+  if (VER_SEL) { const L0 = CAT.slice(); return L0.filter(function (p) { return !noReservable(p); }).concat(L0.filter(function (p) { return noReservable(p); })); }
   const h = huespedes();
   let L = CAT.filter(function (p) {
     if (DISPO && p.vitrina) return false;   // sin fechas online: no aparecen al buscar por fechas
+    if (!coincideNombre(p)) return false;
     if (S.zona && p.barrio !== S.zona) return false;
     if (S.tipo && p.tipo !== S.tipo) return false;
     if (S.dorm && !(p.dormitorios >= S.dorm)) return false;
@@ -934,22 +1005,48 @@ function mas() {
 }
 $('#btnMas').addEventListener('click', function () { const y = window.scrollY; mas(); window.scrollTo(0, y); });
 
+// Felipe (12-nov): lo que no se puede reservar en las fechas elegidas se ve APAGADO, con el motivo y la fecha libre más
+// cercana (la misma llegada con el mínimo de noches, o la ventana libre más cercana). La tarjeta abre la ficha en esa fecha.
+const RANGO_P = ['del ', ' al ', ' de '];
+function rangoTxt(a, b) {
+  const x = parseIso(a), y = parseIso(b); if (!x || !y) return '';
+  return RANGO_P[0] + x.getDate() + (x.getMonth() !== y.getMonth() ? RANGO_P[2] + MESES[x.getMonth()] : '') + RANGO_P[1] + y.getDate() + RANGO_P[2] + MESES[y.getMonth()];
+}
+function noReservable(p) {
+  const alt0 = function (l) { const w = Array.isArray(l) ? l[0] : l; return w && w.desde && w.hasta && w.desde >= iso(new Date()) ? w : null; };
+  if (SELCOT) {
+    const c = SELCOT[p.slug]; if (!c) return null;
+    if (c.estado === 'ocupado') return { m: 'No disponible en esas fechas', alt: alt0(c.libres_cerca) };
+    if (c.estado === 'minimo') return { m: 'Mínimo ' + c.minimo + ' noches para esa llegada', min: c.minimo, alt: alt0(c.libres_cerca) };
+    if (c.estado === 'capacidad') return { m: 'Recibe hasta ' + c.maximo + ' huéspedes', cap: true };
+    return null;
+  }
+  const d = DISPO && DISPO[p.slug];
+  if (!d || d.vitrina) return null;
+  if (d.libre === false) return { m: 'No disponible en esas fechas', alt: alt0(d.alt) };
+  if (d.cumple_minimo === false) return { m: 'Mínimo ' + d.minimo + ' noches para esa llegada', min: d.minimo, alt: alt0(d.alt) };
+  return null;
+}
+function lineaNoRes(nr) {
+  if (!nr.alt) return '<span class="no">' + esc(nr.m) + '</span>' + (nr.cap ? '' : '<span class="alt2">Probá con otras fechas</span>');
+  const n = noches(nr.alt.desde, nr.alt.hasta);
+  const r = rangoTxt(nr.alt.desde, nr.alt.hasta);
+  if (nr.min && nr.alt.desde === S.llegada) return '<span class="alt">Disponible con un mínimo de ' + n + ' noches: ' + r + ' <i>›</i></span>';
+  return '<span class="alt">Disponible ' + r + ' (' + n + (n === 1 ? ' noche' : ' noches') + ') <i>›</i></span>';
+}
 function lineaPrecio(p) {
+  const nr = noReservable(p);
+  if (nr) return lineaNoRes(nr);
   if (SELCOT) {
     const c = SELCOT[p.slug], n = noches(S.llegada, S.salida);
     if (!c) return '<small>Consultá precio y disponibilidad</small>';
     if (c.estado === 'ok') return (c.antes ? '<span class="tach">' + usd(c.antes) + '</span>' : '') + '<b>' + usd(c.total) + '</b> <small>total · ' + n + (n === 1 ? ' noche' : ' noches') + ' · limpieza incluida</small>';
-    if (c.estado === 'ocupado') return '<span class="no">Ya no está disponible en esas fechas</span>';
-    if (c.estado === 'minimo') return '<span class="no">Mínimo ' + c.minimo + ' noches para esa llegada</span>';
-    if (c.estado === 'capacidad') return '<span class="no">Recibe hasta ' + c.maximo + ' huéspedes</span>';
     if (c.estado === 'no_disponible') return '<span class="no">Sin fechas online · consultanos</span>';
     return '<small>Precio a confirmar por WhatsApp</small>';
   }
   const d = DISPO && DISPO[p.slug];
   if (d) {
     const n = noches(S.llegada, S.salida);
-    if (d.libre === false) return '<span class="no">No disponible en esas fechas</span>';
-    if (d.cumple_minimo === false) return '<span class="no">Mínimo ' + d.minimo + ' noches para esa llegada</span>';
     if (d.total_aprox) return '<b>' + usd(d.total_aprox) + '</b> <small>total · ' + n + (n === 1 ? ' noche' : ' noches') + '</small>';
     return '<small>Consultá el precio para esas fechas</small>';
   }
@@ -985,14 +1082,15 @@ function iconosHtml(p) {
 function tarjeta(p) {
   const a = document.createElement('a');
   const d = DISPO && DISPO[p.slug];
-  a.className = 'card' + (d && d.libre === false ? ' ocupada' : '');
-  a.href = BASE + encodeURIComponent(p.slug) + '/' + qsFicha();
+  const nr = noReservable(p);
+  a.className = 'card' + (nr ? ' apagada' : '');
+  a.href = BASE + encodeURIComponent(p.slug) + '/' + qsFicha(nr && nr.alt);
   a.dataset.slug = p.slug;
   const fotos = (p.fotos && p.fotos.length ? p.fotos : []).slice(0, 6);
   a.innerHTML = '<div class="ph"><div class="ph-track">' +
     (fotos.length ? fotos.map(function (u, i) { return '<img src="' + esc(u) + '" alt="' + esc(p.titulo) + '" loading="' + (i === 0 ? 'lazy' : 'lazy') + '" decoding="async" />'; }).join('') : '') + '</div>' +
     (fotos.length > 1 ? '<button type="button" class="ph-arr l" aria-label="Foto anterior">‹</button><button type="button" class="ph-arr r" aria-label="Foto siguiente">›</button><div class="ph-dots">' + fotos.map(function (u, i) { return '<i' + (i ? '' : ' class="on"') + '></i>'; }).join('') + '</div>' : '') +
-    (esInm(p) ? '<span class="ph-tag inm" title="Reservás y pagás online, sin esperar aprobación">⚡ Reserva inmediata</span>' : (p.frente_mar ? '<span class="ph-tag">Frente al mar</span>' : '')) + '<button type="button" class="sel-ck' + (SEL.indexOf(p.slug) >= 0 ? ' on' : '') + '" aria-label="Sumar a la selección">' + (SEL.indexOf(p.slug) >= 0 ? '✓' : '+') + '</button></div>' +
+    (esInm(p) ? '<span class="ph-tag inm" title="Reservás y pagás online, sin esperar aprobación">⚡ Reserva inmediata</span>' : (p.frente_mar ? '<span class="ph-tag">Frente al mar</span>' : '')) + '<button type="button" class="sel-ck' + (SEL.indexOf(p.slug) >= 0 ? ' on' : '') + '" aria-label="Sumar a la selección">' + (SEL.indexOf(p.slug) >= 0 ? '✓' : '+') + '</button>' + (nr ? '<span class="ph-off">' + esc(nr.m) + '</span>' : '') + '</div>' +
     '<div class="cinfo"><div class="cz">' + esc(BARRIO_NOMBRE[p.barrio] || 'Punta del Este') + ' · ' + (p.tipo === 'casa' ? 'Casa' : 'Apartamento') + '</div><h3 class="ct">' + esc(p.titulo) + '</h3>' +
     iconosHtml(p) + '<div class="cp">' + lineaPrecio(p) + '</div></div>';
   // Carrusel: flechas en PC, deslizar en el teléfono.
@@ -1033,13 +1131,14 @@ async function aplicarSinMapa() {
   $('#resN').textContent = visibles.length + (visibles.length === 1 ? ' propiedad' : ' propiedades'); $('#fsVer').textContent = visibles.length ? 'Ver ' + visibles.length + (visibles.length === 1 ? ' propiedad' : ' propiedades') : 'Sin resultados';
   $('#vacio').hidden = visibles.length > 0;
   if (!visibles.length) $('#vacio').innerHTML = '<h3>No hay propiedades en esta zona</h3><p>Mové el mapa o alejá el zoom.</p>';
+  $('#fabTxt').textContent = document.body.classList.contains('mapa-movil') ? 'Lista (' + visibles.length + ')' : 'Mapa';
   pintarMarcas();
 }
 $('#btnZona').addEventListener('click', function () { S.bounds = map.getBounds(); $('#mapSearch').classList.remove('on'); aplicarSinMapa(); });
 $('#zonaQuitar').addEventListener('click', function () { S.bounds = null; aplicar(true); });
 function marcaTxt(p) {
   const d = DISPO && DISPO[p.slug];
-  if (d && d.libre === false) return 'No disp.';
+  if (noReservable(p)) return 'No disp.';
   if (d && d.total_aprox) return usd(d.total_aprox).replace('USD ', 'US$');
   return p.desde_noche ? 'US$' + Math.round(p.desde_noche).toLocaleString(LOC) : '·';
 }
@@ -1050,9 +1149,9 @@ function pintarMarcas() {
     if (!p.coord) return;
     const d = DISPO && DISPO[p.slug];
     const txt = marcaTxt(p);
-    const icon = L.divIcon({ className: '', html: '<span class="mk' + (d && d.libre === false ? ' oc' : '') + (txt === '·' ? ' dot' : '') + '" data-slug="' + esc(p.slug) + '">' + (txt === '·' ? '' : esc(txt)) + '</span>', iconSize: [0, 0] });
+    const icon = L.divIcon({ className: '', html: '<span class="mk' + (noReservable(p) ? ' oc' : '') + (txt === '·' ? ' dot' : '') + '" data-slug="' + esc(p.slug) + '">' + (txt === '·' ? '' : esc(txt)) + '</span>', iconSize: [0, 0] });
     const m = L.marker([p.coord.lat, p.coord.lng], { icon: icon, riseOnHover: true }).addTo(capa);
-    m.bindPopup('<a class="mpop" href="' + BASE + encodeURIComponent(p.slug) + '/' + qsFicha() + '">' + (p.fotos[0] ? '<img src="' + esc(p.fotos[0]) + '" alt="" />' : '') + '<div><b>' + esc(p.titulo) + '</b><span style="font-size:12.5px;color:#556070">' + lineaPrecio(p) + '</span></div></a>', { closeButton: false, offset: [0, -6] });
+    m.bindPopup('<a class="mpop" href="' + BASE + encodeURIComponent(p.slug) + '/' + qsFicha((noReservable(p) || {}).alt) + '">' + (p.fotos[0] ? '<img src="' + esc(p.fotos[0]) + '" alt="" />' : '') + '<div><b>' + esc(p.titulo) + '</b><span style="font-size:12.5px;color:#556070">' + lineaPrecio(p) + '</span></div></a>', { closeButton: false, offset: [0, -6] });
     marcas[p.slug] = m;
   });
 }
@@ -1105,7 +1204,7 @@ function loginEquipo(despues) {
       if (!r.ok || !j || !j.token) throw new Error((j && j.error) || 'Usuario o contraseña incorrectos.');
       try { localStorage.setItem('phweb_team_token', j.token); } catch (e) {}
       $('#lgP').value = '';
-      cerrarModal(); document.body.classList.add('es-equipo'); if (despues) despues();
+      cerrarModal(); document.body.classList.add('es-equipo'); cargarNombres(); if (despues) despues();
     } catch (e) { $('#lgE').textContent = e.message; }
   };
   $('#lgOk').onclick = ir; $('#lgP').addEventListener('keydown', function (e) { if (e.key === 'Enter') ir(); });
@@ -1115,11 +1214,25 @@ $('#selCrear').addEventListener('click', function () {
   if (!SEL.length) return alert('Elegí al menos una propiedad tocando su círculo.');
   const conF = !!(S.llegada && S.salida), n = conF ? noches(S.llegada, S.salida) : 0;
   const nombre = function (sl) { const p = CAT.find(function (x) { return x.slug === sl; }); return p ? p.titulo : sl; };
-  modal('<h3>Crear link de la selección</h3><ul class="lst" id="selLst">' + SEL.map(function (sl) { return '<li><span>' + esc(nombre(sl)) + '</span><button type="button" data-q="' + esc(sl) + '">Quitar</button></li>'; }).join('') + '</ul>' +
+  // Con fechas: cuáles no van a mostrar precio y por qué (mismo dato que la tarjeta de la lista), para sacarlas antes de mandar.
+  const motivoSel = function (sl) {
+    if (!conF) return '';
+    const p = CAT.find(function (x) { return x.slug === sl; }) || {}, d = DISPO && DISPO[sl];
+    if (p.huespedes && huespedes() > p.huespedes) return 'Recibe hasta ' + p.huespedes + ' huéspedes';
+    if (!d) return '';
+    if (d.libre === false) return 'Ocupada en esas fechas';
+    if (d.cumple_minimo === false) return 'Mínimo ' + d.minimo + ' noches para esa llegada';
+    return '';
+  };
+  const sinPrecio = SEL.filter(function (sl) { return motivoSel(sl); });
+  const avisoSel = sinPrecio.length ? '<div class="sel-av" id="selAv"><b>' + sinPrecio.length + ' de ' + SEL.length + '</b> no van a mostrar precio con estas fechas.<button type="button" id="selSacar">Sacarlas</button></div>' : '';
+  modal('<h3>Crear link de la selección</h3>' + avisoSel + '<ul class="lst" id="selLst">' + SEL.map(function (sl) { const m = motivoSel(sl); return '<li><span>' + esc(nombre(sl)) + (m ? '<span class="sm">' + esc(m) + '</span>' : '') + '</span><button type="button" data-q="' + esc(sl) + '">Quitar</button></li>'; }).join('') + '</ul>' +
     (conF ? '<label style="display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-size:14px;color:var(--text)"><input type="checkbox" id="selConF" checked /> Con fechas: ' + fechaCorta(S.llegada) + ' – ' + fechaCorta(S.salida) + ' (' + n + ' noches, ' + huespedes() + ' personas)</label>' : '<p class="nota">Sin fechas: el interesado ve las propiedades y elige las fechas en cada una. Para mandarla con fechas y precios, elegí las fechas arriba antes de crear el link.</p>') +
     '<label>Título (opcional)</label><input type="text" id="selTit" maxlength="80" placeholder="Opciones para tu estadía en enero" /><label>Nota para el interesado (opcional)</label><textarea id="selNota" rows="3" maxlength="400"></textarea>' +
     '<div class="err" id="selE"></div><div id="selRes"></div><div class="acc" id="selAcc"><button type="button" id="selC">Cerrar</button><button type="button" class="pri" id="selOk">Crear link</button></div>');
-  $('#selLst').addEventListener('click', function (e) { const b = e.target.closest('[data-q]'); if (!b) return; selToggle(b.dataset.q); document.querySelectorAll('.card[data-slug="' + CSS.escape(b.dataset.q) + '"] .sel-ck').forEach(function (x) { x.classList.remove('on'); x.textContent = '+'; }); b.closest('li').remove(); });
+  const quitarSel = function (sl) { if (SEL.indexOf(sl) >= 0) selToggle(sl); document.querySelectorAll('.card[data-slug="' + CSS.escape(sl) + '"] .sel-ck').forEach(function (x) { x.classList.remove('on'); x.textContent = '+'; }); const li = document.querySelector('#selLst [data-q="' + CSS.escape(sl) + '"]'); if (li) li.closest('li').remove(); };
+  $('#selLst').addEventListener('click', function (e) { const b = e.target.closest('[data-q]'); if (!b) return; quitarSel(b.dataset.q); const quedan = SEL.filter(function (sl) { return motivoSel(sl); }).length; if (!quedan && $('#selAv')) $('#selAv').remove(); });
+  if ($('#selSacar')) $('#selSacar').onclick = function () { sinPrecio.forEach(quitarSel); $('#selAv').remove(); if (!SEL.length) $('#selE').textContent = 'No quedó ninguna propiedad: elegí otras o cambiá las fechas.'; };
   $('#selC').onclick = cerrarModal;
   $('#selOk').onclick = async function () {
     const tok = teamToken();
@@ -1141,7 +1254,7 @@ $('#selCrear').addEventListener('click', function () {
     } catch (e) { $('#selE').textContent = e.message; b.disabled = false; b.textContent = 'Crear link'; }
   };
 });
-if (teamToken()) { document.body.classList.add('es-equipo'); if (innerWidth < 1000) $('#btnEquipo').textContent = 'Selección'; }
+if (teamToken()) { cargarNombres(); document.body.classList.add('es-equipo'); if (innerWidth < 1000) $('#btnEquipo').textContent = 'Selección'; }
 if (Q.get('equipo') && !teamToken()) setTimeout(function () { loginEquipo(function () { modoEquipo(true); }); }, 300);
 else if (Q.get('equipo')) setTimeout(function () { modoEquipo(true); }, 300);
 selPintarBarra();

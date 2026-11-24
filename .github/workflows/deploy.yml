@@ -34,7 +34,7 @@ jobs:
         env:
           # 'reservas' = la central publicada en phpunta.uy/reservas (y redirecciones en reservasnueva/);
           # 'reservasnueva' = oculta (noindex). Lo cambia el commit que la publica.
-          RESERVAS_ES_DIR: reservasnueva
+          RESERVAS_ES_DIR: reservas
           COMPLETO: ${{ inputs.completo }}
         run: |
           # Lee /web/seo del backend (una vez por idioma) y arma la lista y cada ficha con las plantillas reservas/_lista.html y

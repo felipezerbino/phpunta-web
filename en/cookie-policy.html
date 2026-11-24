@@ -96,7 +96,6 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="dns-prefetch" href="https://reservas.phpunta.uy" />
 <link rel="dns-prefetch" href="https://api.whatsapp.com" />
 
 <!-- ============ ESTILOS & FUENTES ============ -->
@@ -165,7 +164,7 @@ a:hover { border-color: var(--gold); }
 .nav-burger span::after { content: ''; position: absolute; top: 6px; left: 0; }
 @media (min-width: 900px) { .nav-burger { display: none; } .nav-links { display: flex; } }
 
-.mobile-menu { position: fixed; inset: 0; background: var(--navy); z-index: 95; padding: 100px 24px 40px; transform: translateY(-100%); transition: transform .4s var(--ease); overflow-y: auto; }
+.mobile-menu { position: fixed; inset: 0; background: var(--navy); z-index: 88; padding: 100px 24px 40px; transform: translateY(-100%); transition: transform .4s var(--ease); overflow-y: auto; }
 .mobile-menu.open { transform: translateY(0); }
 .mobile-menu ul { list-style: none; padding: 0; margin: 0 0 32px; }
 .mobile-menu ul li { padding: 16px 0; border-bottom: 1px solid rgba(240,236,224,0.08); }
@@ -469,7 +468,7 @@ footer .sep { color: rgba(240,236,224,0.15); margin: 0 6px; }
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="https://reservas.phpunta.uy/renta-vacacional/renta-rentas-d0/">Book</a></li>
+      <li><a href="/en/reservas/">Book</a></li>
       <li><a href="how-we-work.html">How we work</a></li>
       <li><a href="about-us.html">About us</a></li>
       <li><a href="owners.html">Owners</a></li>
@@ -482,7 +481,7 @@ footer .sep { color: rgba(240,236,224,0.15); margin: 0 6px; }
 <div class="mobile-menu" id="mobileMenu">
   <ul>
     <li><a href="index.html">Home</a></li>
-    <li><a href="https://reservas.phpunta.uy/renta-vacacional/renta-rentas-d0/">Book</a></li>
+    <li><a href="/en/reservas/">Book</a></li>
     <li><a href="how-we-work.html">How we work</a></li>
     <li><a href="about-us.html">About us</a></li>
     <li><a href="owners.html">Owners</a></li>
@@ -563,7 +562,7 @@ footer .sep { color: rgba(240,236,224,0.15); margin: 0 6px; }
         <a href="index.html" class="logo">
           <img src="/assets/img/logo.webp" alt="Premium Host Punta" />
         </a>
-        <p>Gestión premium de alquileres vacacionales en Punta del Este, La Barra, Manantiales, Punta Ballena, Montevideo y Rocha.</p>
+        <p>Premium vacation rental management in Punta del Este, La Barra, Manantiales, Punta Ballena, Montevideo and Rocha.</p>
         <div class="footer-socials">
           <a href="https://www.instagram.com/premiumhostpunta/" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
@@ -574,6 +573,9 @@ footer .sep { color: rgba(240,236,224,0.15); margin: 0 6px; }
           <a href="https://www.linkedin.com/in/felipezerbino" target="_blank" rel="noopener" aria-label="Felipe Zerbino on LinkedIn">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.3 18.3H5.7V9.7h2.6v8.6zM7 8.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11.3 9.8h-2.6v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.2h-2.6V9.7H13v1.1c.3-.5 1-1.3 2.4-1.3 1.8 0 3 1.2 3 3.6v5.2z"/></svg>
           </a>
+          <a href="https://maps.app.goo.gl/PHPB9T7P7JGDvrNQ9" target="_blank" rel="noopener" aria-label="Google reviews">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          </a>
           <a href="https://api.whatsapp.com/send/?phone=59899716681" target="_blank" rel="noopener" aria-label="WhatsApp">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.5.8 3.4.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
           </a>
@@ -583,7 +585,9 @@ footer .sep { color: rgba(240,236,224,0.15); margin: 0 6px; }
         <h4>Navigation</h4>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="https://reservas.phpunta.uy/renta-vacacional/renta-rentas-d0/">Book</a></li>
+          <li><a href="/en/reservas/">Book</a></li>
+          <li><a href="/en/punta-del-este-guide.html">Punta del Este Guide</a></li>
+          <li><a href="/en/faq.html">FAQ</a></li>
           <li><a href="how-we-work.html">How we work</a></li>
           <li><a href="about-us.html">About us</a></li>
           <li><a href="owners.html">Owners</a></li>
@@ -612,9 +616,9 @@ footer .sep { color: rgba(240,236,224,0.15); margin: 0 6px; }
       <div>
         <span>© 2026 Premium Host Punta SAS</span>
         <span class="sep">·</span>
-        <span>RUT 220520320015</span>
+        <span>Tax ID 220520320015</span>
         <span class="sep">·</span>
-        <span>Registro MINTUR N°2011</span>
+        <span>MINTUR Registry N°2011</span>
       </div>
       <div>Punta del Este · Uruguay</div>
     </div>
