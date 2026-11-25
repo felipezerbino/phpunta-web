@@ -470,6 +470,12 @@ body.mapa-movil .topbar { display: none; }
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-H21LCM002Z');
+  // Clics a WhatsApp en cualquier parte de la página (evento click_whatsapp, con dónde estaba el botón).
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href*="wa.me"],a[href*="whatsapp.com"],a[href^="whatsapp:"]'); if (!a) return;
+    var u = a.id === 'waFloat' || /wa-float|whatsapp-float/.test(a.className) ? 'boton_flotante' : a.closest('#box,.box') ? 'caja_precio' : a.closest('footer') ? 'pie' : a.closest('.topbar,nav,.nav,header') ? 'menu' : 'contenido';
+    try { gtag('event', 'click_whatsapp', { ubicacion: u }); } catch (x) {}
+  }, true);
 </script>
 </head>
 <body>
@@ -891,7 +897,7 @@ function pintar() {
   // Mapa con los lugares que recomendamos (la guía del huésped)
   if (p.coord && typeof L !== 'undefined') iniciarLugares(p);
   pintarBox();
-  $('#mbarB').onclick = function () { if (P.vitrina) return window.open(waLink(false), '_blank', 'noopener'); if (COT && COT.estado === 'ok') return reservar(); if (COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0) return window.open(waLink(true), '_blank', 'noopener'); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  $('#mbarB').onclick = function () { if (P.vitrina) return abrirWa(false, 'barra_movil'); if (COT && COT.estado === 'ok') return reservar(); if (COT && ['consultar', 'mensual', 'error'].indexOf(COT.estado) >= 0) return abrirWa(true, 'barra_movil'); $(S.llegada && S.salida ? '#box' : '#secCal').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
 }
 
 // ── Compartir ────────────────────────────────────────────────────────────────────────────────────────
@@ -1001,7 +1007,7 @@ function pintarBox() {
     $('#box').innerHTML = '<div class="px">Sin fechas online</div><p style="font-size:14px;line-height:1.55;color:var(--text-soft)">Consultanos por WhatsApp: te contamos cuándo se libera o te pasamos opciones parecidas.</p>' + botonHtml();
     $('#mbarT').innerHTML = 'Sin fechas online';
     $('#mbarB').textContent = 'Consultar';
-    $('#mbarB').onclick = function () { window.open(waLink(false), '_blank', 'noopener'); };
+    $('#mbarB').onclick = function () { abrirWa(false, 'barra_movil'); };
     return;
   }
   const max = p.huespedes || 20;
@@ -1108,6 +1114,10 @@ function botonHtml() {
     (nota ? '<p class="modo-nota">' + esc(nota) + '</p>' : '') +
     '<a class="btn-sec" href="' + waLink(false) + '" target="_blank" rel="noopener">¿Dudas? Escribinos por WhatsApp</a>';
 }
+// Analytics (25-nov): eventos de la reserva. gaEv nunca rompe la página si Analytics no cargó (bloqueadores).
+function gaEv(n, p) { try { if (typeof gtag === 'function') gtag('event', n, p || {}); } catch (e) {} }
+function gaRes() { const c = COT || {}; return { propiedad: SLUG, modo: c.modo === 'inmediata' ? 'inmediata' : 'solicitud', noches: c.noches || 0, currency: 'USD', value: Number(c.total) || 0 }; }
+function abrirWa(conDatos, ub) { gaEv('click_whatsapp', { ubicacion: ub, propiedad: SLUG }); window.open(waLink(conDatos), '_blank', 'noopener'); }
 function waLink(conDatos) {
   let t = 'Hola! Me interesa ' + P.titulo;
   if (conDatos && S.llegada && S.salida) {
@@ -1130,7 +1140,8 @@ function modalBg() {
   return bg;
 }
 function reservar() {
-  if (!(COT && COT.estado === 'ok')) { window.open(waLink(true), '_blank', 'noopener'); return; }
+  if (!(COT && COT.estado === 'ok')) { abrirWa(true, 'consultar_precio'); return; }
+  gaEv('click_reservar', gaRes());
   const bg = modalBg();
   reservar._origen = document.activeElement;
   bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">Antes de reservar</h3>' +
@@ -1233,12 +1244,14 @@ function abrirFormulario() {
       }
       if (inm) {
         if (!/^https:\/\/phpunta\.uy\/pagos\/\?c=[A-Za-z0-9_-]+$/.test(String(j.link))) { cerrarWin(); err('No pudimos iniciar el pago. Escribinos por WhatsApp.'); b.disabled = false; b.textContent = txtB; return; }
+        gaEv('begin_checkout', Object.assign(gaRes(), { pago: esTot() ? 'total' : 'sena', monto_pago: esTot() ? COT.total : COT.sena }));
         if (win && !win.closed) { try { win.opener = null; } catch (eO) {} win.location.href = j.link; }
         else { location.href = j.link; return; }   // el navegador no dejó abrir otra pestaña: el pago sigue en esta
         $('#rmodF').innerHTML = '<div class="ok-sol"><b>Abrimos el pago en otra pestaña.</b><br>Completalo ahí; esta página queda abierta por si querés volver a mirar la propiedad. Si no se abrió, <a href="' + esc(j.link) + '" target="_blank" rel="noopener" style="text-decoration:underline">tocá acá para ir al pago</a>.</div><div class="acc"><button type="button" class="btn-res" id="rFin">Entendido</button></div>';
         $('#rFin').onclick = cerrarReserva;
         return;
       }
+      gaEv('generate_lead', gaRes());
       $('#rmodF').innerHTML = '<div class="ok-sol"><b>¡Listo! Recibimos tu solicitud.</b><br>Te escribimos por WhatsApp o email a la brevedad para confirmarte la disponibilidad. Si se aprueba, te mandamos el link para pagar y reservar.</div><div class="acc"><button type="button" class="btn-res" id="rFin">Entendido</button></div>';
       $('#rFin').onclick = cerrarReserva;
     } catch (e3) { cerrarWin(); err('Sin conexión. Probá de nuevo.'); b.disabled = false; b.textContent = txtB; }

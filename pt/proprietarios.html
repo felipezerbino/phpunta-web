@@ -2455,6 +2455,12 @@ body.toast-modal-open { overflow: hidden; }
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-H21LCM002Z');
+  // Clics a WhatsApp en cualquier parte de la página (evento click_whatsapp, con dónde estaba el botón).
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href*="wa.me"],a[href*="whatsapp.com"],a[href^="whatsapp:"]'); if (!a) return;
+    var u = a.id === 'waFloat' || /wa-float|whatsapp-float/.test(a.className) ? 'boton_flotante' : a.closest('#box,.box') ? 'caja_precio' : a.closest('footer') ? 'pie' : a.closest('.topbar,nav,.nav,header') ? 'menu' : 'contenido';
+    try { gtag('event', 'click_whatsapp', { ubicacion: u }); } catch (x) {}
+  }, true);
 </script>
 </head>
 <body>
