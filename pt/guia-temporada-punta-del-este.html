@@ -2179,7 +2179,7 @@ body.legal-modal-open { overflow: hidden; }
       <li><a href="proprietarios.html">Proprietários</a></li>
       <li><a href="contato.html">Contato</a></li>
     </ul>
-    <button class="nav-burger" id="burger" aria-label="Menú"><span></span></button>
+    <button class="nav-burger" id="burger" aria-label="Menu"><span></span></button>
   </div>
 </nav>
 
@@ -2390,7 +2390,7 @@ document.querySelectorAll('.manifesto-big').forEach(el => manifestoObserver.obse
   const cache = {};
 
   async function openLegal(url, displayTitle) {
-    title.textContent = displayTitle || 'Cargando…';
+    title.textContent = displayTitle || 'Carregando…';
     fullpageLink.href = url;
     body.innerHTML = '<p style="text-align:center; padding:40px 0; color:#8a919c;">Carregando conteúdo…</p>';
 
@@ -2477,7 +2477,7 @@ document.querySelectorAll('.manifesto-big').forEach(el => manifestoObserver.obse
     </div>
     <div class="legal-modal-footer">
       <a href="#" target="_blank" rel="noopener" class="legal-modal-fullpage" id="legalModalFullpage">
-        Abrir en página completa <span style="margin-left:4px;">→</span>
+        Abrir em página completa <span style="margin-left:4px;">→</span>
       </a>
       <button class="legal-modal-close-btn" data-legal-close>Fechar</button>
     </div>
