@@ -1038,10 +1038,6 @@ ES: <span>Al reservar (¦
 PT: <span>Ao reservar (¦
 EN: <span>When booking (¦
 
-ES: <span>Saldo¦
-PT: <span>Saldo¦
-EN: <span>Balance¦
-
 ES: <span>Saldo, el día de la llegada'¦
 PT: <span>Saldo, no dia da chegada'¦
 EN: <span>Balance, on arrival day'¦
