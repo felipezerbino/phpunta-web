@@ -137,7 +137,7 @@ T['es'] = {
     },
     'temporada': {
       'title': 'Cuándo ir a Punta del Este: temporada alta y baja | PHPunta',
-      'desc': 'Temporada alta del 15 de diciembre a fin de febrero, Carnaval, Semana de Turismo y temporada baja: qué cambia en precios, estadía mínima, disponibilidad y política de cancelación.',
+      'desc': 'Temporada alta del 15 de diciembre a fin de febrero, Carnaval, Semana de Turismo y temporada baja: qué cambia en precios, estadía mínima y disponibilidad.',
       'h1': 'Cuándo ir <em>a Punta del Este.</em>',
       'sub': 'El mismo lugar, dos ritmos muy distintos. Lo que conviene saber de cada temporada antes de reservar.',
       'resp': 'La temporada alta va del 15 de diciembre al último día de febrero, con el pico entre Navidad y la primera quincena de enero. Carnaval y la Semana de Turismo son feriados largos con mucha demanda. El resto del año es temporada baja: más calma, mejores precios y más disponibilidad, ideal para escapadas y estadías largas.',
@@ -152,9 +152,8 @@ T['es'] = {
           'Estadía mínima: en temporada alta las propiedades suelen pedir más noches que el resto del año. El mínimo depende de cada propiedad y de la fecha de llegada.',
           'Disponibilidad: para fin de año y la primera quincena de enero lo mejor se reserva con meses de anticipación.']),
         ('Política de cancelación', [
-          'Temporada alta (si alguna noche de la estadía cae entre el 15 de diciembre y fin de febrero, se aplica a toda la reserva): se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para la llegada. El saldo se paga el día de la llegada (puede ser en efectivo).',
-          'Temporada baja: se reserva con el 50%, reembolsable si cancelás hasta 30 días antes de la llegada. El saldo se paga el día de la llegada (puede ser en efectivo).',
-          'Pago del 100% (en las dos temporadas): si preferís, podés pagar el total al reservar; es obligatorio si el total es menor a USD 500 o si llegás el mismo día que reservás. No cambia nada: la mitad que sería la seña sigue las reglas de la seña y el resto te lo devolvemos si cancelás hasta el día antes de la llegada.']),
+          'Es la misma todo el año: se reserva con el 50% (la seña), que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para la llegada. El saldo se paga el día de la llegada (puede ser en efectivo).',
+          'Pago del 100%: si preferís, podés pagar el total al reservar; es obligatorio si el total es menor a USD 500 o si llegás el mismo día que reservás. La seña no se devuelve y el resto te lo devolvemos si cancelás hasta el día antes de la llegada.']),
         ('Estadías de un mes o más', [
           'Para estadías largas armamos una propuesta a medida según la propiedad y las fechas. Escribinos por WhatsApp contando cuándo venís y qué buscás.']),
       ],
@@ -178,7 +177,7 @@ T['es'] = {
           ('¿Qué medios de pago aceptan?', 'La seña se paga online con PHPunta Pay desde la página de la propiedad en la central de reservas: tarjeta u otros medios según tu país, en la página de pago segura de dLocal. También podés pagar por transferencia bancaria, en efectivo (también en nuestra oficina, con cita previa), por Western Union o por Mercado Pago (en pesos uruguayos, con un 6% de recargo). Los precios son en dólares estadounidenses.'),
           ('¿Qué incluye el precio?', 'El precio total incluye el alquiler y la limpieza final. La luz y el agua están incluidas hasta el límite que indica cada propiedad; el excedente queda a cargo del huésped.'),
           ('¿Por qué reservar directo con nosotros?', 'Reservando directo evitás las comisiones de las plataformas de reservas y hablás con el mismo equipo que gestiona la propiedad, antes y durante tu estadía.'),
-          ('¿Cuál es la política de cancelación?', 'En temporada alta la seña no es reembolsable, con 48 horas para arrepentirte si faltan 30 días o más para la llegada. En temporada baja la seña es reembolsable si cancelás hasta 30 días antes de la llegada. En los dos casos el saldo se paga el día de la llegada.'),
+          ('¿Cuál es la política de cancelación?', 'La seña no es reembolsable, en cualquier fecha del año. Si reservás con 30 días o más de anticipación, tenés 48 horas para arrepentirte. El saldo se paga el día de la llegada. Si pagaste el total, el resto te lo devolvemos si cancelás hasta el día antes de la llegada.'),
         ]),
         ('Durante la estadía', [
           ('¿A qué hora es el ingreso y la salida?', 'El ingreso es de 16:00 a 23:00 y la salida a las 10:00. Si necesitás otro horario, consultanos: depende de la disponibilidad de la propiedad.'),
@@ -310,7 +309,7 @@ T['pt'] = {
     },
     'temporada': {
       'title': 'Quando ir a Punta del Este: alta e baixa temporada | PHPunta',
-      'desc': 'Alta temporada de 15 de dezembro ao fim de fevereiro, Carnaval, Semana de Turismo e baixa temporada: o que muda em preços, estadia mínima, disponibilidade e política de cancelamento.',
+      'desc': 'Alta temporada de 15 de dezembro ao fim de fevereiro, Carnaval, Semana de Turismo e baixa temporada: o que muda em preços, estadia mínima e disponibilidade.',
       'h1': 'Quando ir <em>a Punta del Este.</em>',
       'sub': 'O mesmo lugar, dois ritmos bem diferentes. O que vale saber de cada temporada antes de reservar.',
       'resp': 'A alta temporada vai de 15 de dezembro ao último dia de fevereiro, com o pico entre o Natal e a primeira quinzena de janeiro. O Carnaval e a Semana de Turismo (Semana Santa) são feriados prolongados com muita procura. O resto do ano é baixa temporada: mais calma, preços melhores e mais disponibilidade, ideal para escapadas e estadias longas.',
@@ -325,9 +324,8 @@ T['pt'] = {
           'Estadia mínima: na alta temporada os imóveis costumam pedir mais noites que no resto do ano. O mínimo depende de cada imóvel e da data de chegada.',
           'Disponibilidade: para o Réveillon e a primeira quinzena de janeiro, o melhor é reservado com meses de antecedência.']),
         ('Política de cancelamento', [
-          'Alta temporada (se alguma noite da estadia cair entre 15 de dezembro e o fim de fevereiro, vale para toda a reserva): a reserva é feita com 50%, que não é reembolsável. Você tem 48 horas para desistir, desde que faltem 30 dias ou mais para a chegada. O saldo é pago no dia da chegada (pode ser em dinheiro).',
-          'Baixa temporada: a reserva é feita com 50%, reembolsável se você cancelar até 30 dias antes da chegada. O saldo é pago no dia da chegada (pode ser em dinheiro).',
-          'Pagamento de 100% (nas duas temporadas): se preferir, você pode pagar o total ao reservar; é obrigatório se o total for menor que USD 500 ou se você chegar no mesmo dia da reserva. Nada muda: a metade que seria o sinal segue as regras do sinal e devolvemos o restante se você cancelar até o dia anterior à chegada.']),
+          'É a mesma o ano todo: a reserva é feita com 50% (o sinal), que não é reembolsável. Você tem 48 horas para desistir, desde que faltem 30 dias ou mais para a chegada. O saldo é pago no dia da chegada (pode ser em dinheiro).',
+          'Pagamento de 100%: se preferir, você pode pagar o total ao reservar; é obrigatório se o total for menor que USD 500 ou se você chegar no mesmo dia da reserva. O sinal não é devolvido e devolvemos o restante se você cancelar até o dia anterior à chegada.']),
         ('Estadias de um mês ou mais', [
           'Para estadias longas montamos uma proposta sob medida conforme o imóvel e as datas. Fale conosco pelo WhatsApp contando quando vem e o que procura.']),
       ],
@@ -351,7 +349,7 @@ T['pt'] = {
           ('Quais formas de pagamento vocês aceitam?', 'O sinal é pago online com o PHPunta Pay, na página do imóvel na central de reservas: cartão ou outros meios conforme o seu país (inclusive Pix no Brasil), na página de pagamento segura da dLocal. Você também pode pagar por transferência bancária, em dinheiro (também no nosso escritório, com hora marcada), pela Western Union ou pelo Mercado Pago (em pesos uruguaios, com acréscimo de 6%). Os preços são em dólares americanos.'),
           ('O que está incluído no preço?', 'O preço total inclui o aluguel e a limpeza final. Luz e água estão incluídas até o limite indicado em cada imóvel; o excedente fica por conta do hóspede.'),
           ('Por que reservar direto conosco?', 'Reservando direto você evita as taxas das plataformas de reserva e fala com a mesma equipe que administra o imóvel, antes e durante a sua estadia.'),
-          ('Qual é a política de cancelamento?', 'Na alta temporada o sinal não é reembolsável, com 48 horas para desistir se faltarem 30 dias ou mais para a chegada. Na baixa temporada o sinal é reembolsável se você cancelar até 30 dias antes da chegada. Nos dois casos o saldo é pago no dia da chegada.'),
+          ('Qual é a política de cancelamento?', 'O sinal não é reembolsável, em qualquer época do ano. Se você reservar com 30 dias ou mais de antecedência, tem 48 horas para desistir. O saldo é pago no dia da chegada. Se você pagou o total, devolvemos o restante se cancelar até o dia anterior à chegada.'),
         ]),
         ('Durante a estadia', [
           ('Qual é o horário de check-in e check-out?', 'O check-in é das 16h às 23h e o check-out às 10h. Se precisar de outro horário, consulte-nos: depende da disponibilidade do imóvel.'),
@@ -483,7 +481,7 @@ T['en'] = {
     },
     'temporada': {
       'title': 'When to visit Punta del Este: high and low season | PHPunta',
-      'desc': 'High season from December 15 to the end of February, Carnival, Tourism Week and low season: what changes in prices, minimum stay, availability and cancellation policy.',
+      'desc': 'High season from December 15 to the end of February, Carnival, Tourism Week and low season: what changes in prices, minimum stay and availability.',
       'h1': 'When to visit <em>Punta del Este.</em>',
       'sub': 'The same place, two very different rhythms. What to know about each season before you book.',
       'resp': 'High season runs from December 15 to the last day of February, peaking between Christmas and mid-January. Carnival and Tourism Week (Holy Week) are holidays in high demand. The rest of the year is low season: calmer, better prices and more availability, ideal for getaways and long stays.',
@@ -498,9 +496,8 @@ T['en'] = {
           'Minimum stay: in high season homes usually require more nights than the rest of the year. The minimum depends on each home and on the arrival date.',
           'Availability: for New Year and the first half of January, the best homes are booked months in advance.']),
         ('Cancellation policy', [
-          'High season (if any night of the stay falls between December 15 and the end of February, it applies to the whole booking): you book with 50%, which is non-refundable. You have 48 hours to change your mind, as long as arrival is 30 or more days away. The balance is paid on arrival day (it can be in cash).',
-          'Low season: you book with 50%, refundable if you cancel up to 30 days before arrival. The balance is paid on arrival day (it can be in cash).',
-          'Paying 100% (in both seasons): if you prefer, you can pay the full amount when booking; it is required if the total is under USD 500 or if you arrive the same day you book. Nothing changes: the half that would be the down payment follows its rules, and we refund the rest if you cancel up to the day before arrival.']),
+          'It is the same all year: you book with 50% (the down payment), which is non-refundable. You have 48 hours to change your mind, as long as arrival is 30 or more days away. The balance is paid on arrival day (it can be in cash).',
+          'Paying 100%: if you prefer, you can pay the full amount when booking; it is required if the total is under USD 500 or if you arrive the same day you book. The down payment is not refunded, and we refund the rest if you cancel up to the day before arrival.']),
         ('Stays of a month or longer', [
           'For long stays we put together a tailored proposal based on the home and the dates. Message us on WhatsApp with your dates and what you are looking for.']),
       ],
@@ -524,7 +521,7 @@ T['en'] = {
           ('Which payment methods do you accept?', 'The down payment is paid online with PHPunta Pay from the property page on our booking site: card or other local methods depending on your country, on the secure dLocal payment page. You can also pay by bank transfer, in cash (also at our office, by appointment), by Western Union or by Mercado Pago (in Uruguayan pesos, with a 6% surcharge). Prices are in US dollars.'),
           ('What does the price include?', 'The total price includes the rental and final cleaning. Electricity and water are included up to the limit stated for each home; any excess is paid by the guest.'),
           ('Why book directly with us?', 'Booking directly you avoid booking-platform fees and talk to the same team that manages the home, before and during your stay.'),
-          ('What is the cancellation policy?', 'In high season the down payment is non-refundable, with 48 hours to change your mind if arrival is 30 or more days away. In low season the down payment is refundable if you cancel up to 30 days before arrival. In both cases the balance is paid on arrival day.'),
+          ('What is the cancellation policy?', 'The down payment is non-refundable, at any time of year. If you book 30 or more days ahead, you have 48 hours to change your mind. The balance is paid on arrival day. If you paid the full amount, we refund the rest if you cancel up to the day before arrival.'),
         ]),
         ('During your stay', [
           ('What are check-in and check-out times?', 'Check-in is from 4 pm to 11 pm and check-out at 10 am. If you need a different time, ask us: it depends on the home’s availability.'),

@@ -1359,13 +1359,9 @@ ES: <h2>Política de cancelación</h2>¦
 PT: <h2>Política de cancelamento</h2>¦
 EN: <h2>Cancellation policy</h2>¦
 
-ES: <b>Temporada alta · estadías con alguna noche del 15 de diciembre a fin de febrero</b>Se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para tu llegada. El saldo se paga el día de la llegada (puede ser en efectivo). Si una sola noche de tu estadía cae en temporada alta, esta política se aplica a toda la reserva.¦
-PT: <b>Alta temporada · estadias com alguma noite entre 15 de dezembro e o fim de fevereiro</b>Reserva-se com 50%, que não é reembolsável. Você tem 48 horas para desistir, desde que faltem 30 dias ou mais para a sua chegada. O saldo é pago no dia da chegada (pode ser em dinheiro). Se uma única noite da sua estadia cair na alta temporada, esta política vale para toda a reserva.¦
-EN: <b>High season · stays with any night from December 15 to the end of February</b>You book with 50%, which is non-refundable. You have 48 hours to change your mind, as long as your arrival is 30 days or more away. The balance is paid on arrival day (it can be in cash). If even one night of your stay falls in high season, this policy applies to the whole booking.¦
-
-ES: <b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga el día de la llegada (puede ser en efectivo).¦
-PT: <b>Baixa temporada · estadias que não tocam essas datas</b>Reserva-se com 50%, que devolvemos se você cancelar até 30 dias antes da chegada. O saldo é pago no dia da chegada (pode ser em dinheiro).¦
-EN: <b>Low season · stays that do not touch those dates</b>You book with 50%, which we refund if you cancel up to 30 days before arrival. The balance is paid on arrival day (it can be in cash).¦
+ES: <b>La seña · todo el año</b>Se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para tu llegada. El saldo se paga el día de la llegada (puede ser en efectivo).¦
+PT: <b>O sinal · o ano todo</b>Reserva-se com 50%, que não é reembolsável. Você tem 48 horas para desistir, desde que faltem 30 dias ou mais para a sua chegada. O saldo é pago no dia da chegada (pode ser em dinheiro).¦
+EN: <b>The deposit · all year</b>You book with 50%, which is non-refundable. You have 48 hours to change your mind, as long as your arrival is 30 days or more away. The balance is paid on arrival day (it can be in cash).¦
 
 ES: Al elegir tus fechas te mostramos los plazos exactos de tu estadía antes de pagar.¦
 PT: Ao escolher as datas, mostramos os prazos exatos da sua estadia antes de pagar.¦
@@ -1761,9 +1757,9 @@ ES: Probá recargar en un momento, o escribinos por <a¦
 PT: Tente recarregar em instantes ou fale com a gente pelo <a¦
 EN: Try reloading in a moment, or message us on <a¦
 
-ES: <b>Pago del 100% al reservar · en las dos temporadas</b>Si preferís, podés pagar el total al reservar (es obligatorio si el total es menor a USD 500 o si llegás el mismo día que reservás). No cambia nada: la mitad que sería la seña sigue las reglas de la seña y el resto te lo devolvemos si cancelás hasta el día antes de la llegada.¦
-PT: <b>Pagamento de 100% ao reservar · nas duas temporadas</b>Se preferir, você pode pagar o total ao reservar (é obrigatório se o total for menor que USD 500 ou se você chegar no mesmo dia da reserva). Nada muda: a metade que seria o sinal segue as regras do sinal e devolvemos o restante se você cancelar até o dia anterior à chegada.¦
-EN: <b>Paying 100% when booking · in both seasons</b>If you prefer, you can pay the full amount when booking (it is required if the total is under USD 500 or if you arrive the same day you book). Nothing changes: the half that would be the deposit follows the deposit rules, and we refund the rest if you cancel up to the day before arrival.¦
+ES: <b>Pago del 100% al reservar</b>Si preferís, podés pagar el total al reservar (es obligatorio si el total es menor a USD 500 o si llegás el mismo día que reservás). La seña no se devuelve y el resto te lo devolvemos si cancelás hasta el día antes de la llegada.¦
+PT: <b>Pagamento de 100% ao reservar</b>Se preferir, você pode pagar o total ao reservar (é obrigatório se o total for menor que USD 500 ou se você chegar no mesmo dia da reserva). O sinal não é devolvido e devolvemos o restante se você cancelar até o dia anterior à chegada.¦
+EN: <b>Paying 100% when booking</b>If you prefer, you can pay the full amount when booking (it is required if the total is under USD 500 or if you arrive the same day you book). The deposit is not refunded, and we refund the rest if you cancel up to the day before arrival.¦
 
 ES: <span>O pagá el 100% al reservar</span>¦
 PT: <span>Ou pague 100% ao reservar</span>¦
