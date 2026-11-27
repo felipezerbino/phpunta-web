@@ -475,7 +475,24 @@ body.mapa-movil .topbar { display: none; }
     var a = e.target && e.target.closest && e.target.closest('a[href*="wa.me"],a[href*="whatsapp.com"],a[href^="whatsapp:"]'); if (!a) return;
     var u = a.id === 'waFloat' || /wa-float|whatsapp-float/.test(a.className) ? 'boton_flotante' : a.closest('#box,.box') ? 'caja_precio' : a.closest('footer') ? 'pie' : a.closest('.topbar,nav,.nav,header') ? 'menu' : 'contenido';
     try { gtag('event', 'click_whatsapp', { ubicacion: u }); } catch (x) {}
+    if (window.fbEv) fbEv('Contact', { content_category: u });
   }, true);
+</script>
+<!-- ============ META PIXEL (27-nov-2026) ============ -->
+<script>
+  // Píxel de Meta de la central (PHPunta Web Reservas). Si el navegador tiene la sesión del equipo, no se carga:
+  // las visitas del equipo no entran a las audiencias ni a las conversiones de las campañas.
+  window.PH_PIXEL = '2128046518583356';
+  (function () {
+    var eq = false;
+    try { eq = ['phweb_team_token', 'phprop_admin_token', 'php_token'].some(function (k) { var t = localStorage.getItem(k); return t && t.length > 20; }); } catch (e) {}
+    if (eq) return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', window.PH_PIXEL);
+    fbq('track', 'PageView');
+  })();
+  // fbEv nunca rompe la página si el píxel no cargó (bloqueadores, sesión del equipo).
+  window.fbEv = function (n, p) { try { if (typeof window.fbq === 'function') window.fbq('track', n, p || {}); } catch (e) {} };
 </script>
 </head>
 <body>
@@ -1116,7 +1133,16 @@ function botonHtml() {
 // Analytics (25-nov): eventos de la reserva. gaEv nunca rompe la página si Analytics no cargó (bloqueadores).
 function gaEv(n, p) { try { if (typeof gtag === 'function') gtag('event', n, p || {}); } catch (e) {} }
 function gaRes() { const c = COT || {}; return { propiedad: SLUG, modo: c.modo === 'inmediata' ? 'inmediata' : 'solicitud', noches: c.noches || 0, currency: 'USD', value: Number(c.total) || 0 }; }
-function abrirWa(conDatos, ub) { gaEv('click_whatsapp', { ubicacion: ub, propiedad: SLUG }); window.open(waLink(conDatos), '_blank', 'noopener'); }
+// Píxel de Meta: mismos momentos que Analytics, con los parámetros estándar de Meta (sin datos personales).
+function fbRes(extra) {
+  const c = COT && COT.estado === 'ok' ? COT : {};
+  const o = { content_ids: [SLUG], content_type: 'hotel', content_name: (P && P.titulo) || SLUG, currency: 'USD' };
+  if (Number(c.total) > 0) o.value = Number(c.total);
+  if (S.llegada && S.salida) { o.checkin_date = S.llegada; o.checkout_date = S.salida; o.num_adults = huespedes(); }
+  return Object.assign(o, extra || {});
+}
+function fbVer() { if (fbVer.ok || !P) return; fbVer.ok = true; if (window.fbEv) fbEv('ViewContent', fbRes()); }
+function abrirWa(conDatos, ub) { gaEv('click_whatsapp', { ubicacion: ub, propiedad: SLUG }); if (window.fbEv) fbEv('Contact', { content_category: ub, content_ids: [SLUG] }); window.open(waLink(conDatos), '_blank', 'noopener'); }
 function waLink(conDatos) {
   let t = 'Hola! Me interesa ' + P.titulo;
   if (conDatos && S.llegada && S.salida) {
@@ -1141,6 +1167,7 @@ function modalBg() {
 function reservar() {
   if (!(COT && COT.estado === 'ok')) { abrirWa(true, 'consultar_precio'); return; }
   gaEv('click_reservar', gaRes());
+  if (window.fbEv) fbEv('InitiateCheckout', fbRes({ num_items: Number(COT.noches) || 1 }));
   const bg = modalBg();
   reservar._origen = document.activeElement;
   bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">Antes de reservar</h3>' +
@@ -1244,6 +1271,7 @@ function abrirFormulario() {
       if (inm) {
         if (!/^https:\/\/phpunta\.uy\/pagos\/\?c=[A-Za-z0-9_-]+$/.test(String(j.link))) { cerrarWin(); err('No pudimos iniciar el pago. Escribinos por WhatsApp.'); b.disabled = false; b.textContent = txtB; return; }
         gaEv('begin_checkout', Object.assign(gaRes(), { pago: esTot() ? 'total' : 'sena', monto_pago: esTot() ? COT.total : COT.sena }));
+        if (window.fbEv) fbEv('AddPaymentInfo', fbRes({ value: Number(esTot() ? COT.total : COT.sena) || 0 }));
         if (win && !win.closed) { try { win.opener = null; } catch (eO) {} win.location.href = j.link; }
         else { location.href = j.link; return; }   // el navegador no dejó abrir otra pestaña: el pago sigue en esta
         $('#rmodF').innerHTML = '<div class="ok-sol"><b>Abrimos el pago en otra pestaña.</b><br>Completalo ahí; esta página queda abierta por si querés volver a mirar la propiedad. Si no se abrió, <a href="' + esc(j.link) + '" target="_blank" rel="noopener" style="text-decoration:underline">tocá acá para ir al pago</a>.</div><div class="acc"><button type="button" class="btn-res" id="rFin">Entendido</button></div>';
@@ -1251,6 +1279,7 @@ function abrirFormulario() {
         return;
       }
       gaEv('generate_lead', gaRes());
+      if (window.fbEv) fbEv('Lead', fbRes());
       $('#rmodF').innerHTML = '<div class="ok-sol"><b>¡Listo! Recibimos tu solicitud.</b><br>Te escribimos por WhatsApp o email a la brevedad para confirmarte la disponibilidad. Si se aprueba, te mandamos el link para pagar y reservar.</div><div class="acc"><button type="button" class="btn-res" id="rFin">Entendido</button></div>';
       $('#rFin').onclick = cerrarReserva;
     } catch (e3) { cerrarWin(); err('Sin conexión. Probá de nuevo.'); b.disabled = false; b.textContent = txtB; }
@@ -1296,11 +1325,11 @@ $('#burger').addEventListener('click', function () { $('#mobileMenu').classList.
     const j = await api('/web/propiedad?slug=' + encodeURIComponent(SLUG) + '&lang=' + LANG);
     P = j.propiedad; CFG = Object.assign(CFG, j.cfg || {});
     pintar();
-    if (P.vitrina) return;
+    if (P.vitrina) { fbVer(); return; }
     const hasta = iso(new Date(Date.now() + 420 * 86400000));
     try { const c = await api('/web/calendario?slug=' + encodeURIComponent(SLUG) + '&hasta=' + hasta); (c.dias || []).forEach(function (d) { DIAS[d.f] = d; }); } catch (e) {}
     iniciarCalendario(); pintarBox();
-    if (S.llegada && S.salida) cotizar();
+    if (S.llegada && S.salida) cotizar().then(fbVer, fbVer); else fbVer();
   } catch (e) {
     $('#cargando').innerHTML = e.status === 404
       ? '<h1>Esta propiedad ya no está disponible</h1><p style="margin-top:12px"><a href="' + BASE + '" style="text-decoration:underline">Ver las demás propiedades</a></p>'

@@ -74,6 +74,19 @@ Reemplaza al sitio de reservas de Avantio (reservas.phpunta.uy). Oculta: `noinde
 - El calendario del buscador va por encima de la barra de filtros (`body.pop-on .hero`): el `.hero` tiene `isolation`.
 - Logo del menú: `assets/img/logo.webp` (11-nov, copiado de reservas.phpunta.uy). Los links del menú "Reservas" ya van a /reservas (11-nov).
 
+## Píxel de Meta (27-nov-2026)
+- Píxel **PHPunta Web Reservas `2128046518583356`** (cuenta publicitaria act_916738323282161), en las dos plantillas de la central
+  (`reservas/_lista.html` y `_ficha.html`, bloque `META PIXEL` antes de `</head>`; los tres idiomas salen solos del generador).
+  Con la sesión del equipo en el navegador (`phweb_team_token`, `phprop_admin_token`, `php_token`) NO se carga: el equipo no entra
+  a las audiencias ni a las conversiones. `fbEv()` nunca rompe la página (bloqueadores).
+- Eventos (estándar de Meta, sin datos personales): `PageView` (toda página de la central); `Search` (lista, al buscar con fechas:
+  checkin/checkout, huéspedes, zona); `ViewContent` (ficha: content_ids=[slug], content_type hotel, value USD si hay cotización);
+  `InitiateCheckout` (tocar Reservar/Solicitar); `AddPaymentInfo` (se generó el link de pago, value = seña o total); `Lead`
+  (solicitud enviada); `Contact` (cualquier clic a WhatsApp). `Purchase` lo manda la página de pagos
+  (`phpunta-comunicaciones/pagos/`, v1.17) solo para cobros web pagados.
+- **Regla: todo evento nuevo de Analytics (`gaEv`) en la central lleva su par de Meta (`fbEv`) si corresponde a un paso del embudo.**
+- El sitio institucional (index, contacto, etc.) todavía no tiene el píxel.
+
 ## Guía de Punta del Este (17-nov-2026)
 - Páginas de respuestas para buscadores e IA (ES/PT/EN): `guia-punta-del-este.html` (portada), `guia-zonas-punta-del-este.html`,
   `guia-temporada-punta-del-este.html`, `preguntas-frecuentes.html` y sus versiones en `pt/` y `en/`. Enlazadas desde el PIE
