@@ -481,7 +481,24 @@ body.mapa-movil .topbar { display: none; }
     var a = e.target && e.target.closest && e.target.closest('a[href*="wa.me"],a[href*="whatsapp.com"],a[href^="whatsapp:"]'); if (!a) return;
     var u = a.id === 'waFloat' || /wa-float|whatsapp-float/.test(a.className) ? 'boton_flotante' : a.closest('#box,.box') ? 'caja_precio' : a.closest('footer') ? 'pie' : a.closest('.topbar,nav,.nav,header') ? 'menu' : 'contenido';
     try { gtag('event', 'click_whatsapp', { ubicacion: u }); } catch (x) {}
+    if (window.fbEv) fbEv('Contact', { content_category: u });
   }, true);
+</script>
+<!-- ============ META PIXEL (27-nov-2026) ============ -->
+<script>
+  // Píxel de Meta de la central (PHPunta Web Reservas). Si el navegador tiene la sesión del equipo, no se carga:
+  // las visitas del equipo no entran a las audiencias ni a las conversiones de las campañas.
+  window.PH_PIXEL = '2128046518583356';
+  (function () {
+    var eq = false;
+    try { eq = ['phweb_team_token', 'phprop_admin_token', 'php_token'].some(function (k) { var t = localStorage.getItem(k); return t && t.length > 20; }); } catch (e) {}
+    if (eq) return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', window.PH_PIXEL);
+    fbq('track', 'PageView');
+  })();
+  // fbEv nunca rompe la página si el píxel no cargó (bloqueadores, sesión del equipo).
+  window.fbEv = function (n, p) { try { if (typeof window.fbq === 'function') window.fbq('track', n, p || {}); } catch (e) {} };
 </script>
 </head>
 <body>
@@ -951,6 +968,7 @@ async function cargarDispo() {
   if (k === dispoKey) return;
   dispoKey = k; DISPO = null;
   if (!k) return;
+  if (window.fbEv) fbEv('Search', { search_string: S.zona || '', content_type: 'hotel', checkin_date: S.llegada, checkout_date: S.salida, num_adults: huespedes() });
   try { const j = await api('/web/buscar?desde=' + S.llegada + '&hasta=' + S.salida + '&lang=' + LANG); if (dispoKey === k) DISPO = j.resultados || {}; }
   catch (e) { if (dispoKey === k) DISPO = {}; }
 }
