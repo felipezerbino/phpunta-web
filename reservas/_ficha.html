@@ -813,11 +813,10 @@ function pintar() {
         '<div class="regla"><span>Salida</span><b>Hasta las ' + esc(p.checkout) + '</b></div>' +
         (p.minimo_noches ? '<div class="regla"><span>Estadía mínima</span><b>' + p.minimo_noches + ' noches</b></div>' : '') + masc +
         '<div class="regla"><span>Pago</span><b>' + CFG.sena_pct + '% al reservar</b></div>' +
-      '</div><p class="desc" style="margin-top:14px;font-size:14px">Se reserva con el ' + CFG.sena_pct + '% y el saldo se paga 7 días antes de la llegada; si preferís, podés pagar el 100% al reservar. La garantía se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>' +
+      '</div><p class="desc" style="margin-top:14px;font-size:14px">Se reserva con el ' + CFG.sena_pct + '% y el saldo se paga el día de la llegada (puede ser en efectivo); si preferís, podés pagar el 100% al reservar. La garantía se entrega al ingresar y se devuelve después de la salida, una vez revisada la propiedad. La estadía mínima puede cambiar según la fecha.</p></div>' +
       '<div class="sec" id="secPol"><h2>Política de cancelación</h2><div class="polgen">' +
-        '<div><b>Temporada alta · estadías con alguna noche del 15 de diciembre a fin de febrero</b>Se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para tu llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable. Si una sola noche de tu estadía cae en temporada alta, esta política se aplica a toda la reserva.</div>' +
-        '<div><b>Temporada baja · estadías que no tocan esas fechas</b>Se reserva con el 50%, que te devolvemos si cancelás hasta 30 días antes de la llegada. El saldo se paga 7 días antes de la llegada y no es reembolsable.</div>' +
-        '<div><b>Pago del 100% al reservar · en las dos temporadas</b>Si preferís, podés pagar el total al reservar (es obligatorio si faltan menos de 7 días para la llegada o si el total es menor a USD 500). No cambia nada: la mitad que sería la seña sigue las reglas de la seña y el resto te lo devolvemos si cancelás hasta 7 días antes de la llegada.</div>' +
+        '<div><b>La seña · todo el año</b>Se reserva con el 50%, que no es reembolsable. Tenés 48 horas para arrepentirte, siempre que falten 30 días o más para tu llegada. El saldo se paga el día de la llegada (puede ser en efectivo).</div>' +
+        '<div><b>Pago del 100% al reservar</b>Si preferís, podés pagar el total al reservar (es obligatorio si el total es menor a USD 500 o si llegás el mismo día que reservás). La seña no se devuelve y el resto te lo devolvemos si cancelás hasta el día antes de la llegada.</div>' +
       '</div><p class="desc" style="margin-top:12px;font-size:14px">Al elegir tus fechas te mostramos los plazos exactos de tu estadía antes de pagar.</p></div>' +
       (p.coord ? '<div class="sec" id="secLug"><h2>Dónde vas a estar</h2><div class="lug-chips" id="lugChips"></div><p class="lug-hint">Hacé clic en una categoría para ver nuestras recomendaciones.</p><div id="mini"></div><p class="nota-mapa">' + (p.tipo === 'casa' ? 'Ubicación aproximada. La dirección exacta se envía al confirmar la reserva.' : 'La dirección exacta se envía al confirmar la reserva.') + ' Las distancias son en línea recta.</p><div class="lug-lista" id="lugLista"></div></div>' : '') +
     '</div>' +
@@ -1095,9 +1094,9 @@ function pagoHtml(c) {
   const pol = c.politica || {};
   return '<div class="pago">' + (pol.pago_total
     ? '<div class="fila"><span>Al reservar pagás el total</span><b>' + usd(c.sena) + '</b></div>'
-    : '<div class="fila"><span>Al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo' + (pol.saldo_fecha ? ', hasta el ' + fechaCorta(pol.saldo_fecha) : '') + '</span><span>' + usd(c.saldo) + '</span></div>' +
+    : '<div class="fila"><span>Al reservar (' + c.sena_pct + '%)</span><b>' + usd(c.sena) + '</b></div><div class="fila"><span>Saldo, el día de la llegada' + (pol.saldo_fecha ? ' (' + fechaCorta(pol.saldo_fecha) + ')' : '') + '</span><span>' + usd(c.saldo) + '</span></div>' +
       (pagoDoble(c) ? '<div class="fila op100"><span>O pagá el 100% al reservar</span><span>' + usd(c.total) + '</span></div>' : '')) +
-    '<div class="fila"><span>Garantía (se devuelve)</span><span>' + usd(c.garantia) + '</span></div></div>';
+    '<div class="fila"><span>Garantía al ingresar (se devuelve)</span><span>' + usd(c.garantia) + '</span></div></div>';
 }
 function polHtml(pol, abierto) {
   if (!pol || !pol.puntos) return '';
@@ -1182,7 +1181,7 @@ function abrirFormulario() {
   const resP = function () { return inm ? (esTot() ? 'pagás el total ahora' : 'ahora pagás ' + usd(montoP()))
       : 'no pagás nada ahora. Si el equipo la aprueba, te manda el link para pagar ' + (esTot() ? 'el total' : 'la seña de ' + usd(montoP())) + '.'; };
   const pagoOp = !doble ? '' : '<fieldset class="pagoop"><legend>' + (inm ? '¿Cómo querés pagar?' : 'Si el equipo la aprueba, ¿cómo querés pagar?') + '</legend>' +
-    '<label class="ck"><input type="radio" name="rP" value="sena" checked /> <span>Reservar con el ' + c.sena_pct + '%: ' + usd(c.sena) + ' al reservar y ' + usd(c.saldo) + (pol.saldo_fecha ? ' hasta el ' + fechaCorta(pol.saldo_fecha) : '') + '</span></label>' +
+    '<label class="ck"><input type="radio" name="rP" value="sena" checked /> <span>Reservar con el ' + c.sena_pct + '%: ' + usd(c.sena) + ' al reservar y ' + usd(c.saldo) + ' el día de la llegada' + (pol.saldo_fecha ? ' (' + fechaCorta(pol.saldo_fecha) + ')' : '') + '</span></label>' +
     '<label class="ck"><input type="radio" name="rP" value="total" /> <span>Pagar el 100% al reservar: ' + usd(c.total) + '</span></label></fieldset>';
   bg.innerHTML = '<div class="rmod" role="dialog" aria-modal="true" aria-labelledby="rmodT"><h3 id="rmodT">' + (inm ? 'Tu reserva' : 'Solicitud de reserva') + '</h3>' +
     '<div class="res"><b>' + esc(P.titulo) + '</b><br>' + fechaLarga(S.llegada) + ' al ' + fechaLarga(S.salida) + ' · ' + c.noches + (c.noches === 1 ? ' noche' : ' noches') + ' · ' + huespedes() + (huespedes() === 1 ? ' huésped' : ' huéspedes') +

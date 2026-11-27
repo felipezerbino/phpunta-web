@@ -44,6 +44,12 @@ Cloudflare: no se usa (la zona se dio de baja el 2-nov-2026; Felipe decidió no 
   `retirado`). Para volver atrás: `RESERVAS_ES_DIR: reservasnueva` y renombrar ese archivo a mano.
 - Textos de las propiedades en PT/EN: los traduce el backend con la IA en el fondo (v2.754, cache en guias_traducciones);
   mientras no están, salen en español. Estado: `/diag/web-traducciones`.
+- **Pagos (26-nov-2026, backend v2.825):** seña 50% al reservar; el SALDO se paga EL DÍA DE LA LLEGADA (puede ser en efectivo);
+  100% obligatorio si el total es menor a USD 500 o si llega el mismo día; pagando el 100%, el resto se devuelve si cancela hasta el
+  día antes de la llegada; la garantía se entrega al ingresar. Medios: PHPunta Pay (dLocal) desde la ficha, transferencia, efectivo,
+  Western Union, Mercado Pago (pesos, +6%). **Regla: si cambia la política en el backend (`WEB_POLITICA_GENERAL`, `_WEB_POL_TX`),
+  cambiar en el mismo día la ficha (`reservas/_ficha.html` + pares), la guía y FAQ (`tools/guia_contenido.py`), las bases
+  (`tools/legales_reserva.py`) y las Condiciones generales (estáticas, 3 idiomas).**
 - Bases y condiciones y Reglas de la casa: `tools/legales_reserva.py` → `python3 tools/generar-legales.py` arma
   `condiciones-reserva.html`, `reglas-de-la-casa.html` y sus versiones PT/EN. La reserva exige aceptar los dos y la política
   (backend v2.753). Horarios de las reglas: check-in 16 h, check-out 10 h.
